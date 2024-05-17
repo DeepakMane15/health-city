@@ -139,6 +139,8 @@ export class AssignmentListComponent implements OnInit {
       height: '500px'
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+
+    });
   }
 }
