@@ -18,9 +18,13 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Vehicle No</mat-label>
-            <div class="uname-input">
+            <!-- <div class="uname-input">
               <input matInput formControlName="vehicle_no">
-            </div>
+            </div> -->
+            <mat-select formControlName="vehicle_no">
+              <mat-option *ngFor="let vehicle of vehicleData" [value]="vehicle.id"> {{vehicle.registeration_no}}
+              </mat-option>
+          </mat-select>
             <mat-error *ngIf="patientForm.get('vehicle_no')?.invalid && patientForm.get('vehicle_no')?.touched">
               Vehicle No is required
             </mat-error>
@@ -29,7 +33,11 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Driver Name</mat-label>
-            <input matInput formControlName="driver_name">
+            <!-- <input matInput formControlName="driver_name"> -->
+            <mat-select formControlName="driver_name">
+              <mat-option *ngFor="let driver of driverData" [value]="driver.id"> {{driver.first_name + " " + driver.last_name}}
+              </mat-option>
+          </mat-select>
             <mat-error *ngIf="patientForm.get('driver_name')?.invalid && patientForm.get('driver_name')?.touched">
               Driver Name is required
             </mat-error>
@@ -42,8 +50,7 @@
           <mat-form-field class="full-width">
             <mat-label>Expense For</mat-label>
             <mat-select formControlName="expense_for">
-                <mat-option value="Petrol/Diesel
-                ash">Petrol/Diesel
+                <mat-option value="Petrol/Diesel">Petrol/Diesel
                 </mat-option>
                 <mat-option value="Spare part
                 ">Spare part
@@ -99,6 +106,10 @@
       </div>
 
     </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
   </mat-card>
 
   <!-- <mat-card class="shipping-card">

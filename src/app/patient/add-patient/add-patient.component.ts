@@ -21,6 +21,8 @@ export class AddPatientComponent implements OnInit {
   public isChecking: Boolean = false;
   public timezones: any;
   public addressPredictions: any;
+  public vehicleData!:any;
+  public driverData!:any;
   public patientData!: PatientModel;
   @Input() fromPopup: boolean = false;
   @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
@@ -45,23 +47,64 @@ export class AddPatientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getTimeZones();
+    this.getDrivers();
+    this.getVehicles();
     this.patientData = history.state.patientData;
-    // this.patientForm.patchValue({
-    //   id: this.patientData.id,
-    //   customer_id: this.patientData.customer_id,
-    //   name: this.patientData.name,
-    //   address: this.patientData.address,
-    //   timeZone: this.patientData.time_zone,
-    //   telephone: this.patientData.telephone,
-    //   mobile: this.patientData.mobile,
-    //   cperson1: this.patientData['contactPerson1_name'],
-    //   cperson2: this.patientData['contactPerson2_name'],
-    //   cphone1: this.patientData['contactPerson1_phone'],
-    //   cphone2: this.patientData['contactPerson2_phone'],
-    //   specialNotes: this.patientData['special_notes'],
-    //   internalNotes: this.patientData['internal_notes'],
-    // });
+    this.patientForm.patchValue({
+      id: this.patientData.id,
+      vehicle_no: this.patientData['vehicle_no'],
+      driver_name: this.patientData['driver_name'],
+      rate: this.patientData['rate'],
+      amount: this.patientData['amount'],
+      expense_for: this.patientData['expense_for'],
+      payment_mode: this.patientData['payment_mode'],
+      last_reading: this.patientData['last_reading']
+    });
+
+  }
+
+  getVehicles() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append("type", "2");
+    this._apiService
+      .post(APIConstant.SNM_GET,
+        fd
+      )
+      .subscribe(
+        (res: any) => {
+          if(res && res.status) {
+            this.vehicleData = res.data;
+            this.showSpinner = false;
+          }
+        },
+        (error) => {
+          this.showSpinner = false;
+          if (this.fromPopup) this.formSubmitted.emit();
+        }
+      );
+
+  }
+  getDrivers() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append("type", "1");
+    this._apiService
+      .post(APIConstant.SNM_GET,
+        fd
+      )
+      .subscribe(
+        (res: any) => {
+          if(res && res.status) {
+            this.driverData = res.data;
+            this.showSpinner = false;
+          }
+        },
+        (error) => {
+          this.showSpinner = false;
+          if (this.fromPopup) this.formSubmitted.emit();
+        }
+      );
   }
 
   onSubmit(): void {
@@ -74,10 +117,11 @@ export class AddPatientComponent implements OnInit {
         const value = formModel[key];
         formData.append(key, value);
       }
+      formData.append('type','1');
       this.showSpinner = true;
       this._apiService
         .post(
-          this.patientData ? APIConstant.EDIT_PATIENT : APIConstant.ADD_PATIENT,
+          this.patientData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
           formData
         )
         .subscribe(
@@ -85,7 +129,7 @@ export class AddPatientComponent implements OnInit {
             if (res && res.status) {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
-              else this.router.navigate(['/patients']);
+              else this.router.navigate(['/imprest']);
             } else {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
