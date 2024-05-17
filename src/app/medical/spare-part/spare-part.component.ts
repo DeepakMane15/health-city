@@ -4,68 +4,57 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import {
-  AssignmentStatus,
-  DELETE_TYPE,
-} from 'src/app/common/constants/AppEnum';
+import { DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import { MedicalTeamModel } from 'src/app/common/models/MedicalTeamModel';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
-@Component({
-  selector: 'app-driver-list',
-  templateUrl: './driver-list.component.html',
-  styleUrl: './driver-list.component.scss',
-})
-export class DriverListComponent implements OnInit {
-  displayedColumns: string[] = [
-    'no',
-    'name',
-    'address',
-    'pickup',
-    'destination',
-    'action',
-  ];
 
-  showSpinner: any;
-  public showSpinnner: Boolean = false;
-  public originalData: any = [];
+@Component({
+  selector: 'app-spare-part',
+  templateUrl: './spare-part.component.html',
+  styleUrl: './spare-part.component.scss'
+})
+export class SparePartComponent {
+  displayedColumns: string[] = [
+    'id',
+    'driver',
+    'vehicle',
+    'part',
+    'desc',
+    'Action',
+  ];
+  public deleteType = DELETE_TYPE;
+  public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private _apiServices: ApiService,
-    private filterService: FilterServiceService,
+    private _apiService: ApiService,
     private router: Router,
+    private filterService: FilterServiceService,
     private dialog: MatDialog
   ) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented');
+    throw new Error('Method not implemented.');
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.fetchDrivers();
+    this.fetchMedicalTeams();
   }
 
-  applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(
-      this.dataSource.data,
-      this.searchTerm
-    );
-  }
-
-  fetchDrivers() {
+  fetchMedicalTeams() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append('type','6');
-    this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
+    fd.append('type','7');
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
-          this.originalData = res.data;
           this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
@@ -76,37 +65,53 @@ export class DriverListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/driver/add']);
+    this.router.navigate(['/medical-team/add']);
   }
 
-  navigateToEdit(driverData: any) {
-    this.router.navigate(['/driver/edit'], {
-      state: { driverData: driverData },
+  applyFilter(): void {
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
+  }
+
+  navigateToEdit(medicalData: MedicalTeamModel) {
+    this.router.navigate(['/medical-team/edit'], {
+      state: { medicalData: medicalData },
     });
   }
-  navigateToView(driverData: any) {
-    this.router.navigate(['/driver/view'], {
-      state: { driverId: driverData.id, tabIndex: 0 },
+  navigateToView(medicalData: MedicalTeamModel) {
+    this.router.navigate(['/medical-team/view'], {
+      state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }
 
-  handleDelete(id: any) {
+  public openResetPopUp() {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Driver' },
+      data: { name: 'Medical-Team' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  handleDelete(pid: any) {
+    const dialogRef = this.dialog.open(DeleteConfirmComponent, {
+      width: '400px',
+      data: { name: 'Medical-Team' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let fd = new FormData();
-        fd.append('id', id);
-        fd.append('type', DELETE_TYPE.DRIVER.toString());
+        fd.append('type', DELETE_TYPE.MEDICAL.toString());
+        fd.append('pid', pid);
         this.showSpinner = true;
-        this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+        this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.fetchDrivers();
+              this.fetchMedicalTeams();
             } else {
               this.showSpinner = false;
             }
@@ -119,11 +124,28 @@ export class DriverListComponent implements OnInit {
       }
     });
   }
-
   public refineLongText(value: string): string {
     let values = value?.split(',');
 
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
   }
+
+  public approveMedicalTeam(pid: number) {
+    const fd = new FormData();
+    fd.append('pid', pid.toString());
+    this.showSpinner = true;
+    this._apiService.post(APIConstant.APPROVE_MEDICALTEAM, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.fetchMedicalTeams();
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
+  }
 }
+

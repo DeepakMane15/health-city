@@ -9,6 +9,7 @@ import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/del
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
+import { AddInOutComponent } from '../add-in-out/add-in-out.component';
 
 @Component({
   selector: 'app-assignment-list',
@@ -37,7 +38,7 @@ export class AssignmentListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService, private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
+  constructor(private _apiServices: ApiService,  private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -130,5 +131,14 @@ export class AssignmentListComponent implements OnInit {
 
     if (values?.length > 2) return values?.splice(0, 2)?.join(',');
     return value;
+  }
+
+  public openInOut() {
+    const dialogRef = this.dialog.open(AddInOutComponent, {
+      width: '400px',
+      height: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

@@ -1,0 +1,27 @@
+<main style="padding: 16px;">
+  <div class="title-container" style="display: flex;
+  justify-content: space-between;">
+    <h1>Add In-Out</h1>
+    <button class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+    <div>
+      <!-- <mat-form-field class="full-width"> -->
+        <!-- <input matInput formControlName="password" placeholder="New Password" type="password" autocomplete="false"> -->
+        <!-- <input matInput placeholder="Vehicle" type="text" formControlName="vehicle"> -->
+
+        <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings"
+        [data]="vehicleData" formControlName="vehicle" (onSelect)="onItemSelect($event)"
+        (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+      <!-- </mat-form-field> -->
+
+    </div>
+    <div class="action">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!resetForm.valid">Add</button>
+    </div>
+  </form>
+</main>

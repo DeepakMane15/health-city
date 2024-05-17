@@ -32,48 +32,68 @@ export class ViewMedicalComponent implements OnInit {
   ];
   public medicalProfile: any = [
     {
-      label: 'Name',
-      key: 'full_name',
+      label: 'Chasis No',
+      key: 'chassis_no',
     },
     {
-      label: 'Email',
-      key: 'email',
+      label: 'Registration No',
+      key: 'registeration_no',
     },
     {
-      label: 'Phone No',
-      key: 'phone_no',
+      label: 'Engine No',
+      key: 'engine_no',
     },
     {
-      label: 'Describe',
-      key: 'discibe',
+      label: 'Manufacturing Date',
+      key: 'manufacturing_date',
     },
     {
-      label: 'Profession',
-      key: 'profession_name',
+      label: 'Sitting Capacity',
+      key: 'sitting_capacity',
     },
     {
-      label: 'Languages',
-      key: 'language_names',
+      label: 'Vehicle Class',
+      key: 'vehicle_class',
     },
     {
-      label: 'Ethnicity',
-      key: 'ethnicity_name',
+      label: 'Model Name',
+      key: 'model_name',
     },
     {
-      label: 'Service Area',
-      key: 'service_area_names',
+      label: 'Vehicle Make',
+      key: 'vehicle_make',
     },
     {
-      label: 'County',
-      key: 'country_names',
+      label: 'Purchase Date',
+      key: 'purchase_date',
     },
     {
-      label: 'Address',
-      key: 'address',
+      label: 'Registration Date',
+      key: 'registeration_date',
     },
     {
-      label: 'Internal Notes',
-      key: 'internal_notes',
+      label: 'Fuel Type',
+      key: 'fuel_type',
+    },
+    {
+      label: 'Color',
+      key: 'color',
+    },
+    {
+      label: 'Available',
+      key: 'available',
+    },
+    {
+      label: 'Registration Validity',
+      key: 'registeration_validity',
+    },
+    {
+      label: 'Remark',
+      key: 'remark',
+    },
+    {
+      label: 'Present KM',
+      key: 'present_km',
     },
   ];
 
@@ -108,11 +128,11 @@ export class ViewMedicalComponent implements OnInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    let pid = history.state.pid;
-    if (pid) this.fetchMedicalTeamData(pid);
+    this.medicalData = history.state.pid;
+    // if (pid) this.fetchMedicalTeamData(pid);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
     // if (!pid) this.router.navigate(['medical-team']);
-    console.log(history.state);
+    // console.log(history.state);
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

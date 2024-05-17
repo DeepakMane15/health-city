@@ -15,7 +15,7 @@
     </mat-card-header>
     <mat-card-content>
       <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
-        <mat-grid-tile [colspan]="columns ? 3: 2" [rowspan]="2">
+        <mat-grid-tile [colspan]="columns ? 3: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Vehicle">
               <div class="tab-header-label-container bordered">
@@ -37,7 +37,7 @@
               </div>
             </mat-tab>
             <mat-tab label="Documents">
-              <div class="company-content pd-top" *ngIf="medicalData">
+              <div class="company-content pd-top" >
                 <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of medicalDocuments">
                   <div fxFlex="40%" fxFlex.xs="100%">
                     {{data.label}}

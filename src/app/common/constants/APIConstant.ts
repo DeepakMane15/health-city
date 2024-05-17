@@ -83,6 +83,8 @@ export enum APIConstant {
 
   GET_VEHICLE = 'snm-get',
   SNM_GET = 'snm-get',
+  SNM_GET_BY_ID = 'snm-get-by-id',
+
 
   // SNM
 }

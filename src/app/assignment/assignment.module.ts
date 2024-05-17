@@ -23,9 +23,10 @@ import { ViewAssignmentComponent } from './view-assignment/view-assignment.compo
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AddInOutComponent } from './add-in-out/add-in-out.component';
 
 @NgModule({
-  declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent],
+  declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent, AddInOutComponent],
   imports: [
     CommonModule,
     AssignmentRoutingModule,

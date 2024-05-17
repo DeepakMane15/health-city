@@ -1,12 +1,54 @@
 <main>
   <div class="container">
-    <div class="register-container">
+    <!-- <div class="register-container">
       <div class="register-card">
-        <div class="register-title" style="padding-top: 15px;">
-          <h1>
+        <div class="register-title" style="padding-top: 15px;"> -->
+          <div>
+            <mat-card class="center-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <img src="https://nirankarifoundation.org/wp-content/uploads/2023/12/snmd.png" height="60" />
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+                  <span class="login-text">Login Here</span>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" class="custom-input">
+                    <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                      Email is required
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                      Password is required
+                    </mat-error>
+                  </mat-form-field>
+                  <a class="forgot-text" href="#">
+                    <mat-icon>lock</mat-icon>
+                    <span>Forgot your Password?</span>
+                  </a>
+                  <button mat-raised-button color="primary" type="submit" [disabled]="isLoggingIn" class="login-button">
+                    <span *ngIf="isLoggingIn" class="spinner-border spinner-border-sm" role="status"
+                      aria-hidden="true"></span>
+                    <span *ngIf="!isLoggingIn">Login</span>
+                  </button>
+                </form>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <!-- <h1>
             If you are Health Care Professionals,<br> join us by registering your self.
-          </h1>
-          <div class="register-button">
+          </h1> -->
+          <!-- <div class="register-button">
             <div>
               <a href="https://profmedservices.com/register" target="_blank" class="button">
                 <div>
@@ -23,8 +65,8 @@
                 <img src="/assets/images/right-arrow.png" height="15px" />
               </a>
             </div>
-          </div>
-          <div class="download-container">
+          </div> -->
+          <!-- <div class="download-container">
             <div class="download">Download Mobile Apps:</div>
             <div class="app-logo">
               <a href="https://play.google.com/store/apps/details?id=com.profmed.services&pcampaignid=web_share"
@@ -35,69 +77,26 @@
                 <img src="/assets/images/app-store.png" height="50px" />
               </a>
             </div>
-          </div>
+          </div> -->
 
-          <div class="demo-text">
+          <!-- <div class="demo-text">
             <h2>
               If you are a company:
               <a color="primary" class="anchor" href="https://profmedservices.com/contact/" target="_blank"> Click Here
                 To Get a Free.
                 Demo</a>
             </h2>
-            <!-- <div>
-            </div> -->
-          </div>
-        </div>
+          </div> -->
+        <!-- </div>
       </div>
-    </div>
-    <div>
-      <mat-card class="center-card">
-        <mat-card-header>
-          <mat-card-title>
-            <img src="/assets/images/profmed-login-logo.jpg" height="60" />
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-            <span class="login-text">Login Here</span>
-            <mat-form-field appearance="fill">
-              <mat-label>Email</mat-label>
-              <input matInput type="text" formControlName="email" class="custom-input">
-              <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                Email is required
-              </mat-error>
-            </mat-form-field>
+    </div> -->
 
-            <mat-form-field>
-              <mat-label>Enter your password</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-              <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                Password is required
-              </mat-error>
-            </mat-form-field>
-            <a class="forgot-text" href="#">
-              <mat-icon>lock</mat-icon>
-              <span>Forgot your Password?</span>
-            </a>
-            <button mat-raised-button color="primary" type="submit" [disabled]="isLoggingIn" class="login-button">
-              <span *ngIf="isLoggingIn" class="spinner-border spinner-border-sm" role="status"
-                aria-hidden="true"></span>
-              <span *ngIf="!isLoggingIn">Login</span>
-            </button>
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </div>
   </div>
   <div class="footer">
     <mat-divider></mat-divider>
 
     <div>
-      ©2024. ProfmedService. All Rights Reserved.
+      ©2024. Sant Nirankari HealthCity. All Rights Reserved.
     </div>
   </div>
 </main>

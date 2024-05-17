@@ -82,7 +82,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.CUSTOMER_USER,
         ],
         icon: '',
-        url: '/assignments',
+        url: '/driver',
         category: '',
         subItems: [],
       },
@@ -121,7 +121,7 @@ export const NavItemsContant: NavLinksModel[] = [
         subItems: [],
         category: '',
         icon: '',
-        url: ''
+        url: '/living/board'
       },
       {
         label: 'Parked Vehicles',
@@ -220,7 +220,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.PROFESSIONAL,
         ],
         icon: '',
-        url: 'medical-team',
+        url: '/medical-team/spare-parts',
         category: '',
         subItems: [],
       },

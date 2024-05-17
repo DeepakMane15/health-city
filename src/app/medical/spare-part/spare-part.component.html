@@ -1,0 +1,76 @@
+<main>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="customer-card">
+    <mat-card-header>
+      <mat-card-title>All Spare-Parts</mat-card-title>
+      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Spare-Parts</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="search">
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table  [dataSource]="filteredDataSource" class="custom-table">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <!-- Email/Phone No Column -->
+          <ng-container matColumnDef="vehicle">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Vehicle </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"
+              [matTooltip]="element.first_name + ' ' + element.last_name"> {{element.vehicle}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="driver">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Driver No </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.driver }}</td>
+          </ng-container>
+
+          <!-- Languages Column -->
+          <ng-container matColumnDef="part">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Part </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.part">
+              {{element.part}} </td>
+          </ng-container>
+
+          <!-- Service Area Column -->
+          <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Description </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.desc">
+              {{element.desc}} </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+              <div class="icon-container">
+                <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
+                <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                <mat-icon class="action-mat-icon delete-icon" (click)="handleDelete(element.pid)">delete</mat-icon>
+                <mat-icon *ngIf="element.approved === '0'" (click)="approveMedicalTeam(element.pid)"
+                  class="action-mat-icon check" matTooltip="Approve">check</mat-icon>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</main>

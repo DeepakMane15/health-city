@@ -1,6 +1,6 @@
 main {
   margin: 0;
-  background-image: url('/assets/images/login-bg.jpg');
+  background-image: url('/assets/images/login-bg.jpeg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -9,12 +9,14 @@ main {
 
 .container {
   display: flex;
-  // justify-content: space-around;
-  align-items: center;
-  height: 100vh;
-  gap: 30px;
-  padding: 0 75px;
-  /* Adjust the height as needed */
+    align-items: center;
+    height: 100vh;
+
+    gap: 30px;
+    padding: 0px 75px;
+    // width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -220,7 +222,7 @@ mat-form-field {
 
 .center-card .mat-mdc-card-header {
   justify-content: center;
-  background-color: aliceblue;
+  background-color: #2b6598;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   padding-top: 5px;

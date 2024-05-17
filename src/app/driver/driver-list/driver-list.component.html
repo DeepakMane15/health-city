@@ -4,9 +4,9 @@
   </div>
   <mat-card class="assignment-card">
     <mat-card-header>
-      <mat-card-title>All Drivers</mat-card-title>
+      <mat-card-title>All Pre-Requests</mat-card-title>
       <button mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add
-        Drivers</button>
+        Pre-Request</button>
     </mat-card-header>
     <mat-card-content>
       <div class="search">
@@ -24,26 +24,26 @@
           <!-- Transaction Column -->
           <ng-container matColumnDef="name" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Name </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.full_name}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.name}} </td>
           </ng-container>
 
           <!-- Profession Column -->
-          <ng-container matColumnDef="email" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Email </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.email}} </td>
+          <ng-container matColumnDef="address" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Address </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.address}} </td>
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="mobile" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Mobile </th>
+          <ng-container matColumnDef="pickup" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Pickup </th>
             <td mat-cell *matCellDef="let element" style="max-width: 150px;">
-              {{element.mobile_no }} </td>
+              {{element.pickup }} </td>
           </ng-container>
 
           <!-- Entry Date -->
-          <ng-container matColumnDef="address" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Address </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.address}} </td>
+          <ng-container matColumnDef="destination" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Destination </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.destination}} </td>
           </ng-container>
           <!-- Visit Date -->
 

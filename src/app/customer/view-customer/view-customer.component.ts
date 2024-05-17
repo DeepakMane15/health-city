@@ -34,60 +34,68 @@ export class ViewCustomerComponent implements OnInit {
   ];
   public companyData: any = [
     {
-      label: 'Company Name',
-      key: 'company_name',
+      label: 'Sewadar Code',
+      key: 'sewadar_code',
     },
     {
-      label: 'Company Id',
-      key: 'customer_id',
+      label: 'Name',
+      key: 'first_name',
     },
     {
-      label: 'Physical Address',
-      key: 'physical_address',
+      label: 'Type',
+      key: 'type',
     },
     {
-      label: 'Mailing Address',
-      key: 'mailing_address',
-    },
-    {
-      label: 'Email Id',
-      key: 'company_email',
-    },
-    {
-      label: 'Phone Number',
+      label: 'Phone No.',
       key: 'phone',
     },
     {
-      label: 'Fax',
-      key: 'fax',
+      label: 'DL NO',
+      key: 'dl_no',
     },
     {
-      label: 'Website',
-      key: 'website',
+      label: 'Department',
+      key: 'department',
     },
     {
-      label: 'Timezone',
-      key: 'timezone',
+      label: 'Address',
+      key: 'address',
+    },
+    {
+      label: 'Emergency Name',
+      key: 'emergency_name',
+    },
+    {
+      label: 'Emergency No',
+      key: 'emergency_no',
+    },
+    {
+      label: 'Insurance',
+      key: 'insurance',
     },
     {
       label: 'Payment Method',
       key: 'payment_method',
     },
     {
-      label: 'Payment Terms',
-      key: 'payment_terms',
+      label: 'Fuel Card Issued',
+      key: 'fuel_card_issued',
     },
     {
-      label: 'Payment Days',
-      key: 'payment_days',
+      label: 'Fuel Card No.',
+      key: 'fuel_card_no',
     },
     {
-      label: 'Notes',
-      key: 'notes',
+      label: 'Fuel Card Make',
+      key: 'fuel_card_make',
     },
     {
-      label: 'Federal Id/EIN No.',
-      key: 'federal_no',
+      label: 'Cash Eligiblity',
+      key: 'cash_eligiblity',
+    },
+    {
+      label: 'Cash Limit',
+      key: 'cash_limit',
     },
   ];
 
