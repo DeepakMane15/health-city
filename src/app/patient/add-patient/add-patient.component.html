@@ -4,38 +4,34 @@
 <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
   <div class="header-label-container">
     <div>
-      <mat-icon *ngIf="!fromPopup" class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
       <span class="title">
-        {{patientData ? 'Edit' : 'Add'}} Patient</span>
+        Add Expense</span>
     </div>
-    <button *ngIf="fromPopup" class="close-btn" mat-button (click)="closeDialog()">
-      <mat-icon>close</mat-icon>
-    </button>
   </div>
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Patient</mat-card-title>
+      <mat-card-title> </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Name</mat-label>
+            <mat-label>Vehicle No</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="name">
+              <input matInput formControlName="vehicle_no">
             </div>
-            <mat-error *ngIf="patientForm.get('name')?.invalid && patientForm.get('name')?.touched">
-              Name is required
+            <mat-error *ngIf="patientForm.get('vehicle_no')?.invalid && patientForm.get('vehicle_no')?.touched">
+              Vehicle No is required
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address">
-            <mat-error *ngIf="patientForm.get('address')?.invalid && patientForm.get('address')?.touched">
-              Address is required
+            <mat-label>Driver Name</mat-label>
+            <input matInput formControlName="driver_name">
+            <mat-error *ngIf="patientForm.get('driver_name')?.invalid && patientForm.get('driver_name')?.touched">
+              Driver Name is required
             </mat-error>
           </mat-form-field>
         </div>
@@ -44,28 +40,60 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Time Zone</mat-label>
-            <div class="uname-input">
-              <input matInput formControlName="timeZone">
-            </div>
-            <mat-error *ngIf="patientForm.get('timeZone')?.invalid && patientForm.get('timeZone')?.touched">
-              Time Zone is required
+            <mat-label>Expense For</mat-label>
+            <mat-select formControlName="expense_for">
+                <mat-option value="Petrol/Diesel
+                ash">Petrol/Diesel
+                </mat-option>
+                <mat-option value="Spare part
+                ">Spare part
+                </mat-option>
+                <mat-option value="Insurance Renewal
+                ">Insurance Renewal
+              </mat-option>
+              <mat-option value="Pollution Certificate
+                ">Pollution Certificate
+              </mat-option>
+              <mat-option value="Others
+                ">Others
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Last Reading</mat-label>
+            <input matInput formControlName="last_reading">
+          </mat-form-field>
+        </div></div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Rate</mat-label>
+            <input matInput formControlName="rate">
+            <mat-error *ngIf="patientForm.get('rate')?.invalid && patientForm.get('rate')?.touched">
+              Rate is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="amount">
+            <mat-error *ngIf="patientForm.get('amount')?.invalid && patientForm.get('amount')?.touched">
+              Amount is required
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Telephone</mat-label>
-            <input matInput formControlName="telephone">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Mobile No</mat-label>
-            <input matInput formControlName="mobile">
-            <mat-error *ngIf="patientForm.get('mobile')?.invalid && patientForm.get('mobile')?.touched">
-              Mobile No is required
-            </mat-error>
+            <mat-label>Payment Mode</mat-label>
+            <mat-select formControlName="payment_mode">
+                <mat-option value="Cash">Cash</mat-option>
+                <mat-option value="Petrol">Petrol</mat-option>
+                <mat-option value="Cheque">Cheque</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
       </div>
@@ -73,8 +101,7 @@
     </mat-card-content>
   </mat-card>
 
-  <!-- company -->
-  <mat-card class="shipping-card">
+  <!-- <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Contact Person Details</mat-card-title>
     </mat-card-header>
@@ -82,71 +109,16 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>1st Contact Person</mat-label>
-            <input matInput formControlName="cperson1">
-            <mat-error *ngIf="patientForm.get('cperson1')?.invalid && patientForm.get('cperson1')?.touched">
-              Contact person name is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="cphone1">
-            <mat-error *ngIf="patientForm.get('cphone1')?.invalid && patientForm.get('cphone1')?.touched">
-              Phone is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>2nd Contact Person</mat-label>
-            <!-- <input matInput formControlName="physical_address"> -->
-            <textarea matInput formControlName="cperson2"></textarea>
-            <mat-error *ngIf="patientForm.get('cperson2')?.invalid && patientForm.get('cperson2')?.touched">
-              Contact Person is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="cphone2">
-            <mat-error *ngIf="patientForm.get('cphone2')?.invalid && patientForm.get('cphone2')?.touched">
-              Phone is required
-            </mat-error>
+            <mat-label>Payment Mode</mat-label>
+            <mat-select formControlName="payment_mode">
+                <mat-option value="Cash">Cash</mat-option>
+                <mat-option value="Petrol">Petrol</mat-option>
+                <mat-option value="Cheque">Cheque</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
 
-  <!-- contact-info -->
-  <mat-card class="Notes">
-    <mat-card-header>
-      <mat-card-title>Notes</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Special Notes</mat-label>
-            <input matInput formControlName="specialNotes">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Internal Notes</mat-label>
-            <input matInput formControlName="internalNotes">
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions class="action-btns">
-      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </mat-card-actions>
-  </mat-card>
 </form>

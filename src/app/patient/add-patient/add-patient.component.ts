@@ -27,18 +27,13 @@ export class AddPatientComponent implements OnInit {
 
   patientForm = this.fb.group({
     id: 0,
-    customer_id: 0,
-    name: ['', Validators.required],
-    address: ['', Validators.required],
-    timeZone: ['', Validators.required],
-    telephone: '',
-    mobile: ['', Validators.required],
-    cperson1: ['', Validators.required],
-    cperson2: ['', Validators.required],
-    cphone1: ['', Validators.required],
-    cphone2: ['', Validators.required],
-    specialNotes: '',
-    internalNotes: '',
+    vehicle_no: ['', Validators.required],
+    driver_name: ['', Validators.required],
+    expense_for: ['', Validators.required],
+    last_reading: ['', Validators.required],
+    rate: '',
+    amount: ['', Validators.required],
+    payment_mode: ['', Validators.required],
   });
 
   constructor(
@@ -52,21 +47,21 @@ export class AddPatientComponent implements OnInit {
   ngOnInit(): void {
     this.getTimeZones();
     this.patientData = history.state.patientData;
-    this.patientForm.patchValue({
-      id: this.patientData.id,
-      customer_id: this.patientData.customer_id,
-      name: this.patientData.name,
-      address: this.patientData.address,
-      timeZone: this.patientData.time_zone,
-      telephone: this.patientData.telephone,
-      mobile: this.patientData.mobile,
-      cperson1: this.patientData['contactPerson1_name'],
-      cperson2: this.patientData['contactPerson2_name'],
-      cphone1: this.patientData['contactPerson1_phone'],
-      cphone2: this.patientData['contactPerson2_phone'],
-      specialNotes: this.patientData['special_notes'],
-      internalNotes: this.patientData['internal_notes'],
-    });
+    // this.patientForm.patchValue({
+    //   id: this.patientData.id,
+    //   customer_id: this.patientData.customer_id,
+    //   name: this.patientData.name,
+    //   address: this.patientData.address,
+    //   timeZone: this.patientData.time_zone,
+    //   telephone: this.patientData.telephone,
+    //   mobile: this.patientData.mobile,
+    //   cperson1: this.patientData['contactPerson1_name'],
+    //   cperson2: this.patientData['contactPerson2_name'],
+    //   cphone1: this.patientData['contactPerson1_phone'],
+    //   cphone2: this.patientData['contactPerson2_phone'],
+    //   specialNotes: this.patientData['special_notes'],
+    //   internalNotes: this.patientData['internal_notes'],
+    // });
   }
 
   onSubmit(): void {
@@ -121,16 +116,16 @@ export class AddPatientComponent implements OnInit {
     }
 
     // Update form control value and validate
-    if (field === 'phone')
-      this.patientForm.patchValue(
-        { mobile: enteredValue },
-        { emitEvent: false }
-      );
-    else if (field === 'telephone')
-      this.patientForm.patchValue(
-        { telephone: enteredValue },
-        { emitEvent: false }
-      );
+    // if (field === 'phone')
+    //   this.patientForm.patchValue(
+    //     { mobile: enteredValue },
+    //     { emitEvent: false }
+    //   );
+    // else if (field === 'telephone')
+    //   this.patientForm.patchValue(
+    //     { telephone: enteredValue },
+    //     { emitEvent: false }
+    //   );
 
     this.patientForm.get(field)?.markAsTouched(); // Mark phone as touched
   }

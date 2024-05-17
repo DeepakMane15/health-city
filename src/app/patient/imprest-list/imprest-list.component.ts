@@ -13,10 +13,20 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 @Component({
   selector: 'app-imprest-list',
   templateUrl: './imprest-list.component.html',
-  styleUrl: './imprest-list.component.scss'
+  styleUrl: './imprest-list.component.scss',
 })
 export class ImprestListComponent {
-  displayedColumns: string[] = ['id', 'cash', 'reason', 'amount','Action'];
+  displayedColumns: string[] = [
+    'id',
+    'vehicle',
+    'driver',
+    'expense',
+    'last',
+    'rate',
+    'amount',
+    'payment',
+    'Action',
+  ];
 
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
@@ -50,7 +60,7 @@ export class ImprestListComponent {
     this.showSpinner = true;
     const fd = new FormData();
     fd.append('type', '4');
-    this._apiService.post(APIConstant.SNM_GET,fd).subscribe(
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
