@@ -1,0 +1,79 @@
+main {
+  margin: 10px;
+
+  .customer-card {
+    padding: 10px;
+    background-color: #e9ecf2;
+
+    mat-card-header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    mat-card-content {
+      padding-top: 20px;
+
+      .search {
+        display: flex;
+        justify-content: end;
+        padding-bottom: 10px;
+        height: 25px;
+
+        .custom-input {
+          width: 260px;
+          border: 1px solid rgb(209, 209, 209);
+          border-radius: 4px;
+          padding: 10px;
+        }
+
+        .custom-input:focus {
+          border: 1px solid solid rgb(109 126 170);
+          outline: none;
+        }
+
+      }
+
+      table {
+        width: 100%;
+
+        .mat-mdc-header-cell {
+          background-color: #36404e;
+        }
+
+        .mdc-data-table__header-cell {
+          color: #fff;
+        }
+
+        tr {
+          height: 45px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #e9ecf2;
+          /* Set your desired color for even cells */
+        }
+
+        tr:nth-child(odd) {
+          background-color: #f9f9f9;
+          /* Set your desired color for odd rows */
+        }
+
+        .icon-container {
+          display: flex;
+
+        }
+      }
+    }
+  }
+}
+
+// .mat-table {
+//   width: 100%; /* Ensure table takes full width */
+// }
+
+// .mat-cell, .mat-header-cell {
+//   max-width: 100px; /* Adjust the max-width as needed */
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }

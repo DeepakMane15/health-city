@@ -1,0 +1,74 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="medical-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div class="tab-header-label-container">
+          <div class="title">Living Details</div>
+          <button mat-raised-button (click)="navigateBack()">
+            <mat-icon class="action-mat-icon" aria-label="back">keyboard_backspace</mat-icon>
+            Back
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="550" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+          <div class="company-content" *ngIf="livingData">
+            <div fxLayout="row" class="content" fxLayoutAlign="start center"
+              *ngFor="let data of medicalProfile; let i=index" [ngClass]="i % 2 === 0 ? '' : 'colored-cell'">
+              <div fxFlex="40%" fxFlex.xs="100%">
+                {{data.label}}
+              </div>
+              <div style="width: 40px; text-align: center;">
+                :
+              </div>
+              <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                <div class="multiline">{{ getValue(data) }}</div>
+              </div>
+            </div>
+            <span class="room-title">Rooms</span>
+            <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of roomData; let i=index"
+              [ngClass]="i % 2 === 0 ? '' : 'colored-cell'">
+              <div fxFlex="40%" fxFlex.xs="100%">
+                {{data.type}}
+              </div>
+              <div style="width: 40px; text-align: center;">
+                :
+              </div>
+              <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                <div class="multiline">{{ data.amenity }}</div>
+              </div>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
+          <div class="right-panel">
+            <div class="img-container">
+              <div class="image">
+                <div [ngClass]="{'image-border' : !livingData?.avatar }">
+                  <img [src]="livingData?.avatar || appConstants.DEFAULT_IMG " />
+                </div>
+              </div>
+              <div class="img-name">{{getName()}}</div>
+              <div class="container">
+                <a class="button" *ngIf=" livingData['is_booked'] === '0'" (click)="book()">Book</a>
+                <span *ngIf="livingData['is_booked'] === '1'">Booked</span>
+                <!-- <a *ngIf=" livingData['is_paid'] === '0'" (click)="openDialog()" class="button">Pay</a>
+                <a *ngIf=" livingData['is_paid'] === '1' && livingData['request_exists'] === '0'" (click)="sendInvitation()" class="button">Send Invite</a>
+                <span *ngIf="livingData['request_exists'] === '1' && livingData['is_own_team'] === '0'">Invitation Sent</span>
+                <span *ngIf="livingData['is_own_team'] === '1'">Owned</span> -->
+              </div>
+            </div>
+            <div>
+              <iframe width="100%" height="450" frameborder="0" style="border:0" [src]="mapUrl"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

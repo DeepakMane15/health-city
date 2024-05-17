@@ -1,0 +1,85 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="patient-card">
+    <mat-card-header>
+      <mat-card-title>
+        <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
+        <div class="tab-header-label-container">
+          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+          <span>Patient- Details</span>
+        </div>
+      </mat-card-title>
+      <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+          <mat-tab-group [selectedIndex]="defaultTabIndex">
+            <mat-tab label="Personal Detail">
+              <div class="tab-header-label-container bordered">
+                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+                <span>Edit</span>
+              </div>
+              <div class="company-content" *ngIf="patientData">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of patientProfile">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{patientData[data.key] || ''}}
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Contacts">
+              <div class="company-content pd-top" *ngIf="patientData">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center">
+                  <div fxFlex="33%" fxFlex.xs="100%">
+
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    Name
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    Contact No.
+                  </div>
+                </div>
+                <div fxLayout="row" class="content" fxLayoutAlign="start center">
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    Contact Person 1
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    {{patientData.contactPerson1_name}}
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    {{patientData.contactPerson1_phone}}
+                  </div>
+                </div>
+                <div fxLayout="row" class="content" fxLayoutAlign="start center">
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    Contact Person 2
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    {{patientData.contactPerson2_name}}
+                  </div>
+                  <div fxFlex="33%" fxFlex.xs="100%">
+                    {{patientData.contactPerson2_phone}}
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
+          <iframe width="600" height="450" frameborder="0" style="border:0" [src]="getMapUrl()"
+            allowfullscreen></iframe>
+
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

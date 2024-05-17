@@ -1,0 +1,125 @@
+<ng-container *ngIf="checkIsValid(); else unauthorized">
+  <mat-sidenav-container class="sidenav-container" *ngIf="authService.showHeader">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <mat-toolbar class="toolbar">
+        <img style="margin-left: 10px;" src="https://nirankarifoundation.org/wp-content/uploads/2023/12/snmd.png" height="50px">
+      </mat-toolbar>
+      <mat-nav-list>
+        <span class="pl-2">NAVIGATION</span>
+        <mat-tree [dataSource]="authService.dataSource" [treeControl]="authService.treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)"
+            (click)="onNodeClicked(node)">
+            <button mat-icon-button disabled></button>
+            <div class="icon-label-container">
+              <mat-icon>{{node.icon}}</mat-icon>
+              <span>{{ node.label }}</span>
+            </div>
+          </mat-tree-node>
+
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild"
+            matTreeNodePadding (click)="authService.toggleNode(node)">
+            <div class="item-label">
+              <div class="icon-label-container">
+                <mat-icon>{{node.icon}}</mat-icon>
+                <span>{{ node.label }}</span>
+              </div>
+              <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+            </div>
+
+          </mat-tree-node>
+        </mat-tree>
+
+        <mat-tree class="secondary-section" [dataSource]="authService.dataSource1"
+          [treeControl]="authService.treeControl">
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="authService.toggleNode(node)"
+            (click)="onNodeClicked(node)">
+            <button mat-icon-button disabled></button>
+            <div class="icon-label-container">
+              <mat-icon>{{node.icon}}</mat-icon>
+              <span>{{ node.label }}</span>
+            </div>
+          </mat-tree-node>
+          <mat-tree-node class="mat-tree-sub-node" *matTreeNodeDef="let node;when: authService.hasChild"
+            matTreeNodePadding (click)="authService.toggleNode(node)">
+            <div class="item-label">
+              <div class="icon-label-container">
+                <mat-icon>{{node.icon}}</mat-icon>
+                <span>{{ node.label }}</span>
+              </div>
+              <button mat-icon-button [attr.aria-label]="'Toggle ' + node.label">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{authService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+            </div>
+
+          </mat-tree-node>
+        </mat-tree>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div class="navbar-title">
+          <span class="text-title">{{userProfile.type}} |</span>
+          <span>Workshop & Transport</span>
+        </div>
+        <div class="profile-pic-dropdown" [matMenuTriggerFor]="menu">
+          <a class="profile-icon"> <img
+              [src]="userProfile.avatar ? imgUrl+userProfile.avatar : 'https://app.teamedserv.com/assets/admin/images/users/avatar-1.jpg'"
+              alt="user-img" class="img-circle user-img"></a>
+          <mat-menu #menu="matMenu" class="custom-menu">
+            <span class="profile-text">Hello Deepak!</span>
+            <button mat-menu-item (click)="openResetPopUp()">
+              <mat-icon>lock</mat-icon>
+              <span>Reset Password</span>
+            </button>
+            <button mat-menu-item (click)="uploadPicture()">
+              <mat-icon>image</mat-icon>
+              <span>Upload Profile Picture</span>
+            </button>
+            <button mat-menu-item (click)="opendashboard()">
+              <mat-icon>dashboard</mat-icon>
+              <span>Professional's Dashboard</span>
+            </button>
+            <button mat-menu-item (click)="openDocument()">
+              <mat-icon>description</mat-icon>
+              <span>Documents</span>
+            </button>
+            <!-- dynamic option  -->
+            <button mat-menu-item *ngIf="canAccessCompany()">
+              <mat-icon>person</mat-icon>
+              <span>Company</span>
+            </button>
+            <button mat-menu-item *ngIf="canAccessAccount()">
+              <mat-icon>account_circle</mat-icon>
+              <span>Accounts</span>
+            </button>
+            <button mat-menu-item (click)="handleLogOut()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+      <!-- <div class="spinner-container" *ngIf="showSpinner">
+        <mat-spinner  diameter="50"></mat-spinner>
+      </div> -->
+
+      <router-outlet></router-outlet>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <app-team-invitation *ngIf="!authService.showHeader"></app-team-invitation>
+</ng-container>
+
+<ng-template #unauthorized>
+  <app-auth></app-auth>
+</ng-template>

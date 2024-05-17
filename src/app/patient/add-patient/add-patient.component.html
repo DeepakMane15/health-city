@@ -1,0 +1,152 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <div>
+      <mat-icon *ngIf="!fromPopup" class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+      <span class="title">
+        {{patientData ? 'Edit' : 'Add'}} Patient</span>
+    </div>
+    <button *ngIf="fromPopup" class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Patient</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="name">
+            </div>
+            <mat-error *ngIf="patientForm.get('name')?.invalid && patientForm.get('name')?.touched">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="patientForm.get('address')?.invalid && patientForm.get('address')?.touched">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Time Zone</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="timeZone">
+            </div>
+            <mat-error *ngIf="patientForm.get('timeZone')?.invalid && patientForm.get('timeZone')?.touched">
+              Time Zone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Telephone</mat-label>
+            <input matInput formControlName="telephone">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Mobile No</mat-label>
+            <input matInput formControlName="mobile">
+            <mat-error *ngIf="patientForm.get('mobile')?.invalid && patientForm.get('mobile')?.touched">
+              Mobile No is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <!-- company -->
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Contact Person Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>1st Contact Person</mat-label>
+            <input matInput formControlName="cperson1">
+            <mat-error *ngIf="patientForm.get('cperson1')?.invalid && patientForm.get('cperson1')?.touched">
+              Contact person name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="cphone1">
+            <mat-error *ngIf="patientForm.get('cphone1')?.invalid && patientForm.get('cphone1')?.touched">
+              Phone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>2nd Contact Person</mat-label>
+            <!-- <input matInput formControlName="physical_address"> -->
+            <textarea matInput formControlName="cperson2"></textarea>
+            <mat-error *ngIf="patientForm.get('cperson2')?.invalid && patientForm.get('cperson2')?.touched">
+              Contact Person is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="cphone2">
+            <mat-error *ngIf="patientForm.get('cphone2')?.invalid && patientForm.get('cphone2')?.touched">
+              Phone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- contact-info -->
+  <mat-card class="Notes">
+    <mat-card-header>
+      <mat-card-title>Notes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Special Notes</mat-label>
+            <input matInput formControlName="specialNotes">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Internal Notes</mat-label>
+            <input matInput formControlName="internalNotes">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,102 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="customer-card">
+    <mat-card-header>
+      <mat-card-title>
+        <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
+        <div class="tab-header-label-container">
+          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+          <span>Driver/Sewadar Details</span>
+        </div>
+      </mat-card-title>
+      <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+          <mat-tab-group [selectedIndex]="defaultTabIndex">
+            <mat-tab label="Profile">
+              <div class="tab-header-label-container bordered">
+                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+                <span>Edit</span>
+              </div>
+              <div class="company-content">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of companyData">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{customerData[data.key]}}
+
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Payments">
+              <div class="users-content">
+                <div class="user-action">
+                  <button mat-raised-button color="primary" type="button" (click)="navigateToAddUser()">Add
+                    Users</button>
+                  <div class="search">
+                    <input type="text"  class="custom-input" placeholder="Search">
+                  </div>
+                </div>
+                <table mat-table [dataSource]="userData">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="User name">
+                    <th mat-header-cell *matHeaderCellDef> Username </th>
+                    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="Type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.user_type}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Branch">
+                    <th mat-header-cell *matHeaderCellDef> Branch </th>
+                    <td mat-cell *matCellDef="let element"> Headquaters </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                      <mat-icon class="action-mat-icon" (click)="editUser()">edit</mat-icon>
+                      <!-- <mat-icon class="action-mat-icon">remove_red_eye</mat-icon> -->
+                      <mat-icon class="action-mat-icon" *ngIf="canDeleteUser(element.user_type)" (click)="deleteUser(element.id)"class="delete-icon">delete</mat-icon>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+              </mat-paginator>
+            </mat-tab>
+            <mat-tab label="Vehicle Details"> Vehicle Details </mat-tab>
+            <mat-tab label="Travel History"> Travel History </mat-tab>
+          </mat-tab-group>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
+          <iframe width="600" height="450" frameborder="0" style="border:0"
+            [src]="getMapUrl(customerData?.physical_address)" allowfullscreen></iframe>
+
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

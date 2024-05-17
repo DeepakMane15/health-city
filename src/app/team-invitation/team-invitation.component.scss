@@ -1,0 +1,31 @@
+.agreement {
+  // margin: 20px 200px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(189, 185, 185);
+  margin: 20px 13%;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .img {
+      border: 1px solid #efefef;
+    }
+  }
+}
+
+.action-btns {
+  padding-bottom: 20px;
+  padding-top: 10px;
+  gap: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 400px) {
+  .agreement {
+    margin: 20px 1%;
+  }
+}

@@ -1,0 +1,9 @@
+.header-label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  mat-icon {
+    border: none !important;
+  }
+}

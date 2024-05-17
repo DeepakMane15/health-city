@@ -1,0 +1,7 @@
+<!-- <p>add-form-popup works!</p> -->
+<main>
+  <app-add-patient *ngIf="data.component === addPopupComponent.PATIENT" [fromPopup]="true"
+    (formSubmitted)="closeDialog()"></app-add-patient>
+  <app-add-driver *ngIf="data.component === addPopupComponent.FLEET" [fromPopup]="true"
+    (formSubmitted)="closeDialog()"></app-add-driver>
+</main>

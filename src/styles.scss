@@ -1,0 +1,361 @@
+@use '@angular/material'as mat;
+/* You can add global styles to this file, and also import other style files */
+@import '~@mdi/font/css/materialdesignicons.min.css';
+@import "~leaflet/dist/leaflet.css";
+
+
+
+/* styles.css or custom CSS file */
+@font-face {
+  font-family: 'HindMadurai';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/HindMadurai-Regular.ttf') format('truetype'),
+    /* Adjust font file path */
+    url('./assets/fonts/HindMadurai-SemiBold.ttf') format('truetype'),
+    url('./assets/fonts/HindMadurai-Bold.ttf') format('truetype'),
+    url('./assets/fonts/HindMadurai-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "HindMadurai-Light";
+  font-style: normal;
+  font-display: auto;
+  src: url("./assets/fonts/HindMadurai-Light.ttf")format('truetype');
+}
+
+@font-face {
+  font-family: "HindMadurai-Bold";
+  font-style: normal;
+  font-display: auto;
+  src: url("./assets/fonts/HindMadurai-Bold.ttf")format('truetype');
+}
+
+@font-face {
+  font-family: "HindMadurai-Regular";
+  font-style: normal;
+  font-display: auto;
+  src: url("./assets/fonts/HindMadurai-Regular.ttf")format('truetype');
+}
+
+@font-face {
+  font-family: "HindMadurai-SemiBold";
+  font-style: normal;
+  font-display: auto;
+  src: url("./assets/fonts/HindMadurai-SemiBold.ttf")format('truetype');
+}
+
+$my-custom-level: mat.define-typography-level($font-family: 'HindMadurai',
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Hind Madurai', sans-serif !important;
+}
+
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Hind Madurai', sans-serif !important; // Override with Hind Madurai font
+}
+
+main {
+  margin: 10px;
+}
+
+.uname-input {
+  display: flex;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent overlay */
+}
+
+.action-mat-icon {
+  color: #0c2e43;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1.25rem;
+  /* Adjust size as needed */
+  height: 1.25rem;
+  /* Adjust size as needed */
+  vertical-align: text-bottom;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  /* Spinner border color */
+  border-radius: 50%;
+  border-top-color: #fff;
+  /* Spinner color */
+  animation: spinner-border 0.75s linear infinite;
+}
+
+/* Animation for the spinner */
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+form {
+  padding: 10px;
+
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+    font-family: 'HindMadurai-SemiBold';
+    letter-spacing: .0125em;
+  }
+}
+
+mat-card {
+  border-top: 2px solid blue;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.action-btns {
+  justify-content: end;
+  gap: 10px;
+
+  .cancel-btn {
+    background-color: #949292 !important;
+  }
+}
+
+.icon-button {
+  height: 34px;
+  width: 34px;
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #3c8dbc !important;
+}
+
+.card-top {
+  border-top: 2px solid #3c8dbc;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+  font-family: 'HindMadurai-SemiBold';
+  letter-spacing: .0125em;
+}
+
+.align-base {
+  align-items: baseline;
+}
+
+.file-input {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #dadee5;
+  // width: 80%;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 506px;
+
+  .label-container {
+
+    display: flex;
+    align-items: center;
+    background: #f0e9e9;
+    border-radius: 4px;
+    min-width: 106px;
+
+    .label-section {
+      padding: 5px 15px;
+    }
+  }
+
+  .name-section {
+    padding: 5px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.file-input:focus {
+  border-color: #3c8dbc;
+}
+
+.text-sb {}
+
+.help-text {
+  font-size: 12px;
+  color: #444;
+  font-family: 'HindMadurai-Regular';
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  line-height: 16px;
+  /* font-family: 'HindMadurai-SemiBold'; */
+  text-align: end;
+  display: block;
+}
+
+.file-error {
+  border-color: red;
+}
+
+.action-mat-icon {
+  font-size: 20px;
+}
+
+.header-label-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.header-label-container mat-icon {
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
+  color: #36404e;
+  border: 1px solid gray;
+  padding: 5px 0 0 5px;
+  border-radius: 50%;
+}
+
+.tab-header-label-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.tab-header-label-container mat-icon {
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
+  color: #33749b;
+}
+
+.mat-mdc-raised-button {
+  background-color: #3c8dbc !important;
+  // color: #fff;
+}
+
+a {
+  color: #030384;
+  text-decoration: none;
+}
+
+.d-flex-sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.mat-mdc-raised-button {
+  background-color: #3c8dbc !important;
+  color: #ffffff !important;
+  height: 34px !important;
+  box-shadow: none;
+  border-radius: 7px !important;
+}
+
+.secondary-btn {
+  background: #ffff !important;
+  border: 1px solid #c5c5c5 !important;
+  border-radius: 7px !important;
+  height: 36px !important;
+  box-shadow: none !important;
+  color: black !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  // border: 1px solid red !important;
+  height: 52px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #fff !important;
+}
+
+.mat-mdc-form-field-error {
+  font-weight: 500;
+}
+
+// .mdc-text-field--filled :hover {
+//   background-color: #fff !important;
+// }
+
+//  .mat-mdc-input-element  {
+//   background-color: #fff !important;
+// }
+//  .mat-mdc-input-element:focus  {
+//   background-color: #fff !important;
+// }
+
+.green {
+  background-color: #82ff82;
+}
+
+.delete-icon {
+  color: #ef2727;
+}

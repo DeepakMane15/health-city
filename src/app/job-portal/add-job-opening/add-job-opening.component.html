@@ -1,0 +1,106 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="jobPortalForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      {{jobData ? 'Edit' : 'Add'}} Job Opening</span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Job Opening</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Title</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="title">
+            </div>
+            <mat-error *ngIf="jobPortalForm.get('title')?.invalid && jobPortalForm.get('title')?.touched">
+              Title is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width description">
+            <mat-label>Description</mat-label>
+            <!-- <input matInput formControlName="description"> -->
+            <textarea matInput formControlName="description"></textarea>
+            <mat-error *ngIf="jobPortalForm.get('description')?.invalid && jobPortalForm.get('description')?.touched">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Profession</mat-label>
+            <div class="uname-input">
+              <mat-select formControlName="profession" multiple>
+                <mat-option *ngFor="let profession of fieldData?.profession"
+                  [value]="profession.prid">{{profession.title}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="jobPortalForm.get('profession')?.invalid && jobPortalForm.get('profession')?.touched">
+                Profession is required
+              </mat-error>
+            </div>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Languages</mat-label>
+            <div class="uname-input">
+              <mat-select formControlName="language" multiple>
+                <mat-option *ngFor="let languages of fieldData?.languages"
+                  [value]="languages.lid">{{languages.title}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="jobPortalForm.get('language')?.invalid && jobPortalForm.get('language')?.touched">
+                Language is required
+              </mat-error>
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Service Area</mat-label>
+            <div class="uname-input">
+              <mat-select formControlName="service_area" multiple>
+                <mat-option *ngFor="let service of fieldData?.serviceArea"
+                  [value]="service.said">{{service.service_area_title}}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="jobPortalForm.get('service_area')?.invalid && jobPortalForm.get('service_area')?.touched">
+                Service Area is required
+              </mat-error>
+            </div>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>County</mat-label>
+            <mat-select formControlName="county" multiple>
+              <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="jobPortalForm.get('county')?.invalid && jobPortalForm.get('county')?.touched">
+              County is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

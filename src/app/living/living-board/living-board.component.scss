@@ -1,0 +1,69 @@
+agm-map {
+  height: 300px;
+}
+
+mat-card {
+  margin: 20px 24px;
+
+  mat-card-header {
+    justify-content: space-between;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+
+    button {
+      width: 150px;
+      background-color: #ffffff;
+      color: #252525;
+    }
+
+    .btn-active {
+      // background-color: #3c8dbc;
+      // color: #ffffff;
+    }
+  }
+
+  .actions {
+    display: flex;
+    margin-top: 10px;
+    gap: 15px;
+
+    .searchInput {
+      width: 500px;
+      border-radius: 20px;
+      border: 1px solid #656d7c;
+      padding: 0 15px
+    }
+
+    .searchInput:focus-visible {
+      border: 1px solid #2167a8;
+      outline: none;
+
+    }
+    .btn-active {
+      border-radius: 50px;
+
+    }
+  }
+
+}
+
+.title {
+  padding: 24px;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  font-size: 15px !important;
+  width: 190px !important;
+}
+
+::ng-deep .dropdown-list{
+  font-size: 15px !important;
+  width: 230px !important;
+
+  ul {
+    overflow: hidden !important;
+  }
+}

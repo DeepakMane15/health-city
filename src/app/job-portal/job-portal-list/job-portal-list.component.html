@@ -1,0 +1,92 @@
+<main>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="assignment-card">
+    <mat-card-header>
+      <mat-card-title>All Job Openings</mat-card-title>
+      <button mat-raised-button class="add-assignment" color="primary" type="button" (click)="navigateToAdd()">Add
+        Job Opening</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="search">
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="filteredDataSource" class="custom-table">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="no" class="container-tab">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="max-width: 150px;"> No </th>
+            <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <!-- Transaction Column -->
+          <ng-container matColumnDef="title" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Title </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.title}} </td>
+          </ng-container>
+
+          <!-- Profession Column -->
+          <ng-container matColumnDef="description" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Description </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.description}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="profession" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Profession </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+              {{element.profession }} </td>
+          </ng-container>
+
+          <!-- Entry Date -->
+          <ng-container matColumnDef="applicants" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Applicants </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.no_of_applicants}} </td>
+          </ng-container>
+          <!-- Visit Date -->
+
+          <!-- Status  -->
+          <ng-container matColumnDef="status" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Status</th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.is_active}} </td>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+              <div class="icon-container">
+                <button class="icon-button" *ngIf="!isMedical">
+                  <mat-icon class="action-mat-icon" matTooltip="edit" (click)="navigateToEdit(element)">edit</mat-icon>
+                </button>
+                <button class="icon-button">
+                  <mat-icon class="action-mat-icon" matTooltip="view" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                </button>
+                <button class="icon-button" *ngIf="isMedical">
+                  <mat-icon class="action-mat-icon" matTooltip="Apply" (click)="applyJob(element.id)">check_box</mat-icon>
+                </button>
+                <button class="icon-button" *ngIf="!isMedical">
+                  <mat-icon class="action-mat-icon" matTooltip="delete"
+                    (click)="handleDelete(element.id)"class="delete-icon">delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</main>

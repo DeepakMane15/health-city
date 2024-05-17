@@ -1,0 +1,88 @@
+<main>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="customer-card">
+    <mat-card-header>
+      <mat-card-title>All Driver/Sewadar</mat-card-title>
+      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Driver/Sewadar</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="search">
+        <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
+      </div>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="filteredDataSource">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Code">
+            <th mat-header-cell *matHeaderCellDef> Sewadar Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.sewadar_code}} </td>
+          </ng-container>
+
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.first_name + " " + element.last_name}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="Phone">
+            <th mat-header-cell *matHeaderCellDef> Phone </th>
+            <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <!-- <ng-container matColumnDef="Time Zone">
+            <th mat-header-cell *matHeaderCellDef> Time Zone </th>
+            <td mat-cell *matCellDef="let element"> {{element.time_zone}} </td>
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.company_email}} </td>
+          </ng-container> -->
+
+          <ng-container matColumnDef="Sewa Type">
+            <th mat-header-cell *matHeaderCellDef> Sewa Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Department">
+            <th mat-header-cell *matHeaderCellDef> Department </th>
+            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
+              <mat-icon class="action-mat-icon"(click)="navigateToView(element)">remove_red_eye</mat-icon>
+              <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)"class="delete-icon">delete</mat-icon>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+</main>

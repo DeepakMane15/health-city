@@ -1,0 +1,18 @@
+.title-container {
+  display: flex;
+  justify-content: space-between;
+
+  .close-btn {
+    height: 24px;
+    width: 24px;
+
+    mat-icon {
+      font-size: 21px;
+    }
+  }
+}
+.action {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,28 @@
+<main style="padding: 16px;">
+  <div class="title-container">
+    <h1>Upload Profile Picture</h1>
+    <button class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div>
+      <!-- <mat-form-field class="full-width">
+        <input matInput formControlName="password" placeholder="New Password" type="password" autocomplete="false">
+      </mat-form-field> -->
+      <input id="fileInput" hidden #resumeInput type="file" (change)="onFileSelected($event)">
+      <div class="file-input" (click)="resumeInput.click()">
+        <div class="label-container">
+          <div class="label-section">Choose file</div>
+        </div>
+        <div class="name-section">{{this.profileForm.get('photo')?.value?.name || 'No file chosen'}}</div>
+      </div>
+      <span class="error-text">{{photoError}}</span>
+
+    </div>
+    <div class="action">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</main>

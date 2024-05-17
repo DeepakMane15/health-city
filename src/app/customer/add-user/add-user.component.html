@@ -1,0 +1,104 @@
+<main>
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <span class="title">Add User</span>
+    <mat-divider></mat-divider>
+    <div class="card-container">
+      <mat-card class="user-card">
+        <mat-card-header>
+          <mat-card-title>Add User</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Username</mat-label>
+                <div class="uname-input">
+                  <input matInput formControlName="username" (change)="checkUsernameAvailable($event)" [disabled]="true">
+                  <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+                </div>
+                <mat-error *ngIf="userForm.get('username')?.hasError('email') && userForm.get('username')?.touched">
+                  Username is invalid
+                </mat-error>
+                <mat-hint *ngIf="!isUnameAvailable"
+                  class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-tns-c19-25 ng-star-inserted">
+                  Username is not available
+                </mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="first_name">
+                <mat-error *ngIf="userForm.get('first_name')?.invalid && userForm.get('first_name')?.touched">
+                  First Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="last_name">
+                <mat-error *ngIf="userForm.get('last_name')?.invalid && userForm.get('last_name')?.touched">
+                  Last Name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>Middle Name</mat-label>
+                <input matInput formControlName="middle_name">
+                <mat-error *ngIf="userForm.get('middle_name')?.invalid && userForm.get('middle_name')?.touched">
+                  Middle Name is required
+                </mat-error>
+              </mat-form-field>
+            </div> -->
+          </div>
+
+          <div class="row">
+
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-label>User Role</mat-label>
+                <mat-select formControlName="user_role">
+                  <mat-option *ngFor="let role of userRoles" [value]="role.id">{{role.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForm.get('user_role')?.invalid && userForm.get('user_role')?.touched">
+                  User Role is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password">
+              <mat-error *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+                Password is required
+              </mat-error>
+            </mat-form-field>
+            <mat-radio-group aria-label="Password option" (change)="handlePasswordCreation($event)">
+              <mat-radio-button class="label-text" value="1" checked>Let me create the password</mat-radio-button>
+              <mat-radio-button class="label-text" value="2">Auto-Generated password</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <mat-checkbox formControlName="force_password_change"
+            (change)="handleForcePasswordChange($event.checked)">Make the user change their password when they first
+            Signin</mat-checkbox>
+        </mat-card-content>
+        <mat-card-actions class="action-btns">
+
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>
+        </mat-card-actions>'
+      </mat-card>
+    </div>
+  </form>
+</main>

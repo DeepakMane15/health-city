@@ -1,0 +1,121 @@
+<main class="view">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <mat-card class="patient-card">
+    <mat-card-header>
+      <mat-card-title>
+        <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
+        <div class="tab-header-label-container">
+          <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+          <span>Job-Opening- Details </span>
+        </div>
+      </mat-card-title>
+      <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
+    </mat-card-header>
+    <mat-card-content>
+      <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
+        <mat-grid-tile [colspan]="columns ? (isMedical ? 2 : 3 ): 1" [rowspan]="1">
+          <mat-tab-group [selectedIndex]="defaultTabIndex">
+            <mat-tab label="Detail">
+              <div class="tab-header-label-container bordered">
+                <mat-icon class="action-mat-icon colored" aria-label="back" (click)="navigateToEdit()">edit</mat-icon>
+                <span>Edit</span>
+              </div>
+              <div class="company-content" *ngIf="patientData">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of patientProfile">
+                  <div fxFlex="40%" fxFlex.xs="100%">
+                    {{data.label}}
+                  </div>
+                  <div style="width: 40px; text-align: center;">
+                    :
+                  </div>
+                  <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
+                    {{patientData[data.key] || ''}}
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Applicants" *ngIf="!isMedical">
+
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" class="custom-table">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="no" class="container-tab">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef style="max-width: 150px;"> No </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+
+                  <!-- Transaction Column -->
+                  <ng-container matColumnDef="name" class="container-tab">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Name </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.first_name + " " + element.last_name}} </td>
+                  </ng-container>
+
+                  <!-- Profession Column -->
+                  <ng-container matColumnDef="profession" class="container-tab">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Profession </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.profession_name}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="language" class="container-tab">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Languages </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+                      {{element.language_names }} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="ethnicity" class="container-tab">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Ethnicity </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+                      {{element.ethnicity_name }} </td>
+                  </ng-container>
+
+
+                  <!-- Action Column -->
+                  <!-- <ng-container matColumnDef="action" class="container-tab">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;">
+                      <div class="icon-container">
+                        <button class="icon-button" *ngIf="!isMedical">
+                          <mat-icon class="action-mat-icon" matTooltip="edit" (click)="navigateToEdit(element)">edit</mat-icon>
+                        </button>
+                        <button class="icon-button">
+                          <mat-icon class="action-mat-icon" matTooltip="view" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                        </button>
+                        <button class="icon-button" *ngIf="isMedical">
+                          <mat-icon class="action-mat-icon" matTooltip="Apply" (click)="applyJob(element.id)">check_box</mat-icon>
+                        </button>
+                        <button class="icon-button" *ngIf="!isMedical">
+                          <mat-icon class="action-mat-icon" matTooltip="delete"
+                            (click)="handleDeleteAssignment(element.customer_id)"class="delete-icon">delete</mat-icon>
+                        </button>
+                      </div>
+                    </td>
+                  </ng-container> -->
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
+                  </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="isMedical" [colspan]="1" class="apply" rowHeight="200" [rowspan]="1">
+          <div class="content">
+            <div class="content-text">
+              Apply from here
+            </div>
+            <button class="button" (click)="applyJob()" mat-raised-button>Apply</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>

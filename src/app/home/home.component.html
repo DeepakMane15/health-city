@@ -1,0 +1,53 @@
+<div class="grid-container">
+  <span class="mat-h1">Dashboard</span>
+  <mat-divider></mat-divider>
+  <mat-grid-list [cols]="columns ? 4 : 2" rowHeight="140px" *ngIf="cards && cards.length">
+    <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div class="card-content-text">
+            <span>2</span>
+            <mat-icon>arrow_upward</mat-icon>
+          </div>
+          <div>
+            <i [class]="card.icon"></i>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <mat-grid-list [cols]="columns ? 2 : 1" *ngIf="cards && cards.length">
+    <mat-grid-tile class="set2-grid" *ngFor="let card of cardsSet2" [colspan]="card.cols" rowspan="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div class="table-container">
+            <div class="table-row table-header">
+              <div class="table-cell">Username</div>
+              <div class="table-cell">Phone</div>
+              <div class="table-cell">Locaton</div>
+              <div class="table-cell">Date</div>
+            </div>
+            <div class="table-row" >
+              <div class="table-cell">John Doe</div>
+              <div class="table-cell">9999888898</div>
+              <div class="table-cell">USA</div>
+              <div class="table-cell">01-01-2023</div>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

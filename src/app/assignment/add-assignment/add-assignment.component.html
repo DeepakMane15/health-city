@@ -1,0 +1,264 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      Assignment</span>
+  </div>
+
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{assignmentData ? 'Edit' : 'Add'}} Assignment
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Company -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Company
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Medical Member'" [settings]="medSettings"
+                  [data]="medicalTeams" formControlName="medicalId" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Medical Profession</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="medicalProfession" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Assignment -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Assignment
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
+                  [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Transaction</mat-label>
+                    <div class="uname-input">
+                      <input matInput value="TR1213">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label> Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="assignmentForm.get('date')?.invalid && assignmentForm.get('date')?.touched">
+                      Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Amount</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="amount">
+                    </div>
+                    <mat-error *ngIf="assignmentForm.get('amount')?.invalid && assignmentForm.get('amount')?.touched">
+                      Amount is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label> Payment Date</mat-label>
+                    <input matInput [matDatepicker]="paymentDate" formControlName="paymentDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="paymentDate"></mat-datepicker-toggle>
+                    <mat-datepicker #paymentDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="assignmentForm.get('paymentDate')?.invalid && assignmentForm.get('paymentDate')?.touched">
+                      Payment Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Patient -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Patient
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
+                  [data]="patientsMaster" formControlName="patientId" (onSelect)="handlePatientSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                  <mat-error
+                    *ngIf="assignmentForm.get('patientId')?.invalid && assignmentForm.get('patientId')?.touched">
+                    Patient is invalid
+                  </mat-error>
+                  <button mat-button (click)="openAddPopUpForm()">Add</button>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Patient Address</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="patientAddress" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Name</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson1Name" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Phone</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson1Phone" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Name</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson2Name" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Phone</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson2Phone" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Visit Date</mat-label>
+                    <input matInput [matDatepicker]="visitDate" formControlName="visitDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="visitDate"></mat-datepicker-toggle>
+                    <mat-datepicker #visitDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="assignmentForm.get('visitDate')?.invalid && assignmentForm.get('visitDate')?.touched">
+                      Visit Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Visit Time</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="visitTime">
+                    </div>
+                    <mat-error
+                      *ngIf="assignmentForm.get('visitTime')?.invalid && assignmentForm.get('visitTime')?.touched">
+                      Visit Time is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Notes
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Professional Notes</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="prNotes">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Patient Notes</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="pNotes">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Internal Notes</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="iNotes">
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

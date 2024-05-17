@@ -1,0 +1,240 @@
+.view {
+  ::ng-deep .mat-grid-tile-content {
+    // background-color: #e9ecf2 !important;
+    align-items: start !important;
+    // padding-left: 24px !important;o
+    justify-content: initial !important;
+  }
+
+  ::ng-deep .mat-mdc-tab-group {
+    width: 95%;
+  }
+
+  mat-card-header {
+    padding-top: 8px;
+
+    ::ng-deep .mat-mdc-card-header-text {
+      width: 100%;
+      padding: 0px 24px 0 24px;
+    }
+  }
+
+  mat-card-title {
+    width: 100%;
+
+    .tab-header-label-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .title {
+        color: #3c8dbc;
+      }
+
+      button {
+        color: #ffffff;
+
+        .action-mat-icon {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  ::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+
+    flex-grow: 1;
+    background: #fff;
+    margin: 7px 5px 0 0;
+    border-radius: 6px;
+    height: 40px;
+    width: 110px;
+    text-transform: uppercase;
+  }
+
+  mat-card-content {
+    border: 1px solid #d6d6d6;
+    border-radius: 6px;
+    margin: 10px 24px;
+  }
+
+  .bordered {
+    border: 1px solid blue;
+    border-radius: 50px;
+    padding: 2px;
+    width: 75px;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .colored {
+    color: #33749b;
+  }
+
+  .company-content {
+    display: flex;
+    margin-left: 3px;
+    flex-direction: column;
+    width: 99%;
+    margin-top: 24px;
+    border-radius: 6px;
+    // -webkit-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+    // -moz-box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+    // box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.75);
+    border: 1px solid #ead9d9;
+    border-radius: 10px;
+
+    .colored-cell {
+      background-color: #f1f1fc;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      // border-bottom: 1px solid #d6d6d6;
+      font-size: 15px;
+      font-weight: 500;
+
+      .content-rhs {
+        padding-left: 30px;
+      }
+    }
+  }
+
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    width: 100%;
+    padding-top: 24px;
+    gap: 16px;
+
+    .img-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 1px solid #ead9d9;
+      padding: 20px;
+      border-radius: 10px;
+
+      .image {
+        display: flex;
+        justify-content: center;
+
+        .image-border {
+          border: 1px solid gray;
+          border-radius: 50%;
+          padding: 20px;
+        }
+
+        img {
+          height: 125px;
+          width: 125px;
+          border-radius: 4px;
+        }
+      }
+
+      .img-name {
+        font-size: 16px;
+        padding-top: 8px;
+        color: #1f1c1c;
+        display: flex;
+        justify-content: center;
+      }
+
+      $color: #3c8dbc;
+
+      .button {
+        cursor: pointer;
+        display: inline-block;
+        // padding: .75rem 1.25rem;
+        padding: 10px 45px;
+        border-radius: 10rem;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 1rem;
+        letter-spacing: .15rem;
+        transition: all .3s;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: $color;
+          border-radius: 10rem;
+          z-index: -2;
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0%;
+          height: 100%;
+          background-color: darken($color, 15%);
+          transition: all .3s;
+          border-radius: 10rem;
+          z-index: -1;
+        }
+
+        &:hover {
+          color: #fff;
+
+          &:before {
+            width: 100%;
+          }
+        }
+      }
+
+      /* optional reset for presentation */
+      * {
+        font-family: Arial;
+        text-decoration: none;
+        font-size: 20px;
+      }
+
+      .container {
+        padding-top: 50px;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        text-transform: uppercase;
+        font-size: .8rem;
+        margin-bottom: 2rem;
+        color: #777;
+      }
+
+      span {
+        display: block;
+        margin-top: 2rem;
+        font-size: .7rem;
+        color: #777;
+
+        a {
+          font-size: .7rem;
+          color: #999;
+          text-decoration: underline;
+        }
+      }
+
+    }
+  }
+}
+
+.room-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  color: #8c8686;
+}

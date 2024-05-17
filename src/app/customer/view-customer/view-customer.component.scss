@@ -1,0 +1,110 @@
+.view {
+  ::ng-deep .mat-grid-tile-content {
+    background-color: #e9ecf2 !important;
+    align-items: start !important;
+    padding-left: 24px !important;
+    justify-content: initial !important;
+  }
+
+  ::ng-deep .mat-mdc-tab-group {
+    width: 95%;
+  }
+
+  ::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+
+    flex-grow: 1;
+    background: #fff;
+    margin: 7px 5px 0 0;
+    border-radius: 6px;
+    height: 40px;
+    width: 110px;
+    text-transform: uppercase;
+  }
+
+  mat-card-content {
+    padding-top: 10px;
+  }
+
+  .bordered {
+    border: 1px solid blue;
+    border-radius: 50px;
+    padding: 2px;
+    width: 75px;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  .colored {
+    color: #33749b;
+  }
+
+  .company-content {
+    margin: 0px;
+    border: 1px solid #d6d6d6;
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #d6d6d6;
+      font-size: 15px;
+      font-weight: 500;
+
+      .content-rhs {
+        padding-left: 30px;
+      }
+    }
+  }
+
+  .users-content {
+    margin-top: 60px;
+
+    .user-action {
+      display: flex;
+      justify-content: space-between;
+
+      .search {
+        .custom-input {
+          width: 260px;
+          border: 1px solid rgb(209, 209, 209);
+          border-radius: 4px;
+          padding: 10px;
+        }
+
+        .custom-input:focus {
+          border: 1px solid rgb(109 126 170);
+          outline: none;
+        }
+      }
+    }
+
+    table {
+      width: 100%;
+      margin-top: 10px;
+
+      .mat-mdc-header-cell {
+        background-color: #36404e;
+      }
+
+      .mdc-data-table__header-cell {
+        color: #fff;
+      }
+
+      tr {
+        height: 45px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #e9ecf2;
+        /* Set your desired color for even cells */
+      }
+
+      tr:nth-child(odd) {
+        background-color: #f9f9f9;
+        /* Set your desired color for odd rows */
+      }
+
+    }
+  }
+
+}

@@ -1,0 +1,19 @@
+<main style="padding: 16px;">
+  <div class="title-container">
+    <h1>Confirm Delete</h1>
+    <button class="close-btn" mat-button (click)="handleClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div>
+    <div class="delete-content">
+      <h2>Are you sure want to delete {{data.name}}?</h2>
+    </div>
+    <div class="action">
+      <button mat-button class="cancel-btn" (click)="handleClose()">Cancel</button>
+      <button mat-raised-button class="delete-btn" (click)="handleDelete()">Delete</button>
+    </div>
+  </div>
+</main>

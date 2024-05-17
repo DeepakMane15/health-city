@@ -1,0 +1,588 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="ambulanceForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      MedTrans Bookings</span>
+  </div>
+
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{ambulanceData ? 'Edit' : 'Add'}} MedTrans Booking
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Company -->
+      <div class="form-panel">
+        <!-- Awarding Freight -->
+        <!-- <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Awarding Freight
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Transportation Method</mat-label>
+                    <mat-select formControlName="transMethod">
+                      <mat-option *ngFor="let trans of transportationMethod"
+                        [value]="trans.id">{{trans.name}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('transMethod')?.invalid && ambulanceForm.get('transMethod')?.touched">
+                      Transportation Method is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Awarding Method</mat-label>
+                    <mat-select formControlName="awardMethod">
+                      <mat-option *ngFor="let award of awardMethod" [value]="award.id">{{award.name}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('awardMethod')?.invalid && ambulanceForm.get('awardMethod')?.touched">
+                      Awarding Method is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion> -->
+      </div>
+
+      <!-- Assignment -->
+      <!-- <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Involved Parties
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Customer</mat-label>
+                    <mat-select formControlName="customer">
+                      <mat-option *ngFor="let customer of customerMaster"
+                        [value]="customer.id">{{customer.name}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('customer')?.invalid && ambulanceForm.get('customer')?.touched">
+                      Customer is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Medical Team</mat-label>
+                    <mat-select formControlName="medical">
+                      <mat-option *ngFor="let medical of medicalMaster"
+                        [value]="medical.id">{{medical.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="ambulanceForm.get('medical')?.invalid && ambulanceForm.get('medical')?.touched">
+                      Medical is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div> -->
+
+      <!-- General Info -->
+      <!-- <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                General Info
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label> Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="ambulanceForm.get('date')?.invalid && ambulanceForm.get('date')?.touched">
+                      Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Transaction</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="transaction" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Refrence</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="refrence">
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Pincode</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="pincode">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Status</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="status">
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Visit Date</mat-label>
+                    <input matInput [matDatepicker]="visitDate" formControlName="visitDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="visitDate"></mat-datepicker-toggle>
+                    <mat-datepicker #visitDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('visitDate')?.invalid && ambulanceForm.get('visitDate')?.touched">
+                      Visit Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Visit Time</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="visitTime">
+                    </div>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('visitTime')?.invalid && ambulanceForm.get('visitTime')?.touched">
+                      Visit Time is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div> -->
+
+
+      <!-- Assignment -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Assignment
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <!-- <mat-form-field class="full-width">
+                    <mat-label>Assignment</mat-label>
+                    <mat-select formControlName="assignment">
+                      <mat-option *ngFor="let assignment of assignmentsMaster"
+                        [value]="assignment.id">{{assignment.name}}</mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('assignment')?.invalid && ambulanceForm.get('assignment')?.touched">
+                      Assignment is invalid
+                    </mat-error>
+                  </mat-form-field> -->
+                  <ng-multiselect-dropdown [placeholder]="'Assignment'" [settings]="assSettings"
+                  [data]="assignmentsMaster" formControlName="assignment" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Transaction</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="transaction" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label> Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="ambulanceForm.get('date')?.invalid && ambulanceForm.get('date')?.touched">
+                      Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Amount</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="amount">
+                    </div>
+                    <mat-error *ngIf="ambulanceForm.get('amount')?.invalid && ambulanceForm.get('amount')?.touched">
+                      Amount is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label> Payment Date</mat-label>
+                    <input matInput [matDatepicker]="paymentDate" formControlName="paymentDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="paymentDate"></mat-datepicker-toggle>
+                    <mat-datepicker #paymentDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('paymentDate')?.invalid && ambulanceForm.get('paymentDate')?.touched">
+                      Payment Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Patient -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Patient
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Patient'" [settings]="patSettings"
+                  [data]="patientsMaster" formControlName="patient" (onSelect)="handlePatientSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                  <mat-error *ngIf="ambulanceForm.get('patient')?.invalid && ambulanceForm.get('patient')?.touched">
+                    Patient is invalid
+                  </mat-error>
+                  <button mat-button (click)="openAddPopUpForm()">Add</button>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Patient Address</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="patientAddress" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Name</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson1Name" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Phone</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson1Phone" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Name</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson2Name" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Contact Person Phone</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="cPerson2Phone" readonly>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Fleet -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Fleet
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <ng-multiselect-dropdown [placeholder]="'Fleet'" [settings]="drSettings"
+                  [data]="driverMaster" formControlName="driver">
+                </ng-multiselect-dropdown>
+                <button mat-button (click)="openAddFleetPopUpForm()">Add</button>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Equipment -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Equipment
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Vehicle Model</mat-label>
+                    <input matInput formControlName="vehicleModel" />
+                    <mat-error
+                      *ngIf="ambulanceForm.get('vehicleModel')?.invalid && ambulanceForm.get('vehicleModel')?.touched">
+                      Vehicle Model is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Regitration Number</mat-label>
+                    <input matInput formControlName="registrationNo" />
+                    <mat-error
+                      *ngIf="ambulanceForm.get('registrationNo')?.invalid && ambulanceForm.get('registrationNo')?.touched">
+                      Regitration Number is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Pickup -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Pick Up
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="pickupAddress" />
+                    <mat-error
+                      *ngIf="ambulanceForm.get('pickupAddress')?.invalid && ambulanceForm.get('pickupAddress')?.touched">
+                      Address is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Pick-Up Date</mat-label>
+                    <!-- <input matInput formControlName="pickupDate" /> -->
+                    <input matInput [matDatepicker]="pickupDate" formControlName="pickupDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickupDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickupDate></mat-datepicker>
+                    <mat-error
+                      *ngIf="ambulanceForm.get('pickupDate')?.invalid && ambulanceForm.get('pickupDate')?.touched">
+                      Pick-Up Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Pick-Up Time</mat-label>
+                    <input matInput formControlName="pickupTime" />
+                    <mat-error
+                      *ngIf="ambulanceForm.get('pickupTime')?.invalid && ambulanceForm.get('pickupTime')?.touched">
+                      Pick-Up Time is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>PO#</mat-label>
+                    <input matInput formControlName="pickupPO" />
+                    <mat-error *ngIf="ambulanceForm.get('pickupPO')?.invalid && ambulanceForm.get('pickupPO')?.touched">
+                      PO is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>PU#</mat-label>
+                    <input matInput formControlName="pickupPU" />
+                    <mat-error *ngIf="ambulanceForm.get('pickupPU')?.invalid && ambulanceForm.get('pickupPU')?.touched">
+                      PU is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Dectination -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Destination
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="destAddress" />
+                    <mat-error
+                      *ngIf="ambulanceForm.get('destAddress')?.invalid && ambulanceForm.get('destAddress')?.touched">
+                      Consignee is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Destination Date</mat-label>
+                    <input matInput [matDatepicker]="destDate" formControlName="destDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="destDate"></mat-datepicker-toggle>
+                    <mat-datepicker #destDate></mat-datepicker>
+                    <mat-error *ngIf="ambulanceForm.get('destDate')?.invalid && ambulanceForm.get('destDate')?.touched">
+                      Destination Date is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Destination Time</mat-label>
+                    <input matInput formControlName="destTime" />
+                    <mat-error *ngIf="ambulanceForm.get('destTime')?.invalid && ambulanceForm.get('destTime')?.touched">
+                      Destination Time is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>PO#</mat-label>
+                    <input matInput formControlName="destPO" />
+                    <mat-error *ngIf="ambulanceForm.get('destPO')?.invalid && ambulanceForm.get('destPO')?.touched">
+                      PO is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>PU#</mat-label>
+                    <input matInput formControlName="destPU" />
+                    <mat-error *ngIf="ambulanceForm.get('destPU')?.invalid && ambulanceForm.get('destPU')?.touched">
+                      PU is invalid
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-panel">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Notes
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="form-body">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Special Notes</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="specialNotes">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-label>Driver Notes</mat-label>
+                    <div class="uname-input">
+                      <input matInput formControlName="driverNotes">
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

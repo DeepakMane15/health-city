@@ -1,0 +1,51 @@
+agm-map {
+  height: 300px;
+}
+
+mat-card {
+  margin: 20px 24px;
+
+  mat-card-header {
+    justify-content: space-between;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+
+    button {
+      width: 150px;
+      background-color: #ffffff;
+      color: #252525;
+    }
+
+    .btn-active {
+      // background-color: #3c8dbc;
+      // color: #ffffff;
+    }
+  }
+
+  .actions {
+    margin-top: 10px;
+    justify-content: flex-end;
+  }
+
+}
+
+.title {
+  padding: 24px;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  font-size: 15px !important;
+  width: 190px !important;
+}
+
+::ng-deep .dropdown-list{
+  font-size: 15px !important;
+  width: 230px !important;
+
+  ul {
+    overflow: hidden !important;
+  }
+}

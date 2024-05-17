@@ -1,0 +1,21 @@
+<div class="d-flex-sb align-center">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <div mat-dialog-title>
+    Payment
+  </div>
+  <button mat-icon-button (click)="onNoClick()">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="onNoClick()" >close</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <ngx-stripe-elements *ngIf="elementsOptions.clientSecret" [stripe]="stripe" [elementsOptions]="elementsOptions">
+    <ngx-stripe-payment [options]="paymentElementOptions" />
+  </ngx-stripe-elements>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="pay()">Pay</button>
+</mat-dialog-actions>

@@ -1,0 +1,45 @@
+<!-- <div class="chat-list-main-container">
+    <ul class="chat-list-container">
+        <li class="chat-list-item" *ngFor="let chat of groups">
+            <div class="chat-card" (click)="selectGroup(chat)">
+                <div class="profile-container">
+                    <img [src]="chat.icon" class="profile-pic" />
+                </div>
+                <div class="name-container">
+                    <h1>{{ chat.name }}</h1>
+                    <h3>Tap here to chat.</h3>
+                </div>
+                <div class="arrow-container">
+                    <mat-icon class="arrow-icon">arrow_forward_ios</mat-icon>
+                </div>
+
+            </div>
+        </li>
+    </ul>
+</div> -->
+
+<div class="people-list" id="people-list">
+  <div class="search">
+    <div class="search-flex">
+      <div>
+        <input type="text" placeholder="search" />
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="create" matTooltip="Create Group" (click)="createGroup()">
+        <mat-icon class="group-add">group_add</mat-icon>
+      </div>
+    </div>
+  </div>
+  <ul class="list">
+    <li class="clearfix" *ngFor="let chat of groups" (click)="selectGroup(chat)">
+      <img  [src]="chat.icon" alt="avatar" class="profile-pic"  />
+      <div class="about">
+        <div class="name">{{ chat.name }}</div>
+        <!-- <div class="status">
+          <i class="fa fa-circle online"></i> online
+        </div> -->
+      </div>
+    </li>
+
+  </ul>
+</div>

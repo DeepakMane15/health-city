@@ -1,0 +1,26 @@
+.title-container {
+  display: flex;
+  justify-content: space-between;
+
+  .close-btn {
+    height: 24px;
+    width: 24px;
+
+    mat-icon {
+      font-size: 21px;
+    }
+  }
+}
+.delete-content {
+  padding-top: 20px;
+}
+.action {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+
+  .delete-btn {
+    background-color: #ef2727 !important;
+  }
+}

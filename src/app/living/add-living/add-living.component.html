@@ -1,0 +1,140 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="livingForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      {{livingData ? 'Edit' : 'Add'}} Living</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Basic</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Name</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="name">
+            </div>
+            <mat-error *ngIf="livingForm.get('name')?.invalid && livingForm.get('name')?.touched">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="livingForm.get('address')?.invalid && livingForm.get('address')?.touched">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+            <mat-error *ngIf="livingForm.get('description')?.invalid && livingForm.get('description')?.touched">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Rooms</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <form [formGroup]="myForm"> -->
+  <div formArrayName="items">
+    <div class="row" *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+      <div class="col" >
+        <ng-multiselect-dropdown class="rooms-dropdown" [placeholder]="'Room Type'" [settings]="roomSettings"
+          [data]="roomsMaster" formControlName="roomType" (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="col">
+        <ng-multiselect-dropdown class="rooms-dropdown" [placeholder]="'Amenities Type'" [settings]="amenitySettings"
+          [data]="amenitiesMaster" formControlName="amenities" (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price">
+          <!-- <mat-error *ngIf="livingForm.get('price')?.invalid && livingForm.get('price')?.touched">
+            Price is required
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+      <br>
+      <button mat-button *ngIf="items.controls.length > 1" (click)="deleteItem(i)">
+        <mat-icon class="delete-icon"class="delete-icon">delete</mat-icon>
+      </button>
+    </div>
+  </div>
+  <button mat-button (click)="addItem()">
+    <mat-icon class="add-icon">add</mat-icon>
+  </button>
+<!-- </form> -->
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Images</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <!-- <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Ratings</mat-label>
+            <input matInput formControlName="ratings">
+            <mat-error *ngIf="livingForm.get('ratings')?.invalid && livingForm.get('ratings')?.touched">
+              Ratings is required
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+        <div class="col">
+          <div>
+            <span class="text-sb">Attach Images </span>
+            <span class="help-text">( allowed JPG/PNG, max size 2 mb)</span>
+          </div>
+          <input id="fileInput" hidden #licenceInput multiple type="file" (change)="onFileSelected($event, fileType.LICENCE)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.livingForm.get('images')?.value}" (click)="licenceInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">
+              <!-- Display selected file names here -->
+              <ng-container *ngFor="let file of selectedFiles">{{ file.name }}</ng-container>
+              <!-- If no file chosen, display a message -->
+              <span *ngIf="selectedFiles.length === 0">No file chosen</span>
+            </div>
+          </div>
+          <span class="error-text">{{licenceError}}</span>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

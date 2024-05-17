@@ -1,0 +1,251 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="medicalForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      Medical Team</span>
+  </div>
+
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{medicalData ? 'Edit' : 'Add'}} Medical Team
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>First Name</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="first_name">
+            </div>
+            <mat-error *ngIf="medicalForm.get('first_name')?.invalid && medicalForm.get('first_name')?.touched">
+              First Name is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="last_name">
+            <mat-error *ngIf="medicalForm.get('last_name')?.invalid && medicalForm.get('last_name')?.touched">
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="medicalForm.get('address')?.invalid && medicalForm.get('address')?.touched">
+              Address is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Email</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="email" (change)="checkUsernameAvailable($event)">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
+            <mat-error *ngIf="medicalForm.get('email')?.invalid && medicalForm.get('email')?.touched">
+              Email is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 25px;">
+        <div class="col">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Profession</mat-label>
+            <div class="uname-input"> -->
+          <!-- <input matInput formControlName="profession"> -->
+          <!-- <mat-select formControlName="profession">
+                <mat-option *ngFor="let profession of fieldData?.profession"
+                  [value]="profession.prid">{{profession.title}}</mat-option>
+              </mat-select> -->
+          <ng-multiselect-dropdown [placeholder]="'Profession'" [settings]="profSettings" [data]="fieldData?.profession"
+            formControlName="profession" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+        </div>
+        <!-- <mat-error *ngIf="medicalForm.get('profession')?.invalid && medicalForm.get('profession')?.touched">
+              Profession is invalid
+            </mat-error>
+          </mat-form-field> -->
+        <!-- </div> -->
+        <div class="col">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Ethnicity</mat-label> -->
+          <!-- <input matInput formControlName="ethnicity"> -->
+          <!-- <mat-select formControlName="ethnicity">
+              <mat-option *ngFor="let ethnicity of fieldData?.ethnicity"
+                [value]="ethnicity.eid">{{ethnicity.title}}</mat-option>
+            </mat-select> -->
+          <ng-multiselect-dropdown [placeholder]="'Ethnicity'" [settings]="ethSettings" [data]="fieldData?.ethnicity"
+            formControlName="ethnicity" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <!-- <mat-error *ngIf="medicalForm.get('ethnicity')?.invalid && medicalForm.get('ethnicity')?.touched">
+              Ethnicity is required
+            </mat-error>
+          </mat-form-field> -->
+        </div>
+      </div>
+
+      <div class="row" style="padding-bottom: 7px;">
+        <div class="col">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Languages</mat-label>
+            <div class="uname-input"> -->
+          <!-- <input matInput formControlName="languages"> -->
+          <!-- <mat-select formControlName="languages" multiple>
+                <mat-option *ngFor="let languages of fieldData?.languages"
+                  [value]="languages.lid">{{languages.title}}</mat-option>
+              </mat-select> -->
+          <ng-multiselect-dropdown [placeholder]="'languages'" [settings]="lngSettings" [data]="fieldData?.languages"
+            formControlName="languages" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <!-- </div>
+            <mat-error *ngIf="medicalForm.get('languages')?.invalid && medicalForm.get('languages')?.touched">
+              Languages is invalid
+            </mat-error>
+          </mat-form-field> -->
+        </div>
+        <div class="col">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>County</mat-label> -->
+          <!-- <input matInput formControlName="county"> -->
+          <!-- <mat-select formControlName="county" multiple>
+              <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
+            </mat-select> -->
+          <ng-multiselect-dropdown [placeholder]="'County'" [settings]="countySettings" [data]="fieldData?.region"
+            formControlName="county" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <!-- <mat-error *ngIf="medicalForm.get('county')?.invalid && medicalForm.get('county')?.touched">
+              County is required
+            </mat-error>
+          </mat-form-field> -->
+        </div>
+      </div>
+      <div class="row" style="align-items: baseline;">
+        <div class="col">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Service Area</mat-label>
+            <div class="uname-input"> -->
+          <!-- <input matInput formControlName="service_area"> -->
+          <!-- <mat-select formControlName="service_area" multiple>
+                <mat-option *ngFor="let service of fieldData?.serviceArea"
+                  [value]="service.said">{{service.service_area_title}}</mat-option>
+              </mat-select> -->
+          <ng-multiselect-dropdown [placeholder]="'Service Area'" [settings]="servSettings"
+            [data]="fieldData?.serviceArea" formControlName="service_area" (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <!-- </div>
+            <mat-error *ngIf="medicalForm.get('service_area')?.invalid && medicalForm.get('service_area')?.touched">
+              Service Area is invalid
+            </mat-error>
+          </mat-form-field> -->
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="medicalForm.get('phone')?.invalid && medicalForm.get('phone')?.touched">
+              Phone is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <!-- descrbe -->
+
+
+        <div class="col">
+          <div> <span class="text-sb">Attach Passport size photo </span>
+            <span class="help-text">
+              ( allowed JPG or PNG, max size 1 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('photo')?.value}"
+            (click)="photoInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('photo')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{photoError}}</span>
+        </div>
+        <div class="col">
+          <div> <span class="text-sb">Attach Licence </span>
+            <span class="help-text">
+              ( allowed PDF, max size 2 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, fileType.LICENCE)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('licence')?.value}"
+            (click)="licenceInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('licence')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{licenceError}}</span>
+        </div>
+      </div>
+      <div class="row" style="padding-top:16px; padding-bottom: 7px;">
+        <div class="col">
+          <div> <span class="text-sb">Attach Resume </span>
+            <span class="help-text">
+              ( allowed PDF, max size 2 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #resumeInput type="file" (change)="onFileSelected($event, fileType.RESUME)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('resume')?.value}"
+            (click)="resumeInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.medicalForm.get('resume')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{resumeError}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Describe</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="describe">
+            </div>
+            <mat-error *ngIf="medicalForm.get('describe')?.invalid && medicalForm.get('describe')?.touched">
+              Describe is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Internal Notes</mat-label>
+            <input matInput formControlName="internal_notes">
+            <mat-error *ngIf="medicalForm.get('internal_notes')?.invalid && medicalForm.get('internal_notes')?.touched">
+              Internal Notes is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

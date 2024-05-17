@@ -1,0 +1,11 @@
+<div class="message-main-container" *ngIf="!!messages && messages.length > 0">
+    <div [ngClass]="{'message-text-container-fellowuser' : userProfile.id !== message.senderId }" class="message-text-container-user"
+        *ngFor="let message of messages">
+        <div class="message">
+            <h4>{{ message.sender }}</h4>
+            <p>{{ message.message }}</p>
+            <p class="timing-text">{{ message.timing }}</p>
+
+        </div>
+    </div>
+</div>

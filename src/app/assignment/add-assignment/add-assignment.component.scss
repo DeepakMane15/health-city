@@ -1,0 +1,46 @@
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  border-top: 4px solid #2d88a7;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: 1px solid #c2c0c0;
+}
+
+.mat-mdc-card {
+  background: #f8f8f8;
+}
+
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'HindMadurai-SemiBold';
+}
+
+.form-panel {
+  margin-top: 24px;
+
+  .form-body {
+    padding-top: 24px;
+  }
+}
+.action-btns{
+  padding: 24px 16px;
+}
+
+
+
+::ng-deep .multiselect-dropdown .dropdown-btn {
+  font-size: 15px !important;
+  width: 95% !important;
+}
+
+::ng-deep .dropdown-list {
+  font-size: 15px !important;
+  // width: 40% !important;
+  position: relative !important;
+
+  ul {
+    overflow-x: hidden !important;
+  }
+
+}

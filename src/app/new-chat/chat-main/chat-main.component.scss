@@ -1,0 +1,151 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-nav-list {
+  background: #eff8ff;
+}
+
+.mat-toolbar {
+  background-color: #3771a4;
+}
+
+::ng-deep .mat-drawer-content {
+  // overflow: hidden !important;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+
+  .sidenav-title {
+    font-size: 21px;
+    padding: 10px;
+  }
+}
+
+.create-btn {
+  display: flex;
+  padding: 3px 10px;
+
+  input {
+    height: 20px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 2px;
+    border: 1px solid #a0a1a8;
+    outline: none;
+
+    &:focus,
+    &:focus-visible {
+      border: 1px solid #abb4f3;
+    }
+  }
+
+  // justify-content: space-between;
+}
+
+.conv-start {
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.fixed-navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  // width: 250px; /* Adjust width as needed */
+  // height: 100%; /* Ensure it covers the full height of the viewport */
+  z-index: 1000;
+  /* Ensure it appears above other content */
+  // overflow-y: auto; /* Allow vertical scrolling if necessary */
+}
+
+
+.sidenav {
+  width: 230px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.message-box {
+  margin-bottom: 50px;
+
+  .message-container {
+    padding: 20px;
+
+    .message {
+      display: flex;
+
+      .msg {
+        padding: 13px 20px;
+        border-radius: 35px;
+      }
+
+      .msg-sender {
+        background-color: aliceblue;
+      }
+
+      .msg-receiver {
+        background-color: #dfeee0;
+      }
+    }
+
+    .right {
+      justify-content: end;
+    }
+  }
+}
+
+.chat-container {
+  bottom: 0px;
+  padding-bottom: 10px;
+  position: fixed;
+  width: 70%;
+  background-color: aliceblue;
+
+  .input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #988f8f;
+  }
+}
+
+.chat-list {
+  padding: 10px 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #bfb9b9;
+
+  .icon {
+    height: 40px;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.first-child {
+  border-top: 1px solid #bfb9b9;
+  margin-top: 10px;
+}
+
+.chat-icon {
+  height: 50px;
+  padding-right: 15px;
+}

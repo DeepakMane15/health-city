@@ -1,0 +1,133 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="driverForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <div>
+      <mat-icon *ngIf="!fromPopup" class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+      <span class="title">
+        {{driverData ? 'Edit' : 'Add'}} Driver</span>
+    </div>
+    <button *ngIf="fromPopup" class="close-btn" mat-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Portal</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Username</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="email" (change)="checkUsernameAvailable($event)">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
+
+            <mat-error *ngIf="driverForm.get('email')?.hasError('email') && driverForm.get('email')?.touched">
+              Username is invalid
+            </mat-error>
+            <mat-hint *ngIf="!isUnameAvailable"
+              class="mat-mdc-form-field-error mat-mdc-form-field-bottom-align ng-tns-c19-25 ng-star-inserted">
+              Username is not available
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password">
+            <mat-error *ngIf="driverForm.get('password')?.invalid && driverForm.get('password')?.touched">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <mat-radio-group aria-label="Password option" (change)="handlePasswordCreation($event)">
+            <mat-radio-button value="1" checked>Let me create the password</mat-radio-button>
+            <mat-radio-button value="2">Auto-Generated password</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Personal</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>First Name</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="first_name">
+            </div>
+            <mat-error *ngIf="driverForm.get('first_name')?.invalid && driverForm.get('first_name')?.touched">
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="last_name">
+            <mat-error *ngIf="driverForm.get('last_name')?.invalid && driverForm.get('last_name')?.touched">
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="driverForm.get('address')?.invalid && driverForm.get('address')?.touched">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Mobile No</mat-label>
+            <input matInput formControlName="mobile_no">
+            <mat-error *ngIf="driverForm.get('mobile_no')?.invalid && driverForm.get('mobile_no')?.touched">
+              Mobile No is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <div> <span class="text-sb">Attach Licence </span>
+            <span class="help-text">
+              ( allowed PDF, max size 2 mb)
+            </span>
+          </div>
+          <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, fileType.LICENCE)">
+          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.driverForm.get('licence')?.value}"
+            (click)="licenceInput.click()">
+            <div class="label-container">
+              <div class="label-section">Choose file</div>
+            </div>
+            <div class="name-section">{{this.driverForm.get('licence')?.value?.name || 'No file chosen'}}</div>
+          </div>
+          <span class="error-text">{{licenceError}}</span>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+
+</form>

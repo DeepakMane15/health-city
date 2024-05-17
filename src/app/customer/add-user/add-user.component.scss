@@ -1,0 +1,57 @@
+.title {
+  font-size: 21px;
+  padding: 20px;
+}
+.label-text {
+  font-size: 15px;
+}
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+
+  mat-card {
+    width: 620px;
+    border-top: 2px solid #3c8dbc;
+    border-radius: 6px;
+  }
+
+  .user-card {
+    .row {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .col {
+      flex: 1;
+      margin-right: 20px;
+
+      .full-width {
+        width: 100%;
+      }
+
+    }
+
+    .col:last-child {
+      margin-right: 0;
+    }
+
+    mat-radio-button {
+      ::ng-deep .mdc-form-field>label {
+        font-size: 15px;
+      }
+    }
+
+    .action-btns {
+      justify-content: end;
+      gap: 10px;
+
+      .mat-mdc-raised-button {
+        background-color: #3c8dbc !important;
+        // color: #fff;
+      }
+    }
+  }
+}

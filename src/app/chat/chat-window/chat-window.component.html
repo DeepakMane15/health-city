@@ -1,0 +1,40 @@
+<!-- <div class="chat-window-main-container">
+    <div class="chat-top-container">
+        <app-chat-messages [messages]="messages"></app-chat-messages>
+    </div>
+    <div class="chat-bottom-container">
+        <input class="input-container" [(ngModel)]="message" placeholder="Type your message" />
+        <button class="send-button" (click)="sendMessage()">
+            <mat-icon class="send-icon">send</mat-icon>
+        </button>
+    </div>
+</div> -->
+
+<div class="chat">
+  <div class="chat-header clearfix">
+    <img [src]="group?.icon" class="profile-pic" alt="avatar" />
+
+    <div class="chat-about">
+      <div class="chat-with">{{group?.name}}</div>
+      <div class="chat-num-messages">already 1 902 messages</div>
+    </div>
+    <i class="fa fa-star"></i>
+  </div> <!-- end chat-header -->
+
+  <div class="chat-history">
+    <ul>
+      <li class="clearfix"  *ngFor="let message of messages">
+        <div class="message-data" [ngClass]="message.sender === userId ? 'align-right': ''">
+          <span class="message-data-time">{{message.timing }}</span> &nbsp; &nbsp;
+          <span class="message-data-name">{{message.sender}}</span> <i class="fa fa-circle me"></i>
+
+        </div>
+        <div class="message other-message float-right">
+          {{message.message}}
+        </div>
+      </li>
+    </ul>
+
+  </div> <!-- end chat-history -->
+
+</div> <!-- end chat -->

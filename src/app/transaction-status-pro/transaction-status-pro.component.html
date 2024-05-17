@@ -1,0 +1,40 @@
+<div class="example-container mat-elevation-z2">
+    <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="s.no.">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>S.no.</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.sno}}</mat-cell>
+        </ng-container>
+
+        <!-- Assignment id -->
+        <ng-container matColumnDef="Assig. id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Assig. id</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.Assignid}}</mat-cell>
+        </ng-container>
+
+        <!-- Transaction id -->
+        <ng-container matColumnDef="Tran. id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Tran. id</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.Transid}}</mat-cell>
+        </ng-container>
+
+        <!--Transaction date-->
+        <ng-container matColumnDef="Tran. date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Tran. date</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.date | date }}</mat-cell>
+        </ng-container>
+
+        <!-- Transaction status -->
+        <ng-container matColumnDef="Tran. status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-chip color="{{ row.status === 'pending' ? 'primary' : 'accent' }}">
+                    {{row.status}}
+                </mat-chip>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

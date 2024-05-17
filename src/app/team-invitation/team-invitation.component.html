@@ -1,0 +1,53 @@
+<main class="agreement">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+  <div class="title">
+    <div>
+      <img class="img" src="assets/images/profmed-logo.jpg" width="200px" alt="profmedservices-logo" />
+    </div>
+    <h1> Invitation</h1>
+    <div [hidden]="invitationAcceptStatus || !isTokenValid">
+      <h2>
+        ProfMedServices invites you to join the team.
+      </h2>
+      <h4 [innerHTML]="content">
+      </h4>
+
+      <div>
+        <canvas #canvasElement width="400" height="200" style="border: 1px solid black;"
+          (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)"></canvas>
+        <br>
+        <div class="action-btns">
+          <button mat-raised-button class="secondary-btn" (click)="clearCanvas()">Clear</button>
+          <button mat-raised-button (click)="submitSignature()">Submit Signature</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- success page -->
+    <div *ngIf="invitationAcceptStatus">
+      <h2>
+        Invitation Accepted Successfully !
+      </h2>
+      <h3>Please login from <a href="/auth">here</a></h3>
+    </div>
+
+    <!-- expired page -->
+    <div *ngIf="tokenExpired">
+      <h2>
+        Token has expired!
+      </h2>
+      <h3>Please login from <a href="/auth">here</a></h3>
+    </div>
+
+    <!-- request not found page -->
+    <div *ngIf="requestAlreadyAccepted">
+      <h2>
+        Request has already accepted or is not found!
+      </h2>
+      <h3>Please login from <a href="/auth">here</a></h3>
+    </div>
+  </div>
+
+</main>

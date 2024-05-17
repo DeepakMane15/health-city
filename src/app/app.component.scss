@@ -1,0 +1,235 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  background-color: #36404e;
+
+  .toolbar {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.sidenav {
+  width: 270px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.sidenav {
+  color: #98a6ad;
+}
+
+ul {
+  list-style-type: none;
+  font-size: 15px;
+  padding-inline-start: 0px;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  // color: #98a6ad !important;
+  color: #4e3d3d;
+  font-family: 'OpenSans-SemiBold';
+  font-size: 14px !important;
+}
+
+.pl-2 {
+  padding: 0 16px;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-toolbar.mat-primary {
+  background-color: #3c8dbc;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+
+.user-box .user-img {
+  position: relative;
+  height: 36px;
+  width: 36px;
+  margin: 0 auto;
+}
+
+.profile-icon {
+  cursor: pointer;
+}
+
+.img-circle {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  display: flex;
+}
+
+.links {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-label-container {
+  display: flex;
+  align-items: center;
+
+}
+
+mat-icon {
+  font-size: 20px;
+}
+
+.icon-label-container mat-icon {
+  margin-right: 8px;
+  /* Adjust margin between icon and text */
+}
+
+.mat-tree {
+  background-color: transparent;
+}
+
+::ng-deep mat-tree-node {
+  color: #98a6ad !important;
+  padding-left: 0px !important;
+}
+
+
+.mat-tree-node {
+  display: flex;
+  align-items: center;
+}
+
+.node-content {
+  flex: 1;
+}
+
+/* Moves the toggle button to the right */
+button.mat-icon-button.mat-tree-node-toggler {
+  order: 2;
+  /* Moves the button to the right */
+  margin-left: 8px;
+  /* Adjust the spacing between the text and button */
+}
+
+mat-tree-node {
+  cursor: pointer;
+}
+
+.mat-tree-node__toggle {
+  order: 3;
+  /* Moves the icon to the right */
+  margin-left: 8px;
+  /* Adjust the spacing between the button and icon */
+}
+
+.mat-icon-rtl-mirror {}
+
+.mat-tree-sub-node {
+  padding-left: 45px !important;
+  display: flex;
+
+  button {
+    // position: absolute;
+    right: 0;
+  }
+
+  // justify-content: space-between;
+}
+
+.mat-tree-node,
+.mat-nested-tree-node {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.mat-drawer[style*="visibility: hidden"] {
+  width: 20px !important;
+  display: block;
+}
+
+.profile-text {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: #d0d9de;
+
+}
+
+.mat-mdc-menu-item .mat-icon {
+  color: #686b6d !important
+}
+
+::ng-deep .cdk-overlay-container .mat-mdc-menu-content {
+  padding: 0px !important;
+  width: 220px;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  /* Ensure the spinner is on top of other elements */
+}
+
+.item-label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-drawer-inner-container::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: grey;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+::ng-deep .mat-drawer-inner-container::-webkit-scrollbar-thumb {
+  // border-radius: 10px;
+}
+
+.navbar-title {
+  display: flex;
+  gap: 3px;
+}
+.text-title {
+  text-transform: capitalize;
+}
+// .secondary-section {
+//   border: 1px solid #fff;
+//   margin: 7px;
+//   border-radius: 4px;
+// }
+
+.section-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.line {
+  background-color: #d0d9de;
+  height: 1px;
+  width: 100%;
+}
+.color-white {
+  color: #fff;
+}

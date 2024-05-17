@@ -1,0 +1,51 @@
+<!-- <div class="chat-main-container">
+    <div class="chat-left-container">
+        <div class="chat-left-top-container">
+            <img class="profile-pic"
+                src="https://app.profmedservices.com/assets/admin/file/documents/profile.png" />
+                <div class="create" matTooltip="Create Group" (click)="createGroup()">
+                    <mat-icon class="group-add">group_add</mat-icon>
+                </div>
+              </div>
+        <div class="chat-left-bottom-container">
+            <app-chat-list [groups]="groups" (newItemEvent)="getGroup($event)"></app-chat-list>
+        </div>
+    </div>
+    <div class="chat-right-container">
+        <div class="chat-right-top-container">
+            <img class="profile-pic"
+                src="https://app.profmedservices.com/assets/admin/file/documents/profile.png" />
+
+            <h1 class="fellowuser-name">{{selectedGroup?.name}}</h1>
+        </div>
+        <div class="chat-right-bottom-container">
+            <app-chat-window [group]="selectedGroup"></app-chat-window>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="container clearfix">
+  <app-chat-list [groups]="groups" (newItemEvent)="getGroup($event)"></app-chat-list>
+
+  <div class="right-flex">
+
+    <div *ngIf="selectedGroup && userProfile">
+      <app-chat-window [group]="selectedGroup" [userId]="userProfile.id"></app-chat-window>
+
+      <div class="chat-message clearfix">
+        <textarea name="message-to-send" [(ngModel)]="message" id="message-to-send" placeholder="Type your message" rows="3"></textarea>
+
+        <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+        <i class="fa fa-file-image-o"></i>
+
+        <button (click)="sendMessage()">Send</button>
+
+      </div> <!-- end chat-message -->
+    </div>
+    <div *ngIf="!selectedGroup">
+      hi
+    </div>
+  </div>
+
+</div> <!-- end container -->

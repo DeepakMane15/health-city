@@ -1,0 +1,74 @@
+form {
+  padding: 10px;
+
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 32px;
+    font-family: 'HindMadurai-SemiBold';
+    letter-spacing: .0125em;
+  }
+}
+
+mat-card {
+  border-top: 2px solid blue;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.action-btns {
+  justify-content: end;
+  gap: 10px;
+
+  .mat-mdc-raised-button {
+    background-color: #3c8dbc !important;
+    // color: #fff;
+  }
+}
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #3c8dbc !important;
+}
+
+
+
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  font-size: 15px !important;
+  width: 95% !important;
+}
+
+::ng-deep .dropdown-list{
+  font-size: 15px !important;
+  // width: 230px !important;
+
+  ul {
+    overflow-x: hidden !important;
+  }
+}
+
