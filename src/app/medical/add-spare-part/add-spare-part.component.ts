@@ -11,12 +11,12 @@ import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-add-medical',
-  templateUrl: './add-medical.component.html',
-  styleUrls: ['./add-medical.component.scss'],
+  selector: 'app-add-spare-part',
+  templateUrl: './add-spare-part.component.html',
+  styleUrl: './add-spare-part.component.scss',
   providers: [DatePipe]
 })
-export class AddMedicalComponent implements OnInit {
+export class AddSparePartComponent implements OnInit {
   public showSpinner: Boolean = false;
   public medicalData: any;
   public isUnameAvailable: Boolean = true;
@@ -28,20 +28,15 @@ export class AddMedicalComponent implements OnInit {
   public resumeError!: string;
   public fileError: boolean = false;
   public prof: any;
+  public vehicleData!:any;
+  public driverData!:any;
   medicalForm = this.fb.group({
     id: 0,
-    chassis_no: ['', Validators.required],
-    registeration_no: ['', Validators.required],
-    engine_no: '',
-    manufacturing_date: ['', Validators.required],
-    sitting_capacity: ['', Validators.required],
-    model_name: ['', Validators.required],
-    vehicle_make: ['', Validators.required],
-    purchase_date: ['', Validators.required],
-    registeration_date: ['', Validators.required],
-    fuel_type: ['', Validators.required],
-    registeration_validity: ['', Validators.required],
-    present_km: ['', Validators.required],
+    driver: ['', Validators.required],
+    part: ['', Validators.required],
+    vehicle: ['', Validators.required],
+    desc: ['', Validators.required],
+    date: ['', Validators.required]
   });
 
   constructor(
@@ -59,25 +54,62 @@ export class AddMedicalComponent implements OnInit {
   public ethSettings!: IDropdownSettings;
 
   ngOnInit(): void {
+    this.getVehicles();
+    this.getDrivers();
     this.medicalData = history.state.medicalData;
     if (this.medicalData) {
       console.log(this.medicalData);
       this.medicalForm.patchValue({
         id: this.medicalData['id'],
-        chassis_no: this.medicalData['chassis_no'],
-        registeration_no: this.medicalData['registeration_no'],
-        engine_no: this.medicalData['engine_no'],
-        manufacturing_date: this.medicalData['manufacturing_date'],
-        sitting_capacity: this.medicalData['sitting_capacity'],
-        model_name: this.medicalData['model_name'],
-        vehicle_make: this.medicalData['vehicle_make'],
-        purchase_date: this.medicalData['purchase_date'],
-        registeration_date: this.medicalData['registeration_date'],
-        fuel_type: this.medicalData['fuel_type'],
-        registeration_validity: this.medicalData['registeration_validity'],
-        present_km: this.medicalData['present_km'],
+        driver: this.medicalData['driver'],
+        vehicle: this.medicalData['vehicle'],
+        part: this.medicalData['part'],
+        date: this.medicalData['date'],
+        desc: this.medicalData['desc'],
       });
     }
+  }
+
+  getVehicles() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append("type", "2");
+    this._apiService
+      .post(APIConstant.SNM_GET,
+        fd
+      )
+      .subscribe(
+        (res: any) => {
+          if(res && res.status) {
+            this.vehicleData = res.data;
+            this.showSpinner = false;
+          }
+        },
+        (error) => {
+          this.showSpinner = false;
+        }
+      );
+
+  }
+  getDrivers() {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append("type", "1");
+    this._apiService
+      .post(APIConstant.SNM_GET,
+        fd
+      )
+      .subscribe(
+        (res: any) => {
+          if(res && res.status) {
+            this.driverData = res.data;
+            this.showSpinner = false;
+          }
+        },
+        (error) => {
+          this.showSpinner = false;
+        }
+      );
   }
 
   onItemSelect(item: any) {}
@@ -89,20 +121,12 @@ export class AddMedicalComponent implements OnInit {
       const formModel: MedicalTeamModel = this.medicalForm
         .value as MedicalTeamModel;
       const formData = new FormData();
-      formData.append("type",'3');
+      formData.append("type",'4');
 
       // Convert JSON object to FormData
       for (let key of Object.keys(formModel)) {
-        if(key === 'manufacturing_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('manufacturing_date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else if(key === 'registeration_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('registeration_date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else if(key === 'purchase_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('purchase_date')?.value, 'MM-dd-yyyy');
+        if(key === 'date') {
+          let date = this.datePipe.transform(this.medicalForm.get('date')?.value, 'MM-dd-yyyy');
           formData.append(key, date?.toString() || "");
         }
         else {
@@ -120,7 +144,7 @@ export class AddMedicalComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/spare-parts']);
+              this.router.navigate(['/medical-team/spare-parts']);
             } else {
               this.showSpinner = false;
             }
@@ -135,10 +159,11 @@ export class AddMedicalComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['spare-parts']);
+    this.router.navigate(['/medical-team/spare-parts']);
   }
 
   public navigateBack() {
-    this.router.navigate(['/spare-parts']);
+    this.router.navigate(['/medical-team/spare-parts']);
   }
 }
+

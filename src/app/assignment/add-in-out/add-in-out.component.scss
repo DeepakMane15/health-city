@@ -12,10 +12,23 @@
   }
 }
 
+form {
+  padding: 10px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
 .action {
   display: flex;
   justify-content: end;
-  position: absolute;
-    bottom: 10px;
-    right: 13px;
+  position: relative;
+  bottom: 0px;
+  right: -35px;
+
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  max-width: 100% !important;
 }

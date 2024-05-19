@@ -4,7 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { AssignmentStatus, DELETE_TYPE } from 'src/app/common/constants/AppEnum';
+import {
+  AssignmentStatus,
+  DELETE_TYPE,
+} from 'src/app/common/constants/AppEnum';
 import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/delete-confirm.component';
 // import { AssignmentModel } from 'src/app/common/models/AssignmentModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
@@ -38,7 +41,12 @@ export class AssignmentListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _apiServices: ApiService,  private router: Router, private filterService: FilterServiceService, private dialog: MatDialog) {}
+  constructor(
+    private _apiServices: ApiService,
+    private router: Router,
+    private filterService: FilterServiceService,
+    private dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     throw new Error('Method not implemented');
   }
@@ -49,13 +57,16 @@ export class AssignmentListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
+    this.filteredDataSource = this.filterService.applyFilter(
+      this.dataSource.data,
+      this.searchTerm
+    );
   }
 
   fetchAssignments() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append('type','5');
+    fd.append('type', '5');
     this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -92,25 +103,26 @@ export class AssignmentListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-    let fd = new FormData();
-    fd.append('id', id);
-    fd.append('type', DELETE_TYPE.ASSIGNMENT.toString());
-    this.showSpinner = true;
-    this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
-      (res: any) => {
-        if (res && res.status) {
-          this.showSpinner = false;
-          this.fetchAssignments();
-        } else {
-          this.showSpinner = false;
-        }
-      },
-      (error) => {
-        this.showSpinner = false;
-        console.log('Delete failed', error);
+        let fd = new FormData();
+        fd.append('id', id);
+        fd.append('type', DELETE_TYPE.ASSIGNMENT.toString());
+        this.showSpinner = true;
+        this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
+          (res: any) => {
+            if (res && res.status) {
+              this.showSpinner = false;
+              this.fetchAssignments();
+            } else {
+              this.showSpinner = false;
+            }
+          },
+          (error) => {
+            this.showSpinner = false;
+            console.log('Delete failed', error);
+          }
+        );
       }
-    );
-  } })
+    });
   }
   public filterByStatus() {
     this.showSpinner = true;
@@ -136,11 +148,11 @@ export class AssignmentListComponent implements OnInit {
   public openInOut() {
     const dialogRef = this.dialog.open(AddInOutComponent, {
       width: '400px',
-      height: '500px'
+      height: '500px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-
+      if (result) this.fetchAssignments();
     });
   }
 }

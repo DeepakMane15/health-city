@@ -24,9 +24,19 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AddInOutComponent } from './add-in-out/add-in-out.component';
-
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
 @NgModule({
-  declarations: [AssignmentListComponent, AddAssignmentComponent, ViewAssignmentComponent, AddInOutComponent],
+  declarations: [
+    AssignmentListComponent,
+    AddAssignmentComponent,
+    ViewAssignmentComponent,
+    AddInOutComponent,
+  ],
   imports: [
     CommonModule,
     AssignmentRoutingModule,
@@ -43,11 +53,14 @@ import { AddInOutComponent } from './add-in-out/add-in-out.component';
     MatSelectModule,
     MatDatepickerModule,
     MatPaginatorModule,
+    MatNativeDateModule,
     MatTooltipModule,
     MatTableModule,
     MatGridListModule,
     MatTabsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgxMatTimepickerModule,
+    NgxMatDatetimePickerModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [provideNativeDateAdapter()],
 })

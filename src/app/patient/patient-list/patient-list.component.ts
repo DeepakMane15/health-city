@@ -63,11 +63,11 @@ export class PatientListComponent {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/patients/add']);
+    this.router.navigate(['/patients/fuel/add']);
   }
 
   navigateToEdit(patientData: PatientModel) {
-    this.router.navigate(['/patients/edit'], {
+    this.router.navigate(['/patients/fuel/edit'], {
       state: { patientData: patientData },
     });
   }

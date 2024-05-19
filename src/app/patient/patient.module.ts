@@ -24,12 +24,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddPatientComponent } from './add-patient/add-patient.component';
 import { ViewPatientComponent } from './view-patient/view-patient.component';
 import { ImprestListComponent } from './imprest-list/imprest-list.component';
+import { AddFuelComponent } from './add-fuel/add-fuel.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [
     PatientListComponent,
     AddPatientComponent,
     ViewPatientComponent,
     ImprestListComponent,
+    AddFuelComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +55,7 @@ import { ImprestListComponent } from './imprest-list/imprest-list.component';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   exports:[
     AddPatientComponent

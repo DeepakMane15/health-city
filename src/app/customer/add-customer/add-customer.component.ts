@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -16,6 +17,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.scss'],
+  providers: [DatePipe]
 })
 export class AddCustomerComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -47,6 +49,7 @@ export class AddCustomerComponent implements OnInit {
     insurance: '',
     iDate: '',
     fuel_card: '',
+    fuel_card_make: '',
     fNo: '',
     cashElg: '',
     cLimit: '',
@@ -60,35 +63,49 @@ export class AddCustomerComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private _authService: AuthService,
-    private _googleService: GoogleService
+    private _googleService: GoogleService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.companyForm.get('iDate')?.disable();
     this.companyForm.get('fNo')?.disable();
     this.companyForm.get('cLimit')?.disable();
+    this.companyForm.get('fuel_card_make')?.disable();
 
-    this.categorySettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
-    this.subCategorySettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'title',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true,
-    };
+
     this.customerData = history.state.customerData;
-    console.log(this.customerData);
-    this.companyForm.patchValue({});
+
+    this.companyForm.patchValue({
+      id:  this.customerData['id'],
+      sewadar_code:  this.customerData['sewadar_code'],
+      sewadar_type:  this.customerData['sewadar_type'],
+      fname: this.customerData['first_name'],
+      lname: this.customerData['last_name'],
+      dl: this.customerData['dl_no'],
+      phone: this.customerData['phone'],
+      department: this.customerData['department'],
+      address: this.customerData['address'],
+      eNo: this.customerData['emergency_no'],
+      eName: this.customerData['emergency_name'],
+      // insurance: this.customerData['insurance'],
+      iDate: this.customerData['insurance_date'],
+      // fuel_card: this.customerData['fuel_card_issued'],
+      fuel_card_make: this.customerData['fuel_card_make'],
+      fNo: this.customerData['fuel_card_no'],
+      // cashElg: this.customerData['cash_eligiblity'],
+      cLimit: this.customerData['cash_limit'],
+    });
+    if(this.customerData['insurance'] === "1") {
+      this.companyForm.get('iDate')?.enable();
+    }
+    if(this.customerData['fuel_card_issued'] === "1") {
+      this.companyForm.get('fNo')?.enable();
+      this.companyForm.get('fuel_card_make')?.enable();
+    }
+    if(this.customerData['cash_eligiblity'] === "1") {
+      this.companyForm.get('cLimit')?.enable();
+    }
   }
 
   onItemSelect(item: any) {}
@@ -102,8 +119,13 @@ export class AddCustomerComponent implements OnInit {
 
   handleFuel(isCheck: boolean) {
     this.isFuel = isCheck;
-    if (isCheck) this.companyForm.get('fNo')?.enable();
-    else this.companyForm.get('fNo')?.disable();
+    if (isCheck) {
+      this.companyForm.get('fNo')?.enable();
+      this.companyForm.get('fuel_card_make')?.enable();
+    } else {
+      this.companyForm.get('fNo')?.disable();
+      this.companyForm.get('fuel_card_make')?.disable();
+    }
   }
 
   handleCash(isCheck: boolean) {
@@ -116,11 +138,24 @@ export class AddCustomerComponent implements OnInit {
     if (this.companyForm.valid) {
       this.showSpinner = true;
       const formData = new FormData();
+      const formModel: any = this.companyForm.value;
+      formData.append("type", "2");
+      for (const key of Object.keys(formModel)) {
+        if(key === 'iDate') {
+          let date = this.datePipe.transform(this.companyForm.get('iDate')?.value, 'MM-dd-yyyy');
+          formData.append(key, date?.toString() || "");
+        }
+        else {
+          const value = formModel[key];
+          formData.append(key, value);
+        }
+      }
+
       this._apiService
         .post(
           this.customerData
-            ? APIConstant.EDIT_CUSTOMER
-            : APIConstant.ADD_CUSTOMER,
+            ? APIConstant.SNM_EDIT
+            : APIConstant.SNM_SAVE,
           formData
         )
         .subscribe(

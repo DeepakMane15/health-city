@@ -7,13 +7,13 @@ export const DashboardCardsConstant: DashboardCardsModel[] = [
     cards: {
       setOne: [
         {
-          title: 'Employees1',
+          title: 'Drivers',
           cols: 1,
           rows: 1,
           icon: 'mdi mdi-chart-areaspline widget-two-icon',
         },
         {
-          title: 'Customers',
+          title: 'Vehicles',
           cols: 1,
           rows: 1,
           icon: 'mdi mdi-layers widget-two-icon',

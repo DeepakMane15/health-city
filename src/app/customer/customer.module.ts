@@ -28,6 +28,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddUserComponent } from './add-user/add-user.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 @NgModule({
   declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent],
   imports: [
@@ -50,9 +52,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatIconModule,
     MatTabsModule,
     FlexLayoutModule,
+    MatDatepickerModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
+    provideNativeDateAdapter(),
     {
       provide: MAT_RADIO_DEFAULT_OPTIONS,
       useValue: { color: 'primary' },

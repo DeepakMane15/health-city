@@ -37,33 +37,33 @@ export const NavItemsContant: NavLinksModel[] = [
     ],
     category: '',
     subItems: [
-      {
-        label: 'View',
-        roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
-        ],
-        icon: '',
-        url: '/assignments',
-        category: '',
-        subItems: [],
-      },
-      {
-        label: 'Add',
-        roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
-        ],
-        icon: '',
-        url: '/assignments/add',
-        category: '',
-        subItems: [],
-      },
+      // {
+      //   label: 'View',
+      //   roles: [
+      //     UserTypeConstant.ADMIN,
+      //     UserTypeConstant.CUSTOMER,
+      //     UserTypeConstant.CUSTOMER_USER,
+      //   ],
+      //   icon: '',
+      //   url: '/assignments',
+      //   category: '',
+      //   subItems: [],
+      // },
+      // {
+      //   label: 'Add',
+      //   roles: [
+      //     UserTypeConstant.ADMIN,
+      //     UserTypeConstant.CUSTOMER,
+      //     UserTypeConstant.CUSTOMER_USER,
+      //   ],
+      //   icon: '',
+      //   url: '/assignments/add',
+      //   category: '',
+      //   subItems: [],
+      // },
     ],
     icon: 'compare_arrows',
-    url: '/',
+    url: '/assignments',
   },
   {
     label: 'Pre-request For vehicle',
@@ -100,43 +100,6 @@ export const NavItemsContant: NavLinksModel[] = [
       },
     ],
     icon: 'assignment',
-    url: '/',
-  },
-  {
-    label: 'Vehicle Tracking',
-    roles: [
-      UserTypeConstant.ADMIN,
-      UserTypeConstant.CUSTOMER,
-      UserTypeConstant.CUSTOMER_USER,
-    ],
-    category: '',
-    subItems: [
-      {
-        label: 'Live Tracking',
-        roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
-        ],
-        subItems: [],
-        category: '',
-        icon: '',
-        url: '/living/board'
-      },
-      {
-        label: 'Parked Vehicles',
-        roles: [
-          UserTypeConstant.ADMIN,
-          UserTypeConstant.CUSTOMER,
-          UserTypeConstant.CUSTOMER_USER,
-        ],
-        subItems: [],
-        category: '',
-        icon: '',
-        url: ''
-      },
-    ],
-    icon: 'location_on',
     url: '/',
   },
   {
@@ -233,7 +196,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.PROFESSIONAL,
         ],
         icon: '',
-        url: 'medical-team',
+        url: '/medical-team/pollution',
         category: '',
         subItems: [],
       },
@@ -264,6 +227,43 @@ export const NavItemsContant: NavLinksModel[] = [
       },
     ],
     icon: 'people',
+    url: '/',
+  },
+  {
+    label: 'Vehicle Tracking (api pending)',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
+    ],
+    category: '',
+    subItems: [
+      {
+        label: 'Live Tracking',
+        roles: [
+          UserTypeConstant.ADMIN,
+          UserTypeConstant.CUSTOMER,
+          UserTypeConstant.CUSTOMER_USER,
+        ],
+        subItems: [],
+        category: '',
+        icon: '',
+        url: '/living/board'
+      },
+      {
+        label: 'Parked Vehicles',
+        roles: [
+          UserTypeConstant.ADMIN,
+          UserTypeConstant.CUSTOMER,
+          UserTypeConstant.CUSTOMER_USER,
+        ],
+        subItems: [],
+        category: '',
+        icon: '',
+        url: ''
+      },
+    ],
+    icon: 'location_on',
     url: '/',
   },
 

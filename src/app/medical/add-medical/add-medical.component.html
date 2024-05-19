@@ -19,21 +19,21 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>First Name</mat-label>
+            <mat-label>Chassis No</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="first_name">
+              <input matInput formControlName="chassis_no">
             </div>
-            <mat-error *ngIf="medicalForm.get('first_name')?.invalid && medicalForm.get('first_name')?.touched">
-              First Name is invalid
+            <mat-error *ngIf="medicalForm.get('chassis_no')?.invalid && medicalForm.get('chassis_no')?.touched">
+              Chassis No is invalid
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Last Name</mat-label>
-            <input matInput formControlName="last_name">
-            <mat-error *ngIf="medicalForm.get('last_name')?.invalid && medicalForm.get('last_name')?.touched">
-              Last Name is required
+            <mat-label>Registration No</mat-label>
+            <input matInput formControlName="registeration_no">
+            <mat-error *ngIf="medicalForm.get('registeration_no')?.invalid && medicalForm.get('registeration_no')?.touched">
+              Registration No is required
             </mat-error>
           </mat-form-field>
         </div>
@@ -41,207 +41,130 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address">
-            <mat-error *ngIf="medicalForm.get('address')?.invalid && medicalForm.get('address')?.touched">
-              Address is invalid
+            <mat-label>Engine No</mat-label>
+            <input matInput formControlName="engine_no">
+            <mat-error *ngIf="medicalForm.get('engine_no')?.invalid && medicalForm.get('engine_no')?.touched">
+              Engine No is invalid
             </mat-error>
           </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
+            <mat-label>Manufacturing Date</mat-label>
+            <!-- <div class="uname-input"> -->
+              <!-- <input matInput formControlName="manufacturing_date"> -->
+              <input matInput [matDatepicker]="manufacturing_date" formControlName="manufacturing_date">
+              <mat-datepicker-toggle matIconSuffix [for]="manufacturing_date"></mat-datepicker-toggle>
+              <mat-datepicker #manufacturing_date></mat-datepicker>
+            <!-- </div> -->
+            <mat-error *ngIf="medicalForm.get('manufacturing_date')?.invalid && medicalForm.get('manufacturing_date')?.touched">
+              Manufacturing Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Sitting Capacity</mat-label>
+            <input matInput formControlName="sitting_capacity">
+            <mat-error *ngIf="medicalForm.get('sitting_capacity')?.invalid && medicalForm.get('sitting_capacity')?.touched">
+              Sitting Capacity is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Model Name</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="email" (change)="checkUsernameAvailable($event)">
+              <input matInput formControlName="model_name">
               <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </div>
-            <mat-error *ngIf="medicalForm.get('email')?.invalid && medicalForm.get('email')?.touched">
-              Email is required
+            <mat-error *ngIf="medicalForm.get('model_name')?.invalid && medicalForm.get('model_name')?.touched">
+              Model Name is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="row" style="padding-bottom: 25px;">
-        <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Profession</mat-label>
-            <div class="uname-input"> -->
-          <!-- <input matInput formControlName="profession"> -->
-          <!-- <mat-select formControlName="profession">
-                <mat-option *ngFor="let profession of fieldData?.profession"
-                  [value]="profession.prid">{{profession.title}}</mat-option>
-              </mat-select> -->
-          <ng-multiselect-dropdown [placeholder]="'Profession'" [settings]="profSettings" [data]="fieldData?.profession"
-            formControlName="profession" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-        </div>
-        <!-- <mat-error *ngIf="medicalForm.get('profession')?.invalid && medicalForm.get('profession')?.touched">
-              Profession is invalid
-            </mat-error>
-          </mat-form-field> -->
-        <!-- </div> -->
-        <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Ethnicity</mat-label> -->
-          <!-- <input matInput formControlName="ethnicity"> -->
-          <!-- <mat-select formControlName="ethnicity">
-              <mat-option *ngFor="let ethnicity of fieldData?.ethnicity"
-                [value]="ethnicity.eid">{{ethnicity.title}}</mat-option>
-            </mat-select> -->
-          <ng-multiselect-dropdown [placeholder]="'Ethnicity'" [settings]="ethSettings" [data]="fieldData?.ethnicity"
-            formControlName="ethnicity" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <!-- <mat-error *ngIf="medicalForm.get('ethnicity')?.invalid && medicalForm.get('ethnicity')?.touched">
-              Ethnicity is required
-            </mat-error>
-          </mat-form-field> -->
-        </div>
-      </div>
 
-      <div class="row" style="padding-bottom: 7px;">
+      <div class="row">
         <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Languages</mat-label>
-            <div class="uname-input"> -->
-          <!-- <input matInput formControlName="languages"> -->
-          <!-- <mat-select formControlName="languages" multiple>
-                <mat-option *ngFor="let languages of fieldData?.languages"
-                  [value]="languages.lid">{{languages.title}}</mat-option>
-              </mat-select> -->
-          <ng-multiselect-dropdown [placeholder]="'languages'" [settings]="lngSettings" [data]="fieldData?.languages"
-            formControlName="languages" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <!-- </div>
-            <mat-error *ngIf="medicalForm.get('languages')?.invalid && medicalForm.get('languages')?.touched">
-              Languages is invalid
+          <mat-form-field class="full-width">
+            <mat-label>Vehicle Make</mat-label>
+            <input matInput formControlName="vehicle_make">
+            <mat-error *ngIf="medicalForm.get('vehicle_make')?.invalid && medicalForm.get('vehicle_make')?.touched">
+              Vehicle Make is invalid
             </mat-error>
-          </mat-form-field> -->
-        </div>
-        <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>County</mat-label> -->
-          <!-- <input matInput formControlName="county"> -->
-          <!-- <mat-select formControlName="county" multiple>
-              <mat-option *ngFor="let region of fieldData?.region" [value]="region.rid">{{region.title}}</mat-option>
-            </mat-select> -->
-          <ng-multiselect-dropdown [placeholder]="'County'" [settings]="countySettings" [data]="fieldData?.region"
-            formControlName="county" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <!-- <mat-error *ngIf="medicalForm.get('county')?.invalid && medicalForm.get('county')?.touched">
-              County is required
-            </mat-error>
-          </mat-form-field> -->
-        </div>
-      </div>
-      <div class="row" style="align-items: baseline;">
-        <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Service Area</mat-label>
-            <div class="uname-input"> -->
-          <!-- <input matInput formControlName="service_area"> -->
-          <!-- <mat-select formControlName="service_area" multiple>
-                <mat-option *ngFor="let service of fieldData?.serviceArea"
-                  [value]="service.said">{{service.service_area_title}}</mat-option>
-              </mat-select> -->
-          <ng-multiselect-dropdown [placeholder]="'Service Area'" [settings]="servSettings"
-            [data]="fieldData?.serviceArea" formControlName="service_area" (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <!-- </div>
-            <mat-error *ngIf="medicalForm.get('service_area')?.invalid && medicalForm.get('service_area')?.touched">
-              Service Area is invalid
-            </mat-error>
-          </mat-form-field> -->
+          </mat-form-field>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone">
-            <mat-error *ngIf="medicalForm.get('phone')?.invalid && medicalForm.get('phone')?.touched">
-              Phone is required
+            <mat-label>Purchase Date</mat-label>
+            <!-- <div class="uname-input"> -->
+              <!-- <input matInput formControlName="purchase_date"> -->
+              <input matInput [matDatepicker]="purchase_date" formControlName="purchase_date">
+              <mat-datepicker-toggle matIconSuffix [for]="purchase_date"></mat-datepicker-toggle>
+              <mat-datepicker #purchase_date></mat-datepicker>
+            <!-- </div> -->
+            <mat-error *ngIf="medicalForm.get('purchase_date')?.invalid && medicalForm.get('purchase_date')?.touched">
+              Purchase Date is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
-        <!-- descrbe -->
 
-
-        <div class="col">
-          <div> <span class="text-sb">Attach Passport size photo </span>
-            <span class="help-text">
-              ( allowed JPG or PNG, max size 1 mb)
-            </span>
-          </div>
-          <input id="fileInput" hidden #photoInput type="file" (change)="onFileSelected($event, fileType.PHOTO)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('photo')?.value}"
-            (click)="photoInput.click()">
-            <div class="label-container">
-              <div class="label-section">Choose file</div>
-            </div>
-            <div class="name-section">{{this.medicalForm.get('photo')?.value?.name || 'No file chosen'}}</div>
-          </div>
-          <span class="error-text">{{photoError}}</span>
-        </div>
-        <div class="col">
-          <div> <span class="text-sb">Attach Licence </span>
-            <span class="help-text">
-              ( allowed PDF, max size 2 mb)
-            </span>
-          </div>
-          <input id="fileInput" hidden #licenceInput type="file" (change)="onFileSelected($event, fileType.LICENCE)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('licence')?.value}"
-            (click)="licenceInput.click()">
-            <div class="label-container">
-              <div class="label-section">Choose file</div>
-            </div>
-            <div class="name-section">{{this.medicalForm.get('licence')?.value?.name || 'No file chosen'}}</div>
-          </div>
-          <span class="error-text">{{licenceError}}</span>
-        </div>
-      </div>
-      <div class="row" style="padding-top:16px; padding-bottom: 7px;">
-        <div class="col">
-          <div> <span class="text-sb">Attach Resume </span>
-            <span class="help-text">
-              ( allowed PDF, max size 2 mb)
-            </span>
-          </div>
-          <input id="fileInput" hidden #resumeInput type="file" (change)="onFileSelected($event, fileType.RESUME)">
-          <div class="file-input" [ngClass]="{'file-error' : fileError && !this.medicalForm.get('resume')?.value}"
-            (click)="resumeInput.click()">
-            <div class="label-container">
-              <div class="label-section">Choose file</div>
-            </div>
-            <div class="name-section">{{this.medicalForm.get('resume')?.value?.name || 'No file chosen'}}</div>
-          </div>
-          <span class="error-text">{{resumeError}}</span>
-        </div>
-      </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Describe</mat-label>
+            <mat-label>Registration Date</mat-label>
+            <!-- <input matInput formControlName="registeration_date"> -->
+            <input matInput [matDatepicker]="registeration_date" formControlName="registeration_date">
+              <mat-datepicker-toggle matIconSuffix [for]="registeration_date"></mat-datepicker-toggle>
+              <mat-datepicker #registeration_date></mat-datepicker>
+            <mat-error *ngIf="medicalForm.get('registeration_date')?.invalid && medicalForm.get('registeration_date')?.touched">
+              Registration Date is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Fuel Type</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="describe">
+              <input matInput formControlName="fuel_type">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             </div>
-            <mat-error *ngIf="medicalForm.get('describe')?.invalid && medicalForm.get('describe')?.touched">
-              Describe is invalid
+            <mat-error *ngIf="medicalForm.get('fuel_type')?.invalid && medicalForm.get('fuel_type')?.touched">
+              Fuel Type is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Internal Notes</mat-label>
-            <input matInput formControlName="internal_notes">
-            <mat-error *ngIf="medicalForm.get('internal_notes')?.invalid && medicalForm.get('internal_notes')?.touched">
-              Internal Notes is required
+            <mat-label>Registeration Validity</mat-label>
+            <input matInput formControlName="registeration_validity">
+            <mat-error *ngIf="medicalForm.get('registeration_validity')?.invalid && medicalForm.get('registeration_validity')?.touched">
+              Registeration Validity is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Present Km</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="present_km">
+              <span *ngIf="isChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </div>
+            <mat-error *ngIf="medicalForm.get('present_km')?.invalid && medicalForm.get('present_km')?.touched">
+              Present Km is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
+
     </mat-card-content>
     <mat-card-actions class="action-btns">
       <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>

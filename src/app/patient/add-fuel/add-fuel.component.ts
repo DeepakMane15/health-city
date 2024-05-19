@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { PatientModel } from 'src/app/common/models/PatientModel';
@@ -11,29 +12,46 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { GoogleService } from 'src/app/shared/services/google/google.service';
 
 @Component({
-  selector: 'app-add-driver',
-  templateUrl: './add-driver.component.html',
-  styleUrl: './add-driver.component.scss',
+  selector: 'app-add-fuel',
+  templateUrl: './add-fuel.component.html',
+  styleUrl: './add-fuel.component.scss',
 })
-export class AddDriverComponent implements OnInit {
+export class AddFuelComponent implements OnInit {
   public showSpinner: Boolean = false;
   public isUnameAvailable: Boolean = true;
   public isChecking: Boolean = false;
   public timezones: any;
   public addressPredictions: any;
-  public vehicleData!:any;
-  public driverData!:any;
+  public vehicleData!: any;
+  public driverData!: any;
   public patientData!: PatientModel;
   @Input() fromPopup: boolean = false;
   @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
   patientForm = this.fb.group({
     id: 0,
-    name: ['', Validators.required],
-    address: ['', Validators.required],
-    pickup: ['', Validators.required],
-    destination: ['', Validators.required]
+    receipt_no: ['', Validators.required],
+    vehicle: ['', Validators.required],
+    fuel_in_litre: ['', Validators.required],
+    rate: ['', Validators.required],
+    amount: ['', Validators.required],
+    amount_paid: ['', Validators.required],
+    transaction_type: ['', Validators.required],
+    // refill_in: ['', Validators.required],
+    refill_from: ['', Validators.required],
+    present_km: ['', Validators.required],
+    // refill_to: ['', Validators.required],
   });
+
+  public medSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'registeration_no',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -44,39 +62,43 @@ export class AddDriverComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getVehicles();
     this.patientData = history.state.patientData;
     this.patientForm.patchValue({
       id: this.patientData.id,
-      name: this.patientData['name'],
-      address: this.patientData['address'],
-      pickup: this.patientData['pickup'],
-      destination: this.patientData['destination']
+      receipt_no: this.patientData['receipt_no'],
+      vehicle: this.patientData['vehicle'],
+      fuel_in_litre: this.patientData['fuel_in_litre'],
+      rate: this.patientData['rate'],
+      amount: this.patientData['amount'],
+      amount_paid: this.patientData['amount_paid'],
+      transaction_type: this.patientData['transaction_type'],
+      present_km: this.patientData['present_km'],
+      // refill_in: this.patientData['refill_in']
     });
-
   }
 
   getVehicles() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append("type", "2");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.vehicleData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    fd.append('type', '2');
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.vehicleData = res.data;
           this.showSpinner = false;
-          if (this.fromPopup) this.formSubmitted.emit();
         }
-      );
-
+      },
+      (error) => {
+        this.showSpinner = false;
+        if (this.fromPopup) this.formSubmitted.emit();
+      }
+    );
   }
+  onItemSelect(item: any) {
+    // this.handleMedicalSelect(item);
+  }
+  onSelectAll(items: any) {}
 
   onSubmit(): void {
     if (this.patientForm.valid) {
@@ -85,10 +107,14 @@ export class AddDriverComponent implements OnInit {
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        const value = formModel[key];
-        formData.append(key, value);
+        if (key === 'vehicle') {
+          formData.append(key, formModel[key][0].id);
+        } else {
+          const value = formModel[key];
+          formData.append(key, value);
+        }
       }
-      formData.append('type','6');
+      formData.append('type', '5');
       this.showSpinner = true;
       this._apiService
         .post(
@@ -177,4 +203,3 @@ export class AddDriverComponent implements OnInit {
     this.formSubmitted.emit();
   }
 }
-

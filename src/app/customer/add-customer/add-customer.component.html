@@ -19,8 +19,8 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Sewadar Code</mat-label>
-            <input matInput formControlName="code">
-            <mat-error *ngIf="companyForm.get('code')?.invalid && companyForm.get('code')?.touched">
+            <input matInput formControlName="sewadar_code">
+            <mat-error *ngIf="companyForm.get('sewadar_code')?.invalid && companyForm.get('sewadar_code')?.touched">
               Sewadar Code is required
             </mat-error>
           </mat-form-field>
@@ -28,7 +28,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Sewa Type</mat-label>
-            <mat-select formControlName="sewa_type">
+            <mat-select formControlName="sewadar_type">
               <mat-option value="Driver"> Driver
               </mat-option>
               <mat-option value="Helper"> Helper
@@ -36,7 +36,7 @@
               <mat-option value="Cleaner"> Cleaner
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="companyForm.get('code')?.invalid && companyForm.get('code')?.touched">
+            <mat-error *ngIf="companyForm.get('sewadar_type')?.invalid && companyForm.get('sewadar_type')?.touched">
               Sewadar Code is required
             </mat-error>
           </mat-form-field>
@@ -76,7 +76,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>DL No</mat-label>
-            <input matInput formControlName="lname" placeholder="DL No">
+            <input matInput formControlName="dl" placeholder="DL No">
             <mat-error *ngIf="companyForm.get('dl')?.invalid && companyForm.get('dl')?.touched">
               DL No is invalid
             </mat-error>
@@ -88,9 +88,9 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Department</mat-label>
-            <input matInput formControlName="phone" placeholder="Phone">
-            <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
-              Phone is invalid
+            <input matInput formControlName="department" placeholder="department">
+            <mat-error *ngIf="companyForm.get('department')?.invalid && companyForm.get('department')?.touched">
+              Department is invalid
             </mat-error>
           </mat-form-field>
         </div>
@@ -136,10 +136,10 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Insurance Date</mat-label>
-            <input  [disabled]="!isIns" matInput formControlName="iDate" placeholder="Insurance Date">
-            <mat-error *ngIf="companyForm.get('iDate')?.invalid && companyForm.get('iDate')?.touched">
-              Insurance Date is invalid
-            </mat-error>
+            <!-- <input  [disabled]="!isIns" matInput formControlName="iDate" placeholder="Insurance Date"> -->
+            <input matInput [matDatepicker]="picker" formControlName="iDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
@@ -160,6 +160,23 @@
             <mat-error *ngIf="companyForm.get('fNo')?.invalid && companyForm.get('fNo')?.touched">
               Fuel Card No is invalid
             </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Fuel Card Make</mat-label>
+            <mat-select formControlName="fuel_card_make">
+              <mat-option value="Rupay"> Rupay
+              </mat-option>
+              <mat-option value="Visa"> Visa
+              </mat-option>
+              <mat-option value="Platinum"> Platinum
+              </mat-option>
+            </mat-select>
+            <!-- <input matInput formControlName="fNo" placeholder="Fuel Card Make"> -->
+            <!-- <mat-error *ngIf="companyForm.get('fNo')?.invalid && companyForm.get('fNo')?.touched">
+              Fuel Card No is invalid
+            </mat-error> -->
           </mat-form-field>
         </div>
       </div>

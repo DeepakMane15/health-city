@@ -26,6 +26,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SparePartComponent } from './spare-part/spare-part.component';
+import { AddSparePartComponent } from './add-spare-part/add-spare-part.component';
+import { PollutionListComponent } from './pollution-list/pollution-list.component';
+import { AddPollutionComponent } from './add-pollution/add-pollution.component';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
 
 
@@ -34,7 +37,10 @@ import { SparePartComponent } from './spare-part/spare-part.component';
     MedicalListComponent,
     AddMedicalComponent,
     ViewMedicalComponent,
-    SparePartComponent
+    SparePartComponent,
+    AddSparePartComponent,
+    PollutionListComponent,
+    AddPollutionComponent
   ],
   imports: [
     CommonModule,

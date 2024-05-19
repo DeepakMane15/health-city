@@ -10,19 +10,17 @@ import { DeleteConfirmComponent } from 'src/app/shared/dialog/delete-confirm/del
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { FilterServiceService } from 'src/app/shared/services/filter-service/filter-service.service';
 
-
 @Component({
-  selector: 'app-spare-part',
-  templateUrl: './spare-part.component.html',
-  styleUrl: './spare-part.component.scss'
+  selector: 'app-pollution-list',
+  templateUrl: './pollution-list.component.html',
+  styleUrl: './pollution-list.component.scss'
 })
-export class SparePartComponent {
+export class PollutionListComponent  {
   displayedColumns: string[] = [
     'id',
-    'driver',
     'vehicle',
-    'part',
-    'desc',
+    'amount',
+    'valid',
     'Action',
   ];
   public deleteType = DELETE_TYPE;
@@ -50,7 +48,7 @@ export class SparePartComponent {
   fetchMedicalTeams() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append('type','7');
+    fd.append('type','9');
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

@@ -1,0 +1,123 @@
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <div>
+      <span class="title">
+        Add Fuel</span>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title> </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData"
+            formControlName="vehicle" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Fuel in Litre</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="fuel_in_litre">
+            </div>
+            <mat-error *ngIf="patientForm.get('fuel_in_litre')?.invalid && patientForm.get('fuel_in_litre')?.touched">
+              Fuel in Litre is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Current Reading</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="present_km" type="number">
+            </div>
+            <mat-error *ngIf="patientForm.get('present_km')?.invalid && patientForm.get('present_km')?.touched">
+              Current Reading is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Receipt No</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="receipt_no">
+            </div>
+            <mat-error *ngIf="patientForm.get('receipt_no')?.invalid && patientForm.get('receipt_no')?.touched">
+              Receipt No is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Rate</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="rate" type="number">
+            </div>
+            <mat-error *ngIf="patientForm.get('rate')?.invalid && patientForm.get('rate')?.touched">
+              Rate is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="amount" type="number">
+            <mat-error *ngIf="patientForm.get('amount')?.invalid && patientForm.get('amount')?.touched">
+              Amount is required
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Amount Paid</mat-label>
+            <input matInput formControlName="amount_paid" type="number">
+            <mat-error *ngIf="patientForm.get('amount_paid')?.invalid && patientForm.get('amount_paid')?.touched">
+              Paid is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Refill From</mat-label>
+            <!-- <input matInput formControlName="refill_from"> -->
+            <mat-select formControlName="refill_from">
+              <mat-option value="Tanker">Fuel Tanker</mat-option>
+              <mat-option value="Pump">Fuel Station</mat-option>
+            </mat-select>
+            <mat-error *ngIf="patientForm.get('refill_from')?.invalid && patientForm.get('refill_from')?.touched">
+              Refill From is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Payment Mode</mat-label>
+            <mat-select formControlName="transaction_type">
+              <mat-option value="Cash">Cash</mat-option>
+              <mat-option value="Fuel Card">Fuel Card</mat-option>
+              <mat-option value="Cheque">Cheque</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
