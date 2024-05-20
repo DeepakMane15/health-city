@@ -4,11 +4,16 @@
   </div>
   <mat-card class="customer-card">
     <mat-card-header>
-      <mat-card-title>All Driver/Sewadar</mat-card-title>
-      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Driver/Sewadar</button>
+      <mat-card-title>All Driver Sewadar</mat-card-title>
+      <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Driver Sewadar</button>
     </mat-card-header>
     <mat-card-content>
       <div class="search">
+        <div class="status-ins">
+          <span>Parked : <div class="green"></div></span>
+          <span>Out : <div class="red"></div></span>
+
+        </div>
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
@@ -74,7 +79,7 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row [ngStyle]="{color: row.status === 'In' ? 'green' : '#df1717'}" *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons

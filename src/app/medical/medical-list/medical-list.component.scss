@@ -15,9 +15,35 @@ main {
 
       .search {
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
         padding-bottom: 10px;
         height: 25px;
+        align-items: center;
+
+        .status-ins {
+          display: flex;
+          gap: 15px;
+          font-size: 15px;
+
+          span {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+          }
+
+          .green {
+            background-color: green;
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+          }
+          .red {
+            background-color: #df1717;
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+          }
+        }
 
         .custom-input {
           width: 260px;

@@ -57,6 +57,7 @@ export class ViewMedicalComponent {
     'Branch',
     'Action',
   ];
+
   public medicalProfile: MedicalProfileData[] = [
     {
       label: 'Name',

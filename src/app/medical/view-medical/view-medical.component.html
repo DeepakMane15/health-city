@@ -8,7 +8,9 @@
         <!-- <mat-icon class="action-mat-icon"> keyboard_backspace </mat-icon> Customer/Company Details -->
         <div class="tab-header-label-container">
           <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
-          <span>Vehicle Details</span>
+          <span>Vehicle Details : <span class="vehicle-no">
+              {{medicalData['registeration_no']}} </span>
+          </span>
         </div>
       </mat-card-title>
       <!-- <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Customer/Company</button> -->
@@ -23,7 +25,9 @@
                 <span>Edit</span>
               </div>
               <div class="company-content" *ngIf="medicalData">
-                <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of medicalProfile">
+                <div fxLayout="row" class="content" fxLayoutAlign="start center"
+                  *ngFor="let data of medicalProfile; let i = index"
+                  [ngStyle]="{ 'background-color': i === 0 ? '#f1f1c8' : '' }">
                   <div fxFlex="40%" fxFlex.xs="100%">
                     {{data.label}}
                   </div>
@@ -37,7 +41,11 @@
               </div>
             </mat-tab>
             <mat-tab label="Documents">
-              <div class="company-content pd-top" >
+              <div class="tab-header-label-container bordered w-90">
+                <mat-icon class="action-mat-icon colored " aria-label="back" (click)="navigateToEdit()">cloud_upload</mat-icon>
+                <span>Upload</span>
+              </div>
+              <div class="company-content pd-top">
                 <div fxLayout="row" class="content" fxLayoutAlign="start center" *ngFor="let data of medicalDocuments">
                   <div fxFlex="40%" fxFlex.xs="100%">
                     {{data.label}}
@@ -46,15 +54,143 @@
                     :
                   </div>
                   <div fxFlex="60%" fxFlex.xs="100%" class="content-rhs">
-                    <a [href]="appConstants.MEDICAL_DOCUMENTS_URL + medicalData[data.key]" target="_blank">{{medicalData[data.key] || ''}}</a>
+                    <a [href]="appConstants.MEDICAL_DOCUMENTS_URL + medicalData[data.key]"
+                      target="_blank">{{medicalData[data.key] || 'View'}}</a>
                   </div>
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="Driver History"> Driver History </mat-tab>
-            <mat-tab label="Travel History"> Travel History </mat-tab>
-            <mat-tab label="Accessories"> Accessories </mat-tab>
-            <mat-tab label="Fuel"> Fuel </mat-tab>
+            <mat-tab label="Travel History">
+              <div class="users-content">
+                <table mat-table [dataSource]="inOutData" class="custom-table">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+                  <!-- Profession Column -->
+                  <ng-container matColumnDef="driver">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Driver </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element?.driver_name}} </td>
+                  </ng-container>
+
+                  <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="km">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">KM </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.km}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Date </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date + " " +
+                      element.time}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Type </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.type}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="inOutColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: inOutColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </mat-tab>
+            <mat-tab label="Fuel">
+              <div class="users-content">
+                <table mat-table [dataSource]="fuelData" class="custom-table">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="receipt">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Receipt No </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;" [matTooltip]="element.receipt_no ">
+                      {{element.receipt_no }} </td>
+                  </ng-container>
+
+                  <!-- Profession Column -->
+                  <ng-container matColumnDef="fuel">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Fuel in litre </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.fuel_in_litre}} </td>
+                  </ng-container>
+
+                  <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="rate">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Rate </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.rate}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Amount Paid </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.amount_paid}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="transaction">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Transaction type </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.transaction_type}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </mat-tab>
+            <mat-tab label="Accessories">
+              <div class="users-content">
+                <table mat-table [dataSource]="spareData" class="custom-table">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+                  <!-- Profession Column -->
+                  <ng-container matColumnDef="part">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Part </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.part}} </td>
+                  </ng-container>
+
+                  <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="desc">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Description </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.desc}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Amount Paid </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.amount}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="transaction">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Transaction type </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.transaction_type}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Date </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="spareColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: spareColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+            </mat-tab>
           </mat-tab-group>
         </mat-grid-tile>
         <!-- <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">

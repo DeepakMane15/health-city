@@ -28,6 +28,7 @@ export class AddMedicalComponent implements OnInit {
   public resumeError!: string;
   public fileError: boolean = false;
   public prof: any;
+  public fuelData!:any;
   medicalForm = this.fb.group({
     id: 0,
     chassis_no: ['', Validators.required],

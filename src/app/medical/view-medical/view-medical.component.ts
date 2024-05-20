@@ -21,23 +21,29 @@ export class ViewMedicalComponent implements OnInit {
   columns: Boolean = true;
   defaultTabIndex!: number;
   public appConstants = AppConstants;
+  public fuelData!: any;
+  public spareData!: any;
+  public inOutData!: any;
 
   displayedColumns: string[] = [
     'id',
-    'User name',
-    'Type',
-    // 'Time Zone',
-    'Branch',
-    'Action',
+    'receipt',
+    'fuel',
+    'rate',
+    'amount',
+    'transaction',
   ];
+  spareColumns: string[] = ['id', 'part', 'desc','date'];
+  inOutColumns: string[] = ['id', 'driver', 'km', 'date','type'];
+
   public medicalProfile: any = [
-    {
-      label: 'Chasis No',
-      key: 'chassis_no',
-    },
     {
       label: 'Registration No',
       key: 'registeration_no',
+    },
+    {
+      label: 'Chasis No',
+      key: 'chassis_no',
     },
     {
       label: 'Engine No',
@@ -99,12 +105,16 @@ export class ViewMedicalComponent implements OnInit {
 
   public medicalDocuments: any = [
     {
-      label: 'Resume',
+      label: 'Registration Certificate',
       key: 'resume',
     },
     {
-      label: 'Licence',
+      label: 'Pollution Certificate',
       key: 'licence',
+    },
+    {
+      label: 'Insurance',
+      key: 'insurance',
     },
   ];
 
@@ -141,6 +151,29 @@ export class ViewMedicalComponent implements OnInit {
         }
       }
     });
+    this.getFuelData();
+  }
+  public getFuelData() {
+    this.showSpinner = true;
+    const formData = new FormData();
+    formData.append('type', '8');
+    formData.append('vehicle', this.medicalData['id']);
+    this._apiService.post(APIConstant.SNM_GET_BY_ID, formData).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fuelData = res.data['fuel'];
+          this.spareData = res.data['spare-parts'];
+          this.inOutData = res.data['inout'];
+        } else {
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Operation failed', error);
+      }
+    );
   }
 
   private fetchMedicalTeamData(pid: string) {

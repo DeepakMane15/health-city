@@ -31,36 +31,40 @@
     </div>
     <div>
       <!-- <mat-form-field class="full-width"> -->
-        <!-- <mat-label>Request</mat-label> -->
-        <ng-multiselect-dropdown [placeholder]="'Request'" [settings]="reqSettings" [data]="requestData"
-        formControlName="request"  (onSelectAll)="onSelectAll($event)">
+      <!-- <mat-label>Request</mat-label> -->
+      <ng-multiselect-dropdown [placeholder]="'Request'" [settings]="reqSettings" [data]="requestData"
+        formControlName="request" (onSelectAll)="onSelectAll($event)">
       </ng-multiselect-dropdown>
       <!-- </mat-form-field> -->
+    </div>
+    <div class="row">
+      <div class="col" style="width: 50%;">
+        <mat-form-field class="full-width">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="date" formControlName="date">
+          <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+          <mat-datepicker #date></mat-datepicker>
+        </mat-form-field>
       </div>
-    <div>
-      <mat-form-field class="full-width">
-        <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="date" formControlName="date">
-        <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
-        <mat-datepicker #date></mat-datepicker>
-      </mat-form-field>
+      <div class="col" style="width: 50%;">
+        <mat-form-field class="full-width">
+          <mat-label>Time</mat-label>
+          <div class="uname-input">
+            <input matInput formControlName="time">
+          </div>
+          <!-- <ngx-mat-timepicker  [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker> -->
+        </mat-form-field>
       </div>
-    <div>
-      <mat-form-field class="full-width">
-        <mat-label>Time</mat-label>
-        <div class="uname-input">
-          <input matInput formControlName="time">
-        </div>
-        <!-- <ngx-mat-timepicker  [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker> -->
-     </mat-form-field>
     </div>
 
     <!-- </mat-form-field> -->
     <div>
-      <div *ngIf="vehicleDetail">
-        <p>Recent Data</p>
+      <div *ngIf="vehicleDetail" class="recent-bg">
+        <h3>Last Entry : </h3>
         <div>
-          Type : {{vehicleDetail?.type}}
+          {{vehicleDetail?.type === 'Out' ? 'Vehicle was Out of Workshop' :
+          'Vehicle was Parked in the Workshop'
+          }}
         </div>
         <div>
           Date : {{vehicleDetail?.date}}
@@ -71,7 +75,8 @@
       </div>
     </div>
     <div class="action">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!resetForm.valid">Mark {{vehicleDetail ? (vehicleDetail.type === 'Out'? 'In' : 'Out') : ''}}</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!resetForm.valid">Mark {{vehicleDetail ?
+        (vehicleDetail.type === 'Out'? 'In' : 'Out') : ''}}</button>
     </div>
   </form>
 </main>

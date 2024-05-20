@@ -23,6 +23,7 @@ export class MedicalListComponent implements OnInit {
     'Model',
     'Color',
     'Type',
+    'Reading',
     'Chasis',
     // 'Ethnicity',
     // 'Address',

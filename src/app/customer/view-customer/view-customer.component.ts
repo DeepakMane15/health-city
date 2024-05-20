@@ -23,6 +23,9 @@ export class ViewCustomerComponent implements OnInit {
   userData = new MatTableDataSource<any>();
   columns: Boolean = true;
   defaultTabIndex!: number;
+  public fuelData!: any;
+  public spareData!: any;
+  public inOutData!: any;
 
   displayedColumns: string[] = [
     'id',
@@ -32,6 +35,8 @@ export class ViewCustomerComponent implements OnInit {
     'Branch',
     'Action',
   ];
+  inOutColumns: string[] = ['id', 'driver', 'km', 'date','type'];
+
   public companyData: any = [
     {
       label: 'Sewadar Code',
@@ -136,6 +141,32 @@ export class ViewCustomerComponent implements OnInit {
         }
       }
     });
+    this.getFuelData();
+  }
+
+  public getFuelData() {
+    this.showSpinner = true;
+    const formData = new FormData();
+    formData.append('type', '8');
+    formData.append('driver', this.customerData['id']);
+    formData.append('isVehicle', '0');
+
+    this._apiService.post(APIConstant.SNM_GET_BY_ID, formData).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.showSpinner = false;
+          this.fuelData = res.data['fuel'];
+          this.spareData = res.data['spare-parts'];
+          this.inOutData = res.data['inout'];
+        } else {
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Operation failed', error);
+      }
+    );
   }
 
   isPageRefresh(): boolean {

@@ -7,42 +7,87 @@ export const DashboardCardsConstant: DashboardCardsModel[] = [
     cards: {
       setOne: [
         {
-          title: 'Drivers',
+          title: 'Total Requests',
           cols: 1,
           rows: 1,
-          icon: 'mdi mdi-chart-areaspline widget-two-icon',
+          key: 'count_request',
+          icon: 'mdi mdi-form-select',
+          url: '/driver',
+          subItems: [
+            {
+              title: 'Open : 1 ',
+              color: 'green'
+            },
+            {
+              title: 'Closed : 1',
+              color: '#df1717'
+            }
+          ]
         },
         {
-          title: 'Vehicles',
+          title: 'Vehicles Count',
           cols: 1,
           rows: 1,
-          icon: 'mdi mdi-layers widget-two-icon',
+          key: 'count_vehicle',
+          url: '',
+          icon: 'mdi mdi-car-back',
+          subItems: [
+            {
+              title: 'Parked : 1 ',
+              color: 'green'
+            },
+            {
+              title: 'Out : 1',
+              color: '#df1717'
+            }
+          ]
         },
         {
-          title: 'Medical Teams',
+          title: 'Drivers Count',
           cols: 1,
           rows: 1,
-          icon: 'mdi mdi-access-point-network widget-two-icon',
+          key: 'count_driver',
+          icon: 'mdi mdi-account-supervisor',
+          subItems: [
+            {
+              title: 'Ready : 2 ',
+              color: 'green'
+            },
+            {
+              title: 'Out : 2',
+              color: '#df1717'
+            }
+          ],
+          url: '',
         },
         {
-          title: 'Patients',
+          title: 'Fuel Consumed',
           cols: 1,
           rows: 1,
-          icon: 'mdi mdi-account-convert widget-two-icon',
+          key: 'count_fuel',
+          icon: 'mdi mdi-gas-station-outline',
+          subItems: [],
+          url: '',
         },
       ],
       setTwo: [
         {
-          title: 'Employees',
+          title: 'Requests',
           cols: 1,
           rows: 1,
+          key: '',
           icon: '',
+          subItems: [],
+          url: '',
         },
         {
-          title: 'Customers',
+          title: 'Drivers Available',
           cols: 1,
           rows: 1,
-          icon: '',
+          key: '',
+          icon: 'circle',
+          subItems: [],
+          url: '',
         },
       ],
     },

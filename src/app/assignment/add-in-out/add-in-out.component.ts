@@ -69,7 +69,7 @@ export class AddInOutComponent implements OnInit {
   resetForm = this.fb.group({
     vehicle: ['', Validators.required],
     driver: ['', Validators.required],
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     type: '',
     km: ['', Validators.required],
     time: ['', Validators.required],

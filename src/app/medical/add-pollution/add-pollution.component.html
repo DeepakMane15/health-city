@@ -1,1 +1,76 @@
-<p>add-pollution works!</p>
+<div class="spinner-overlay" *ngIf="showSpinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<form [formGroup]="medicalForm" (ngSubmit)="onSubmit()">
+  <div class="header-label-container">
+    <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
+    <span class="title">
+      Pollution</span>
+  </div>
+
+  <mat-divider></mat-divider>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{medicalData ? 'Edit' : 'Add'}} Pollution
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Vehicle</mat-label>
+            <div class="uname-input">
+              <!-- <input matInput formControlName="vehicle"> -->
+              <mat-select formControlName="vehicle">
+                <mat-option *ngFor="let vehicle of vehicleData" [value]="vehicle.id"> {{vehicle.registeration_no}}
+                </mat-option>
+            </mat-select>
+            </div>
+            <mat-error *ngIf="medicalForm.get('vehicle')?.invalid && medicalForm.get('vehicle')?.touched">
+              Vehicle is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Amount</mat-label>
+            <input matInput formControlName="amount">
+            <mat-error *ngIf="medicalForm.get('amount')?.invalid && medicalForm.get('amount')?.touched">
+              Amount is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Tenure (in Months)</mat-label>
+            <!-- <input matInput formControlName="date"> -->
+            <input matInput type="number" formControlName="tenure">
+            <mat-error *ngIf="medicalForm.get('tenure')?.invalid && medicalForm.get('tenure')?.touched">
+              Tenure is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Valid Till</mat-label>
+            <!-- <input matInput formControlName="date"> -->
+            <input matInput [matDatepicker]="date" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+              <mat-datepicker #date></mat-datepicker>
+            <mat-error *ngIf="medicalForm.get('date')?.invalid && medicalForm.get('date')?.touched">
+              Valid Till is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions class="action-btns">
+      <button mat-raised-button class="cancel-btn" type="button" (click)="handleCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

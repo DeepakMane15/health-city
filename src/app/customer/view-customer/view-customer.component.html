@@ -15,7 +15,7 @@
     </mat-card-header>
     <mat-card-content>
       <mat-grid-list [cols]="columns ? 3 : 1" rowHeight="700" gutterSize="10">
-        <mat-grid-tile [colspan]="columns ? 2: 1" [rowspan]="1">
+        <mat-grid-tile [colspan]="columns ? 3: 1" [rowspan]="1">
           <mat-tab-group [selectedIndex]="defaultTabIndex">
             <mat-tab label="Profile">
               <div class="tab-header-label-container bordered">
@@ -86,14 +86,52 @@
               </mat-paginator> -->
             </mat-tab>
             <mat-tab label="Vehicle Details"> Vehicle Details </mat-tab>
-            <mat-tab label="Travel History"> Travel History </mat-tab>
+            <mat-tab label="Travel History">
+              <div class="users-content">
+                <table mat-table [dataSource]="inOutData" class="custom-table">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+                  <!-- Profession Column -->
+                  <ng-container matColumnDef="driver">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Driver </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element?.driver_name}} </td>
+                  </ng-container>
+
+                  <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="km">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">KM </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.km}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Date </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date + " " + element.time}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Type </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.type}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="inOutColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: inOutColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+                </div>
+               </mat-tab>
           </mat-tab-group>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
+        <!-- <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">
           <iframe width="600" height="450" frameborder="0" style="border:0"
             [src]="getMapUrl(customerData?.physical_address)" allowfullscreen></iframe>
 
-        </mat-grid-tile>
+        </mat-grid-tile> -->
       </mat-grid-list>
     </mat-card-content>
   </mat-card>

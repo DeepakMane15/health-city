@@ -19,7 +19,7 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 export class SparePartComponent {
   displayedColumns: string[] = [
     'id',
-    'driver',
+    // 'driver',
     'vehicle',
     'part',
     'desc',

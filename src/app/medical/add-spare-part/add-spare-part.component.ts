@@ -32,11 +32,12 @@ export class AddSparePartComponent implements OnInit {
   public driverData!:any;
   medicalForm = this.fb.group({
     id: 0,
-    driver: ['', Validators.required],
+    // driver: ['', Validators.required],
     part: ['', Validators.required],
     vehicle: ['', Validators.required],
     desc: ['', Validators.required],
-    date: ['', Validators.required]
+    date: [new Date(), Validators.required],
+    amount: ['', Validators.required],
   });
 
   constructor(
@@ -53,6 +54,17 @@ export class AddSparePartComponent implements OnInit {
   public profSettings!: IDropdownSettings;
   public ethSettings!: IDropdownSettings;
 
+  public medSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'registeration_no',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 1,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true
+  };
+
   ngOnInit(): void {
     this.getVehicles();
     this.getDrivers();
@@ -61,11 +73,12 @@ export class AddSparePartComponent implements OnInit {
       console.log(this.medicalData);
       this.medicalForm.patchValue({
         id: this.medicalData['id'],
-        driver: this.medicalData['driver'],
+        // driver: this.medicalData['driver'],
         vehicle: this.medicalData['vehicle'],
         part: this.medicalData['part'],
         date: this.medicalData['date'],
         desc: this.medicalData['desc'],
+        amount: this.medicalData['amount'],
       });
     }
   }
@@ -128,6 +141,9 @@ export class AddSparePartComponent implements OnInit {
         if(key === 'date') {
           let date = this.datePipe.transform(this.medicalForm.get('date')?.value, 'MM-dd-yyyy');
           formData.append(key, date?.toString() || "");
+        }
+        else if(key === 'vehicle') {
+          formData.append(key, formModel[key][0].id);
         }
         else {
           const value = formModel[key];

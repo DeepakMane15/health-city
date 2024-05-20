@@ -36,8 +36,8 @@ export class PollutionListComponent  {
     private filterService: FilterServiceService,
     private dialog: MatDialog
   ) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  ngOnInit(){
+
   }
 
   ngAfterViewInit() {
@@ -63,7 +63,7 @@ export class PollutionListComponent  {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/medical-team/spare-parts/add']);
+    this.router.navigate(['/medical-team/pollution/add']);
   }
 
   applyFilter(): void {
@@ -74,12 +74,12 @@ export class PollutionListComponent  {
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/spare-parts/edit'], {
+    this.router.navigate(['/medical-team/pollution/edit'], {
       state: { medicalData: medicalData },
     });
   }
   navigateToView(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/spare-parts/view'], {
+    this.router.navigate(['/medical-team/pollution/view'], {
       state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }
@@ -87,7 +87,7 @@ export class PollutionListComponent  {
   public openResetPopUp() {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'spare-parts' },
+      data: { name: 'pollution' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -96,7 +96,7 @@ export class PollutionListComponent  {
   handleDelete(pid: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'spare-parts' },
+      data: { name: 'pollution' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -45,6 +45,10 @@
 
 }
 
+.hand-cursor {
+  cursor: pointer;
+}
+
 .dashboard-card-content {
   text-align: center;
   display: flex;
@@ -52,7 +56,7 @@
 
   .card-content-text {
     text-align: initial;
-    padding-top: 10px;
+    padding-top: 3px;
   }
 
   span {
@@ -64,6 +68,7 @@
     color: #6d6dff;
   }
 }
+
 ::ng-deep .set2-grid mat-card {
   min-height: 200px !important;
 }
@@ -74,4 +79,47 @@
   border-radius: 50%;
   color: rgba(58, 201, 214, 0.5);
   padding: 10px;
+}
+
+.driver-title {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+
+.d-flex {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.circle,
+.circle::before {
+  content: " ";
+  margin: 15px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 auto;
+  transition: all 0.3s;
+  background-color: green;
+}
+
+.circle::before {
+  animation: mymove 2s infinite;
+  position: absolute;
+  background-color: green
+}
+
+@keyframes mymove {
+  50% {
+    transform: scale(2);
+    opacity: 0
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0
+  }
 }

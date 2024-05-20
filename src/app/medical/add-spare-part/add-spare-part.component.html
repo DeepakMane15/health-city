@@ -16,55 +16,57 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
+      <div class="row" style="align-items: center;">
         <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Vehicle</mat-label>
-            <div class="uname-input">
+          <!-- <mat-form-field class="full-width">
+            <mat-label>Select Vehicle No.</mat-label>
+            <div class="uname-input"> -->
               <!-- <input matInput formControlName="vehicle"> -->
-              <mat-select formControlName="vehicle">
+              <!-- <mat-select formControlName="vehicle">
                 <mat-option *ngFor="let vehicle of vehicleData" [value]="vehicle.id"> {{vehicle.registeration_no}}
                 </mat-option>
-            </mat-select>
-            </div>
+              </mat-select> -->
+              <ng-multiselect-dropdown [placeholder]="'Select Vehicle No.'" [settings]="medSettings" [data]="vehicleData"
+            formControlName="vehicle">
+          </ng-multiselect-dropdown>
+            <!-- </div>
             <mat-error *ngIf="medicalForm.get('vehicle')?.invalid && medicalForm.get('vehicle')?.touched">
               Vehicle is invalid
-            </mat-error>
-          </mat-form-field>
+            </mat-error> -->
+          <!-- </mat-form-field> -->
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Driver</mat-label>
-            <!-- <input matInput formControlName="driver"> -->
-            <mat-select formControlName="driver">
-              <mat-option *ngFor="let driver of driverData" [value]="driver.id"> {{driver.first_name + " " + driver.last_name}}
-              </mat-option>
-          </mat-select>
-            <mat-error *ngIf="medicalForm.get('driver')?.invalid && medicalForm.get('driver')?.touched">
-              Driver is required
+            <mat-label>Amount</mat-label>
+            <div class="uname-input">
+              <input matInput formControlName="amount" type="number">
+            </div>
+            <mat-error *ngIf="medicalForm.get('amount')?.invalid && medicalForm.get('amount')?.touched">
+              Amount is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Part</mat-label>
-            <input matInput formControlName="part">
-            <mat-error *ngIf="medicalForm.get('part')?.invalid && medicalForm.get('part')?.touched">
-              Part is invalid
-            </mat-error>
-          </mat-form-field>
-        </div>
+
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Date</mat-label>
             <!-- <input matInput formControlName="date"> -->
             <input matInput [matDatepicker]="date" formControlName="date">
-              <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
-              <mat-datepicker #date></mat-datepicker>
+            <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
             <mat-error *ngIf="medicalForm.get('date')?.invalid && medicalForm.get('date')?.touched">
               Date is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Part Name</mat-label>
+            <input matInput formControlName="part">
+            <mat-error *ngIf="medicalForm.get('part')?.invalid && medicalForm.get('part')?.touched">
+              Part Name is invalid
             </mat-error>
           </mat-form-field>
         </div>
@@ -72,12 +74,12 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Desc</mat-label>
+            <mat-label>Part Description</mat-label>
             <div class="uname-input">
               <input matInput formControlName="desc">
             </div>
             <mat-error *ngIf="medicalForm.get('desc')?.invalid && medicalForm.get('desc')?.touched">
-              Desc is required
+              Part Description is required
             </mat-error>
           </mat-form-field>
         </div>
