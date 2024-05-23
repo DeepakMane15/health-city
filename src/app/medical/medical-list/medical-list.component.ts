@@ -37,7 +37,7 @@ export class MedicalListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public outCount: number = 0;
   public inCount: number = 0;
-
+  public originalData!: any;
   constructor(
     private _apiService: ApiService,
     private router: Router,
@@ -61,10 +61,11 @@ export class MedicalListComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.originalData = res.data;
           this.inCount = res.data.filter((data: any) => data.status === 'In')?.length;
           this.outCount = res.data.filter((data: any) => data.status === 'Out')?.length;
 
-          this.filteredDataSource = this.dataSource.data.slice();
+          this.dataSource.data = this.originalData.slice();
         }
         this.showSpinner = false;
       },
@@ -78,8 +79,8 @@ export class MedicalListComponent implements OnInit {
   }
 
   applyFilter(): void {
-    this.filteredDataSource = this.filterService.applyFilter(
-      this.dataSource.data,
+    this.dataSource.data = this.filterService.applyFilter(
+      this.originalData,
       this.searchTerm
     );
   }

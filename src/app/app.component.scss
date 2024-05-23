@@ -11,6 +11,21 @@ mat-sidenav {
   }
 }
 
+.logo-container {
+  display: flex;
+  white-space: break-spaces;
+  gap: 21px;
+  align-items: center;
+
+  .title {
+    font-size: 20px;
+    padding: 8px;
+    color: #fff;
+    // letter-spacing: 1px;
+    line-height: 22px;
+  }
+}
+
 .sidenav {
   width: 270px;
 }
@@ -209,9 +224,11 @@ mat-tree-node {
   display: flex;
   gap: 3px;
 }
+
 .text-title {
   text-transform: capitalize;
 }
+
 // .secondary-section {
 //   border: 1px solid #fff;
 //   margin: 7px;
@@ -230,6 +247,7 @@ mat-tree-node {
   height: 1px;
   width: 100%;
 }
+
 .color-white {
   color: #fff;
 }

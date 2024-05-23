@@ -3,7 +3,12 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
       <mat-toolbar class="toolbar">
-        <img style="margin-left: 10px;" src="https://nirankarifoundation.org/wp-content/uploads/2023/12/snmd.png" height="50px">
+        <div class="logo-container">
+          <img style="margin-left: 10px;"
+            src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b0/Sant_Nirankari_Mission_official_logo.webp/316px-Sant_Nirankari_Mission_official_logo.webp.png"
+            height="50px">
+          <div class="title">Sant Nirankari Health City</div>
+        </div>
       </mat-toolbar>
       <mat-nav-list>
         <span class="pl-2">NAVIGATION</span>

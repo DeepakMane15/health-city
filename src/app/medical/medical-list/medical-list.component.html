@@ -22,7 +22,7 @@
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="filteredDataSource" class="custom-table">
+        <table mat-table [dataSource]="dataSource" class="custom-table">
 
           <!-- Position Column -->
           <ng-container matColumnDef="id">

@@ -9,14 +9,14 @@ main {
 
 .container {
   display: flex;
-    align-items: center;
-    height: 100vh;
+  align-items: center;
+  height: 100vh;
 
-    gap: 30px;
-    padding: 0px 75px;
-    // width: 100%;
-    align-items: center;
-    justify-content: center;
+  gap: 30px;
+  padding: 0px 75px;
+  // width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -222,10 +222,18 @@ mat-form-field {
 
 .center-card .mat-mdc-card-header {
   justify-content: center;
-  background-color: #2b6598;
+  // background-color: #2b6598;
+  background: linear-gradient(90deg, rgba(231, 231, 231, 1) 0%, rgba(200, 191, 246, 1) 0%, rgba(110, 168, 196, 1) 1%, rgba(49, 145, 164, 1) 100%);
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   padding-top: 5px;
+
+  .title {
+    font-size: 28px;
+    padding: 8px;
+    color: #fff;
+    letter-spacing: 1px;
+  }
 }
 
 mat-card-content {
