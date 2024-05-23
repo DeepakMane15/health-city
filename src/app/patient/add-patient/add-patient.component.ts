@@ -28,6 +28,11 @@ export class AddPatientComponent implements OnInit {
   public vehicleData!: any;
   public driverData!: any;
   public patientData!: PatientModel;
+  public isQtyVisible: boolean = false;
+  public isOthChallanVisible: boolean = false;
+  public isChallanVisible: boolean = false;
+  public vehicleDetail!: any;
+
   @Input() fromPopup: boolean = false;
   @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
 
@@ -38,6 +43,9 @@ export class AddPatientComponent implements OnInit {
     expense_for: ['', Validators.required],
     last_reading: ['', Validators.required],
     rate: '',
+    qty: '',
+    challan_type: '',
+    other_challan: '',
     amount: ['', Validators.required],
     payment_mode: ['', Validators.required],
     date: ['', Validators.required],
@@ -60,7 +68,7 @@ export class AddPatientComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 1,
     allowSearchFilter: true,
-    closeDropDownOnSelection: true
+    closeDropDownOnSelection: true,
   };
   public driverSettings: IDropdownSettings = {
     singleSelection: true,
@@ -70,7 +78,7 @@ export class AddPatientComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
     allowSearchFilter: true,
-    closeDropDownOnSelection: true
+    closeDropDownOnSelection: true,
   };
 
   ngOnInit(): void {
@@ -82,7 +90,9 @@ export class AddPatientComponent implements OnInit {
       vehicle_no: this.patientData['vehicle_no'],
       driver_name: this.patientData['driver_name'],
       rate: this.patientData['rate'],
+      qty: this.patientData['qty'],
       amount: this.patientData['amount'],
+      challan_type: this.patientData['challan_type'],
       expense_for: this.patientData['expense_for'],
       payment_mode: this.patientData['payment_mode'],
       last_reading: this.patientData['last_reading'],
@@ -126,7 +136,7 @@ export class AddPatientComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.patientForm.valid) {
+    if (this.patientForm.valid && !this.isKmError()) {
       const formModel: PatientModel = this.patientForm.value as PatientModel;
       const formData = new FormData();
 
@@ -138,15 +148,14 @@ export class AddPatientComponent implements OnInit {
             'MM-dd-yyyy'
           );
           formData.append(key, date?.toString() || '');
-        }
-        else if(key === 'driver_name' || key === 'vehicle_no') {
+        } else if (key === 'driver_name' || key === 'vehicle_no') {
           formData.append(key, formModel[key][0].id.toString());
-        }
-        else {
+        } else {
           const value = formModel[key];
           formData.append(key, value);
         }
       }
+      if (this.isChallanVisible) formData.append('is_challan', '1');
       formData.append('type', '1');
       this.showSpinner = true;
       this._apiService
@@ -204,10 +213,72 @@ export class AddPatientComponent implements OnInit {
     this.patientForm.get(field)?.markAsTouched(); // Mark phone as touched
   }
 
-  public handleExpenseChange(event : MatSelectChange) {
-    // if(event.value === 'Spare part') {
+  public handleExpenseChange(event: MatSelectChange) {
+    if (event.value === 'Spare part') {
+      this.isQtyVisible = true;
+      this.isChallanVisible = false;
+      this.patientForm.patchValue({
+        qty: '1',
+        challan_type: '',
+        other_challan: '',
+      });
+    } else if (event.value === 'Challan') {
+      this.isChallanVisible = true;
+      this.isQtyVisible = false;
+    } else {
+      this.isQtyVisible = false;
+      this.patientForm.patchValue({
+        qty: '',
+        challan_type: '',
+        other_challan: '',
+      });
+      this.isChallanVisible = false;
+    }
+  }
 
-    // }
+  public handleChallanChange(event: MatSelectChange) {
+    if (event.value === 'Others') {
+      this.isOthChallanVisible = true;
+    } else {
+      this.isOthChallanVisible = false;
+      this.patientForm.patchValue({
+        other_challan: '',
+      });
+    }
+  }
+
+  onItemSelect(item: any) {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('type', '8');
+    fd.append('vehicle', item.id);
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res.data && res.data.length > 0) {
+          this.vehicleDetail = res.data[0];
+          this.patientForm.patchValue({
+            last_reading: this.vehicleDetail.km,
+          });
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.error('Operation failed', error);
+      }
+    );
+  }
+
+  isKmError(): boolean {
+    if (this.vehicleDetail?.km) {
+      const kmControl = this.patientForm.get('last_reading');
+      return (
+        kmControl?.value !== null &&
+        kmControl?.value !== undefined &&
+        parseInt(kmControl.value) < parseInt(this.vehicleDetail?.km)
+      );
+    }
+    return false;
   }
 
   public getTimeZones() {

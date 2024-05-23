@@ -30,7 +30,7 @@ import { AddSparePartComponent } from './add-spare-part/add-spare-part.component
 import { PollutionListComponent } from './pollution-list/pollution-list.component';
 import { AddPollutionComponent } from './add-pollution/add-pollution.component';
 // import { MedicalListComponent } from '../medical-list/medical-list.component';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -64,6 +64,7 @@ import { AddPollutionComponent } from './add-pollution/add-pollution.component';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatDatepickerModule,
+    MatButtonToggleModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   providers:[provideNativeDateAdapter()]

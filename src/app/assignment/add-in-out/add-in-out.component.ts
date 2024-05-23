@@ -1,8 +1,8 @@
 // import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
@@ -23,17 +23,21 @@ export class AddInOutComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private datePipe: DatePipe,
-    public dialogRef: MatDialogRef<AddInOutComponent> // private datePipe: DatePipe
+    public dialogRef: MatDialogRef<AddInOutComponent>, // private datePipe: DatePipe
+    @Inject(MAT_DIALOG_DATA) public data: any
+
   ) {}
   public vehicleData!: any;
   public driverData!: any;
   public requestData!: any;
   public vehicleDetail!: any;
+  public showSpinner: boolean = false;
 
   ngOnInit() {
     this.getVehicles();
     this.getDrivers();
     this.getrequests();
+    this.vehicleDetail = this.data;
   }
   public medSettings: IDropdownSettings = {
     singleSelection: true,
@@ -104,17 +108,23 @@ export class AddInOutComponent implements OnInit {
   }
 
   getVehicles() {
+    this.showSpinner = true;
     const fd = new FormData();
     fd.append('type', '2');
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.vehicleData = res.data;
+          if(this.data)
+            this.resetForm.patchValue({
+              vehicle: this.vehicleData.filter((vehicle: any) => vehicle.id === this.data.vehicle_id),
+              km: this.data.km
+            })
         }
-        // this.showSpinner = false;
+        this.showSpinner = false;
       },
       (error) => {
-        // this.showSpinner = false;
+        this.showSpinner = false;
       }
     );
   }
@@ -125,6 +135,10 @@ export class AddInOutComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.driverData = res.data;
+          if(this.data)
+            this.resetForm.patchValue({
+              driver: this.driverData.filter((driver: any) => driver.id === this.data.driver_id),
+            })
         }
       },
       (error) => {}
@@ -137,6 +151,11 @@ export class AddInOutComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.requestData = res.data;
+          this.requestData.push({id:'0', name:"Others"});
+          if(this.data)
+            this.resetForm.patchValue({
+              request: this.requestData.filter((request: any) => request.id === this.data.request),
+            })
         }
         // this.showSpinner = false;
       },

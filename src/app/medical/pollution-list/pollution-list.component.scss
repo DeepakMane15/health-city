@@ -15,9 +15,15 @@ main {
 
       .search {
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
+        align-items: baseline;
         padding-bottom: 10px;
         height: 25px;
+
+        ::ng-deep .mat-button-toggle-checked {
+          background: #3c8dbc;
+          color: #fff;
+        }
 
         .custom-input {
           width: 260px;

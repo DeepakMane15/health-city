@@ -1,4 +1,7 @@
 <main style="padding: 16px;">
+  <div class="spinner-overlay" *ngIf="showSpinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
   <div class="title-container" style="display: flex;
   justify-content: space-between;">
     <h1>Add In-Out</h1>

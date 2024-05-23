@@ -147,10 +147,11 @@ export class AssignmentListComponent implements OnInit {
     return value;
   }
 
-  public openInOut() {
+  public openInOut(data = null) {
     const dialogRef = this.dialog.open(AddInOutComponent, {
       width: '400px',
       height: '500px',
+      data: data
     });
 
     dialogRef.afterClosed().subscribe((result) => {

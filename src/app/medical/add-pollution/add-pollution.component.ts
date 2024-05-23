@@ -33,6 +33,7 @@ export class AddPollutionComponent implements OnInit {
   public driverData!:any;
   medicalForm = this.fb.group({
     id: 0,
+    addType: ['Pollution', Validators.required],
     amount: ['', Validators.required],
     vehicle: ['', Validators.required],
     tenure: ['', Validators.required],
@@ -61,6 +62,7 @@ export class AddPollutionComponent implements OnInit {
       console.log(this.medicalData);
       this.medicalForm.patchValue({
         id: this.medicalData['id'],
+        addType: this.medicalData['type'],
         vehicle: this.medicalData['vehicle'],
         amount: this.medicalData['amount'],
         date: this.medicalData['valid_till'],

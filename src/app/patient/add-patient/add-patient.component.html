@@ -16,7 +16,7 @@
     <mat-card-content>
       <div class="row">
         <div class="col" style="width: 50%;">
-          <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData"
+          <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData" (onSelect)="onItemSelect($event)"
             formControlName="vehicle_no">
           </ng-multiselect-dropdown>
         </div>
@@ -27,16 +27,20 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" style="margin-top: 20px; margin-bottom: 4px;">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Expense For</mat-label>
-            <mat-select formControlName="expense_for" >
+            <mat-select formControlName="expense_for" (selectionChange)="handleExpenseChange($event)">
               <mat-option value="Petrol">Petrol
               </mat-option>
               <mat-option value="Diesel">Diesel
               </mat-option>
+              <mat-option value="CNG">CNG
+              </mat-option>
               <mat-option value="Spare part">Spare part
+              </mat-option>
+              <mat-option value="Challan">Challan
               </mat-option>
               <mat-option value="Insurance Renewal">Insurance Renewal
               </mat-option>
@@ -47,15 +51,59 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col">
+        <div class="col" *ngIf="isChallanVisible">
+          <mat-form-field class="full-width">
+            <mat-label>Challan Type</mat-label>
+            <mat-select formControlName="challan_type" (selectionChange)="handleChallanChange($event)">
+              <mat-option value="Overspeeding">Overspeeding
+              </mat-option>
+              <mat-option value="No-Parking">No-Parking
+              </mat-option>
+              <mat-option value="Others">Others
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col" *ngIf="isOthChallanVisible">
+          <mat-form-field class="full-width">
+            <mat-label>Other Challan</mat-label>
+            <input matInput formControlName="other_challan">
+            <mat-error *ngIf="patientForm.get('other_challan')?.invalid && patientForm.get('other_challan')?.touched">
+              Other Challan is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col" *ngIf="!isOthChallanVisible">
           <mat-form-field class="full-width">
             <mat-label>Last Reading</mat-label>
             <input matInput formControlName="last_reading">
+            <mat-hint style="color: red; line-height: 11px;" *ngIf="isKmError()">
+              Current Reading must be equal or greater than Last Reading : {{this.vehicleDetail?.km}}.
+            </mat-hint>
           </mat-form-field>
         </div>
+
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col" *ngIf="isOthChallanVisible">
+          <mat-form-field class="full-width">
+            <mat-label>Last Reading</mat-label>
+            <input matInput formControlName="last_reading">
+            <mat-hint style="color: red; line-height: 11px;" *ngIf="isKmError()">
+              Current Reading must be equal or greater than Last Reading : {{this.vehicleDetail?.km}}.
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col" *ngIf="isQtyVisible">
+          <mat-form-field class="full-width">
+            <mat-label>Quantity</mat-label>
+            <input type="number" matInput formControlName="qty">
+            <mat-error *ngIf="patientForm.get('qty')?.invalid && patientForm.get('qty')?.touched">
+              Quantity is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col" *ngIf="!isQtyVisible">
           <mat-form-field class="full-width">
             <mat-label>Rate</mat-label>
             <input matInput formControlName="rate">
@@ -63,7 +111,7 @@
               Rate is required
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div class="col">
           <mat-form-field class="full-width">
@@ -89,7 +137,7 @@
             <mat-label>Payment Mode</mat-label>
             <mat-select formControlName="payment_mode">
               <mat-option value="Cash">Cash</mat-option>
-              <mat-option value="Petrol">Petrol</mat-option>
+              <mat-option value="Petrol">Fuel Card</mat-option>
               <mat-option value="Cheque">Cheque</mat-option>
             </mat-select>
           </mat-form-field>

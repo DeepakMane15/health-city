@@ -5,23 +5,36 @@
   <div class="header-label-container">
     <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
     <span class="title">
-      Pollution</span>
+      Pollution/Insurance</span>
   </div>
 
   <mat-divider></mat-divider>
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>
-        {{medicalData ? 'Edit' : 'Add'}} Pollution
+        {{medicalData ? 'Edit' : 'Add'}} Pollution/Insurance
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <mat-label>Type</mat-label>
+            <div class="uname-input">
+              <mat-select formControlName="addType">
+                <mat-option *ngFor="let type of ['Pollution','Insurance']" [value]="type"> {{type}}
+                </mat-option>
+            </mat-select>
+            </div>
+            <mat-error *ngIf="medicalForm.get('addType')?.invalid && medicalForm.get('addType')?.touched">
+              Type is invalid
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
             <mat-label>Vehicle</mat-label>
             <div class="uname-input">
-              <!-- <input matInput formControlName="vehicle"> -->
               <mat-select formControlName="vehicle">
                 <mat-option *ngFor="let vehicle of vehicleData" [value]="vehicle.id"> {{vehicle.registeration_no}}
                 </mat-option>

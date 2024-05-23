@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -27,7 +28,9 @@ export class PollutionListComponent  {
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
+  public originalDataSource!: any[];
   public searchTerm!: string;
+  public selectedToggle = '1';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -53,6 +56,7 @@ export class PollutionListComponent  {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.originalDataSource = res.data;
           this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;
@@ -64,6 +68,18 @@ export class PollutionListComponent  {
   }
   navigateToAdd() {
     this.router.navigate(['/medical-team/pollution/add']);
+  }
+
+  handleToggleChange(event: MatButtonToggleChange): void {
+    const selectedValue = event.value;
+    this.selectedToggle = event.value;
+    // Perform any other logic based on the selected value
+    if (selectedValue === '1') {
+      this.dataSource.data = this.originalDataSource.filter(data => data.type === 'Insurance');
+    } else if (selectedValue === '2') {
+      this.dataSource.data = this.originalDataSource.filter(data => data.type === 'Pollution');
+    }
+    this.filteredDataSource = this.dataSource.data.slice();
   }
 
   applyFilter(): void {
