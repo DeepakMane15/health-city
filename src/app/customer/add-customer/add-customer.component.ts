@@ -1,13 +1,16 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatRadioChange } from '@angular/material/radio';
-import { MatSelectChange } from '@angular/material/select';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { CustomerModel } from 'src/app/common/models/CustomerModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -20,6 +23,8 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   providers: [DatePipe]
 })
 export class AddCustomerComponent implements OnInit {
+  currentFile?: File;
+
   public showSpinner: Boolean = false;
   public isUnameAvailable: Boolean = true;
   public isChecking: Boolean = false;
@@ -53,6 +58,8 @@ export class AddCustomerComponent implements OnInit {
     fNo: '',
     cashElg: '',
     cLimit: '',
+    driverLicenseExpiryDate: [new Date(), Validators.required],
+    driverLicensePhoto: ['Select File',Validators.required],
   });
 
   public categorySettings!: IDropdownSettings;
@@ -72,10 +79,7 @@ export class AddCustomerComponent implements OnInit {
     this.companyForm.get('fNo')?.disable();
     this.companyForm.get('cLimit')?.disable();
     this.companyForm.get('fuel_card_make')?.disable();
-
-
     this.customerData = history.state.customerData;
-
     this.companyForm.patchValue({
       id:  this.customerData['id'],
       sewadar_code:  this.customerData['sewadar_code'],
@@ -184,5 +188,48 @@ export class AddCustomerComponent implements OnInit {
   }
   public navigateBack() {
     this.router.navigate(['/customer']);
+  }
+
+  selectFile(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      const file: File = event.target.files[0];
+      this.currentFile = file;
+    } else {
+      // this.fileName = 'Select File';
+    }
+  }
+
+  onDriverLicensePhotoSelected($event: Event) {
+    throw new Error('Method not implemented.');
+  }
+
+  upload(): void {
+    // this.progress = 0;
+    // this.message = '';
+
+    // if (this.currentFile) {
+    //   this.uploadService.upload(this.currentFile).subscribe(
+    //     (event: any) => {
+    //       if (event.type === HttpEventType.UploadProgress) {
+    //         this.progress = Math.round((100 * event.loaded) / event.total);
+    //       } else if (event instanceof HttpResponse) {
+    //         this.message = event.body.message;
+    //         this.fileInfos = this.uploadService.getFiles();
+    //       }
+    //     },
+    //     (err: any) => {
+    //       console.log(err);
+    //       this.progress = 0;
+
+    //       if (err.error && err.error.message) {
+    //         this.message = err.error.message;
+    //       } else {
+    //         this.message = 'Could not upload the file!';
+    //       }
+
+    //       this.currentFile = undefined;
+    //     }
+    //   );
+    // }
   }
 }

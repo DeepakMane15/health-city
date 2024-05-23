@@ -4,8 +4,7 @@
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
   <div class="header-label-container">
     <mat-icon class="action-mat-icon" aria-label="back" (click)="navigateBack()">keyboard_backspace</mat-icon>
-    <span class="title">
-      {{customerData ? 'Edit' : 'Add'}} Driver/Sewadar</span>
+    <span class="title">{{ customerData ? "Edit" : "Add" }} Driver/Sewadar</span>
   </div>
   <mat-divider></mat-divider>
 
@@ -19,7 +18,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Sewadar Code</mat-label>
-            <input matInput formControlName="sewadar_code">
+            <input matInput formControlName="sewadar_code" />
             <mat-error *ngIf="companyForm.get('sewadar_code')?.invalid && companyForm.get('sewadar_code')?.touched">
               Sewadar Code is required
             </mat-error>
@@ -29,15 +28,12 @@
           <mat-form-field class="full-width">
             <mat-label>Sewa Type</mat-label>
             <mat-select formControlName="sewadar_type">
-              <mat-option value="Driver"> Driver
-              </mat-option>
-              <mat-option value="Helper"> Helper
-              </mat-option>
-              <mat-option value="Cleaner"> Cleaner
-              </mat-option>
+              <mat-option value="Driver">Driver</mat-option>
+              <mat-option value="Helper">Helper</mat-option>
+              <mat-option value="Cleaner">Cleaner</mat-option>
             </mat-select>
             <mat-error *ngIf="companyForm.get('sewadar_type')?.invalid && companyForm.get('sewadar_type')?.touched">
-              Sewadar Code is required
+              Sewa Type is required
             </mat-error>
           </mat-form-field>
         </div>
@@ -46,7 +42,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>First Name</mat-label>
-            <input matInput formControlName="fname" placeholder="First Name">
+            <input matInput formControlName="fname" placeholder="First Name" />
             <mat-error *ngIf="companyForm.get('fname')?.invalid && companyForm.get('fname')?.touched">
               First Name is invalid
             </mat-error>
@@ -55,7 +51,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lname" placeholder="Last Name">
+            <input matInput formControlName="lname" placeholder="Last Name" />
             <mat-error *ngIf="companyForm.get('lname')?.invalid && companyForm.get('lname')?.touched">
               Last Name is invalid
             </mat-error>
@@ -67,7 +63,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone" placeholder="Phone">
+            <input matInput formControlName="phone" placeholder="Phone" />
             <mat-error *ngIf="companyForm.get('phone')?.invalid && companyForm.get('phone')?.touched">
               Phone is invalid
             </mat-error>
@@ -76,7 +72,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>DL No</mat-label>
-            <input matInput formControlName="dl" placeholder="DL No">
+            <input matInput formControlName="dl" placeholder="DL No" />
             <mat-error *ngIf="companyForm.get('dl')?.invalid && companyForm.get('dl')?.touched">
               DL No is invalid
             </mat-error>
@@ -88,7 +84,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Department</mat-label>
-            <input matInput formControlName="department" placeholder="department">
+            <input matInput formControlName="department" placeholder="Department" />
             <mat-error *ngIf="companyForm.get('department')?.invalid && companyForm.get('department')?.touched">
               Department is invalid
             </mat-error>
@@ -97,7 +93,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Address</mat-label>
-            <input matInput formControlName="address" placeholder="DL No">
+            <input matInput formControlName="address" placeholder="Address" />
             <mat-error *ngIf="companyForm.get('address')?.invalid && companyForm.get('address')?.touched">
               Address is invalid
             </mat-error>
@@ -109,7 +105,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Emergency No</mat-label>
-            <input matInput formControlName="eNo" placeholder="Emergency No">
+            <input matInput formControlName="eNo" placeholder="Emergency No" />
             <mat-error *ngIf="companyForm.get('eNo')?.invalid && companyForm.get('eNo')?.touched">
               Emergency No is invalid
             </mat-error>
@@ -118,7 +114,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Emergency Name</mat-label>
-            <input matInput formControlName="eName" placeholder="Emergency Name">
+            <input matInput formControlName="eName" placeholder="Emergency Name" />
             <mat-error *ngIf="companyForm.get('eName')?.invalid && companyForm.get('eName')?.touched">
               Emergency Name is invalid
             </mat-error>
@@ -128,16 +124,12 @@
 
       <div class="row">
         <div class="col">
-          <!-- <mat-form-field class="full-width"> -->
-          <!-- <input matInput formControlName="insurance" placeholder="Insurance"> -->
           <mat-checkbox formControlName="insurance" [checked]="isIns" (change)="handleIns($event.checked)">Insurance</mat-checkbox>
-          <!-- </mat-form-field> -->
         </div>
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Insurance Date</mat-label>
-            <!-- <input  [disabled]="!isIns" matInput formControlName="iDate" placeholder="Insurance Date"> -->
-            <input matInput [matDatepicker]="picker" formControlName="iDate">
+            <input matInput [matDatepicker]="picker" formControlName="iDate" />
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -146,17 +138,12 @@
 
       <div class="row">
         <div class="col">
-          <!-- <mat-form-field class="full-width"> -->
-            <!-- <mat-label>Fuel Card Issued</mat-label>
-            <input matInput formControlName="fuel_card" placeholder="Fuel Card Issued"> -->
           <mat-checkbox formControlName="fuel_card" [checked]="isFuel" (change)="handleFuel($event.checked)">Fuel Card Issued</mat-checkbox>
-
-          <!-- </mat-form-field> -->
         </div>
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Fuel Card No</mat-label>
-            <input matInput formControlName="fNo" placeholder="Fuel Card No">
+            <input matInput formControlName="fNo" placeholder="Fuel Card No" />
             <mat-error *ngIf="companyForm.get('fNo')?.invalid && companyForm.get('fNo')?.touched">
               Fuel Card No is invalid
             </mat-error>
@@ -166,35 +153,22 @@
           <mat-form-field class="full-width">
             <mat-label>Fuel Card Make</mat-label>
             <mat-select formControlName="fuel_card_make">
-              <mat-option value="Rupay"> Rupay
-              </mat-option>
-              <mat-option value="Visa"> Visa
-              </mat-option>
-              <mat-option value="Platinum"> Platinum
-              </mat-option>
+              <mat-option value="Rupay">Rupay</mat-option>
+              <mat-option value="Visa">Visa</mat-option>
+              <mat-option value="Platinum">Platinum</mat-option>
             </mat-select>
-            <!-- <input matInput formControlName="fNo" placeholder="Fuel Card Make"> -->
-            <!-- <mat-error *ngIf="companyForm.get('fNo')?.invalid && companyForm.get('fNo')?.touched">
-              Fuel Card No is invalid
-            </mat-error> -->
           </mat-form-field>
         </div>
       </div>
 
-
       <div class="row">
         <div class="col">
-          <!-- <mat-form-field class="full-width">
-            <mat-label>Cash Eligiblity</mat-label> -->
-            <!-- <input matInput formControlName="cashElg" placeholder="Cash Eligiblity"> -->
-          <mat-checkbox formControlName="cashElg" [checked]="isCash" (change)="handleCash($event.checked)">Cash Eligiblity</mat-checkbox>
-
-          <!-- </mat-form-field> -->
+          <mat-checkbox formControlName="cashElg" [checked]="isCash" (change)="handleCash($event.checked)">Cash Eligibility</mat-checkbox>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Cash Limit</mat-label>
-            <input matInput formControlName="cLimit" placeholder="Cash Limit">
+            <input matInput formControlName="cLimit" placeholder="Cash Limit" />
             <mat-error *ngIf="companyForm.get('cLimit')?.invalid && companyForm.get('cLimit')?.touched">
               Cash Limit is invalid
             </mat-error>
@@ -202,6 +176,26 @@
         </div>
       </div>
 
+       <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Driver License Expiry Date</mat-label>
+            <input matInput [matDatepicker]="driverLicenseExpiryDate" formControlName="driverLicenseExpiryDate" />
+            <mat-datepicker-toggle matIconSuffix [for]="driverLicenseExpiryDate"></mat-datepicker-toggle>
+            <mat-datepicker #driverLicenseExpiryDate></mat-datepicker>
+           <mat-error *ngIf="companyForm.get('driverLicenseExpiryDate')?.invalid && companyForm.get('driverLicenseExpiryDate')?.touched">
+              Driver License Expiry Date is required
+            </mat-error>
+          </mat-form-field>        
+        </div>
+        <div class="col">
+          <mat-label>Driver License Photo</mat-label>
+          <input  type="file" formControlName="driverLicensePhoto" accept=".jpg, .jpeg, .png" style="display: block;">
+          <mat-error *ngIf="companyForm.get('driverLicensePhoto')?.invalid && companyForm.get('driverLicensePhoto')?.touched">
+            License Photo is required
+          </mat-error>
+        </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions class="action-btns">
@@ -209,7 +203,4 @@
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
-
-  <!-- payment-info -->
-
 </form>

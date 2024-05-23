@@ -1,35 +1,45 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CustomerRoutingModule } from './customer-routing.module';
-import { CustomersListComponent } from './customers-list/customers-list.component';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import {
+  MAT_CHECKBOX_DEFAULT_OPTIONS,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
 // import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import {MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxModule} from '@angular/material/checkbox'
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   MAT_RADIO_DEFAULT_OPTIONS,
   MatRadioModule,
 } from '@angular/material/radio';
-import { AddCustomerComponent } from './add-customer/add-customer.component';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
-import { ViewCustomerComponent } from './view-customer/view-customer.component';
-import {MatTabsModule} from '@angular/material/tabs';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { AddUserComponent } from './add-user/add-user.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { CustomerRoutingModule } from './customer-routing.module';
+import {
+  CustomersListComponent,
+} from './customers-list/customers-list.component';
+import { ViewCustomerComponent } from './view-customer/view-customer.component';
+
 @NgModule({
   declarations: [CustomersListComponent, AddCustomerComponent, ViewCustomerComponent, AddUserComponent],
   imports: [
@@ -53,7 +63,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatTabsModule,
     FlexLayoutModule,
     MatDatepickerModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    MatToolbarModule
   ],
   providers: [
     provideNativeDateAdapter(),
