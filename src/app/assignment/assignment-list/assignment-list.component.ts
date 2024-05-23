@@ -23,9 +23,10 @@ export class AssignmentListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
     'vehicle',
+    'type',
     'driver',
     'date',
-    'time',
+    // 'time',
     'km',
     'action',
   ];
@@ -98,6 +99,7 @@ export class AssignmentListComponent implements OnInit {
   handleDeleteAssignment(id: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
+      height: '550px',
       data: { name: 'Assignment' },
     });
 

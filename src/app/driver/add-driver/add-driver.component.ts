@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -14,6 +15,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   selector: 'app-add-driver',
   templateUrl: './add-driver.component.html',
   styleUrl: './add-driver.component.scss',
+  providers: [DatePipe]
 })
 export class AddDriverComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -30,9 +32,10 @@ export class AddDriverComponent implements OnInit {
   patientForm = this.fb.group({
     id: 0,
     name: ['', Validators.required],
-    address: ['', Validators.required],
+    date: ['', Validators.required],
     pickup: ['', Validators.required],
-    destination: ['', Validators.required]
+    destination: ['', Validators.required],
+    phone: ['', Validators.required]
   });
 
   constructor(
@@ -40,7 +43,8 @@ export class AddDriverComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private _authService: AuthService,
-    private _googleService: GoogleService
+    private _googleService: GoogleService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -48,9 +52,10 @@ export class AddDriverComponent implements OnInit {
     this.patientForm.patchValue({
       id: this.patientData.id,
       name: this.patientData['name'],
-      address: this.patientData['address'],
+      date: this.patientData['date'],
       pickup: this.patientData['pickup'],
-      destination: this.patientData['destination']
+      destination: this.patientData['destination'],
+      phone: this.patientData['phone']
     });
 
   }
@@ -80,13 +85,19 @@ export class AddDriverComponent implements OnInit {
 
   onSubmit(): void {
     if (this.patientForm.valid) {
-      const formModel: PatientModel = this.patientForm.value as PatientModel;
+      const formModel: any = this.patientForm.value;
       const formData = new FormData();
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        const value = formModel[key];
-        formData.append(key, value);
+        if(key === 'date') {
+          let date = this.datePipe.transform(this.patientForm.get('date')?.value, 'MM-dd-yyyy');
+          formData.append(key, date?.toString() || "");
+        }
+        else {
+          const value = formModel[key];
+          formData.append(key, value);
+        }
       }
       formData.append('type','6');
       this.showSpinner = true;

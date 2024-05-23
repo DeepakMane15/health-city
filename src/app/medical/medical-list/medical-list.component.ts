@@ -35,6 +35,8 @@ export class MedicalListComponent implements OnInit {
   public filteredDataSource!: any[];
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public outCount: number = 0;
+  public inCount: number = 0;
 
   constructor(
     private _apiService: ApiService,
@@ -59,6 +61,9 @@ export class MedicalListComponent implements OnInit {
       (res: any) => {
         if (res && res.status) {
           this.dataSource.data = res.data;
+          this.inCount = res.data.filter((data: any) => data.status === 'In')?.length;
+          this.outCount = res.data.filter((data: any) => data.status === 'Out')?.length;
+
           this.filteredDataSource = this.dataSource.data.slice();
         }
         this.showSpinner = false;

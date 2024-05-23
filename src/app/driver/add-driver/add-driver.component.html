@@ -28,12 +28,15 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <div class="uname-input">
-              <input matInput formControlName="address">
-            </div>
-            <mat-error *ngIf="patientForm.get('address')?.invalid && patientForm.get('address')?.touched">
-              Address is required
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="date" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+            <!-- <div class="uname-input">
+              <input matInput formControlName="date">
+            </div> -->
+            <mat-error *ngIf="patientForm.get('date')?.invalid && patientForm.get('date')?.touched">
+              Date is required
             </mat-error>
           </mat-form-field>
         </div>
@@ -49,22 +52,6 @@
             <mat-error *ngIf="patientForm.get('pickup')?.invalid && patientForm.get('pickup')?.touched">
               Pickup is required
             </mat-error>
-            <!-- <mat-select formControlName="expense_for">
-                <mat-option value="Petrol/Diesel">Petrol/Diesel
-                </mat-option>
-                <mat-option value="Spare part
-                ">Spare part
-                </mat-option>
-                <mat-option value="Insurance Renewal
-                ">Insurance Renewal
-              </mat-option>
-              <mat-option value="Pollution Certificate
-                ">Pollution Certificate
-              </mat-option>
-              <mat-option value="Others
-                ">Others
-              </mat-option>
-            </mat-select> -->
           </mat-form-field>
         </div>
         <div class="col">
@@ -75,10 +62,17 @@
               Destination is required
             </mat-error>
           </mat-form-field>
-
-        </div></div>
-
-
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Phone No.</mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="patientForm.get('phone')?.invalid && patientForm.get('phone')?.touched">
+              Phone No. is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
     </mat-card-content>
     <mat-card-actions class="action-btns">
       <button mat-raised-button class="cancel-btn" type="button" (click)="navigateBack()">Cancel</button>

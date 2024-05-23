@@ -36,7 +36,7 @@ export class AddCustomerComponent implements OnInit {
 
   companyForm = this.fb.group({
     id: 0,
-    sewadar_code: ['', Validators.required],
+    sewadar_code: ['SD00000', Validators.required],
     sewadar_type: ['', Validators.required],
     fname: ['', Validators.required],
     lname: ['', Validators.required],
@@ -57,7 +57,7 @@ export class AddCustomerComponent implements OnInit {
 
   public categorySettings!: IDropdownSettings;
   public subCategorySettings!: IDropdownSettings;
-
+  isFocused: boolean = false;
   constructor(
     private fb: FormBuilder,
     private _apiService: ApiService,

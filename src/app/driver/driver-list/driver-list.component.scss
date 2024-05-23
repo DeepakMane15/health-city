@@ -30,9 +30,41 @@ main {
 
       .search {
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
         padding-bottom: 10px;
         height: 25px;
+        align-items: center;
+
+        .status-ins {
+          display: flex;
+          gap: 15px;
+          font-size: 15px;
+
+          span {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+          }
+
+          .complete {
+            background-color: green;
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+          }
+          .unapprove {
+            background-color: #d08600;
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+          }
+          .pending {
+            background-color: #012bb0;
+            height: 10px;
+            width: 10px;
+            border-radius: 50px;
+          }
+        }
 
         .custom-input {
           width: 260px;

@@ -10,6 +10,12 @@
     </mat-card-header>
     <mat-card-content>
       <div class="search">
+        <div class="status-ins">
+          <span>Un-Approve : <div class="unapprove"></div></span>
+          <span>Pending : <div class="pending"></div></span>
+          <span>Completed : <div class="complete"></div></span>
+
+        </div>
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
@@ -27,10 +33,15 @@
             <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.name}} </td>
           </ng-container>
 
+          <ng-container matColumnDef="phone" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Phone </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.phone}} </td>
+          </ng-container>
+
           <!-- Profession Column -->
-          <ng-container matColumnDef="address" class="container-tab">
-            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Address </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.address}} </td>
+          <ng-container matColumnDef="date" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Date </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.date}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -64,6 +75,11 @@
                 <button class="icon-button">
                   <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
                 </button>
+                <!-- <button class="icon-button" *ngIf="element.status === 'unapproved'">
+                  <mat-icon (click)="approveRequest(element.id)"
+                  class="action-mat-icon check" matTooltip="Approve">check</mat-icon>
+                </button> -->
+
                 <button class="icon-button">
                   <mat-icon class="action-mat-icon"
                     (click)="handleDelete(element.id)"class="delete-icon">delete</mat-icon>
@@ -74,7 +90,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
+            [ngStyle]="{'color': row.status === 'unapproved' ? '#d08600' : row.status === 'pending' ? '#012bb0' : row.status === 'complete' ? 'green' : ''}">
           </tr>
         </table>
 

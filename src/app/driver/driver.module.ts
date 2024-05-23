@@ -50,6 +50,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatRadioModule,
     FlexLayoutModule
   ],
-  exports: [AddDriverComponent]
+  exports: [AddDriverComponent],
+  providers: [provideNativeDateAdapter()]
 })
 export class DriverModule {}

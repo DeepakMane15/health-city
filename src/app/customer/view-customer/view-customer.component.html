@@ -37,55 +37,6 @@
                 </div>
               </div>
             </mat-tab>
-            <mat-tab label="Payments">
-              Payments
-              <!-- <div class="users-content">
-                <div class="user-action">
-                  <button mat-raised-button color="primary" type="button" (click)="navigateToAddUser()">Add
-                    Users</button>
-                  <div class="search">
-                    <input type="text"  class="custom-input" placeholder="Search">
-                  </div>
-                </div>
-                <table mat-table [dataSource]="userData">
-
-                  <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="User name">
-                    <th mat-header-cell *matHeaderCellDef> Username </th>
-                    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="Type">
-                    <th mat-header-cell *matHeaderCellDef> Type </th>
-                    <td mat-cell *matCellDef="let element"> {{element.user_type}} </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="Branch">
-                    <th mat-header-cell *matHeaderCellDef> Branch </th>
-                    <td mat-cell *matCellDef="let element"> Headquaters </td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="Action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element">
-                      <mat-icon class="action-mat-icon" (click)="editUser()">edit</mat-icon>
-                      <mat-icon class="action-mat-icon" *ngIf="canDeleteUser(element.user_type)" (click)="deleteUser(element.id)"class="delete-icon">delete</mat-icon>
-                    </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-              </div> -->
-              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                aria-label="Select page of periodic elements">
-              </mat-paginator> -->
-            </mat-tab>
-            <mat-tab label="Vehicle Details"> Vehicle Details </mat-tab>
             <mat-tab label="Travel History">
               <div class="users-content">
                 <table mat-table [dataSource]="inOutData" class="custom-table">
@@ -95,12 +46,11 @@
                     <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
                   </ng-container>
                   <!-- Profession Column -->
-                  <ng-container matColumnDef="driver">
-                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Driver </th>
-                    <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element?.driver_name}} </td>
-                  </ng-container>
-
                   <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="vehicle">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Vehicle </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.registeration_no}} </td>
+                  </ng-container>
                   <ng-container matColumnDef="km">
                     <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">KM </th>
                     <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.km}} </td>
@@ -125,6 +75,44 @@
                 </mat-paginator>
                 </div>
                </mat-tab>
+            <mat-tab label="Payments">
+              <div class="users-content">
+                <table mat-table [dataSource]="expenseData" class="custom-table">
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="max-width: 150px;"> {{ i + 1 }} </td>
+                  </ng-container>
+                  <!-- Profession Column -->
+                  <!-- Email/Phone No Column -->
+                  <ng-container matColumnDef="expense">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Expense For </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.expense_for}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Amount </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.amount}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="payment">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Payment Type </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date + " " + element.payment_mode}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="max-width: 200px;">Date </th>
+                    <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.date}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="expenseColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: expenseColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                  aria-label="Select page of periodic elements">
+                </mat-paginator>
+                </div>
+            </mat-tab>
           </mat-tab-group>
         </mat-grid-tile>
         <!-- <mat-grid-tile [colspan]="1" rowHeight="200" [rowspan]="1">

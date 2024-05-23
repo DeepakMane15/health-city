@@ -229,6 +229,18 @@ export const NavItemsContant: NavLinksModel[] = [
     icon: 'people',
     url: '/',
   },
+  {
+    label: 'Live Tracking',
+    roles: [
+      UserTypeConstant.ADMIN,
+      UserTypeConstant.CUSTOMER,
+      UserTypeConstant.CUSTOMER_USER,
+    ],
+    subItems: [],
+    category: '',
+    icon: 'location_on',
+    url: '/living/board',
+  },
   // {
   //   label: 'Vehicle Tracking (api pending)',
   //   roles: [

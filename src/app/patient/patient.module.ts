@@ -26,6 +26,8 @@ import { ViewPatientComponent } from './view-patient/view-patient.component';
 import { ImprestListComponent } from './imprest-list/imprest-list.component';
 import { AddFuelComponent } from './add-fuel/add-fuel.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 @NgModule({
   declarations: [
     PatientListComponent,
@@ -55,10 +57,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatDatepickerModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   exports:[
     AddPatientComponent
-  ]
+  ],
+  providers: [provideNativeDateAdapter()]
 })
 export class PatientModule {}

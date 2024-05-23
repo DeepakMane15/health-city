@@ -1,8 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { PatientModel } from 'src/app/common/models/PatientModel';
@@ -14,6 +17,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   selector: 'app-add-patient',
   templateUrl: './add-patient.component.html',
   styleUrls: ['./add-patient.component.scss'],
+  providers: [DatePipe],
 })
 export class AddPatientComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -21,8 +25,8 @@ export class AddPatientComponent implements OnInit {
   public isChecking: Boolean = false;
   public timezones: any;
   public addressPredictions: any;
-  public vehicleData!:any;
-  public driverData!:any;
+  public vehicleData!: any;
+  public driverData!: any;
   public patientData!: PatientModel;
   @Input() fromPopup: boolean = false;
   @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
@@ -36,6 +40,7 @@ export class AddPatientComponent implements OnInit {
     rate: '',
     amount: ['', Validators.required],
     payment_mode: ['', Validators.required],
+    date: ['', Validators.required],
   });
 
   constructor(
@@ -43,8 +48,30 @@ export class AddPatientComponent implements OnInit {
     private _apiService: ApiService,
     private router: Router,
     private _authService: AuthService,
-    private _googleService: GoogleService
+    private _googleService: GoogleService,
+    private datePipe: DatePipe
   ) {}
+
+  public medSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'registeration_no',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 1,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true
+  };
+  public driverSettings: IDropdownSettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'full_name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true
+  };
 
   ngOnInit(): void {
     this.getDrivers();
@@ -58,53 +85,44 @@ export class AddPatientComponent implements OnInit {
       amount: this.patientData['amount'],
       expense_for: this.patientData['expense_for'],
       payment_mode: this.patientData['payment_mode'],
-      last_reading: this.patientData['last_reading']
+      last_reading: this.patientData['last_reading'],
+      date: this.patientData['date'],
     });
-
   }
 
   getVehicles() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append("type", "2");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.vehicleData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    fd.append('type', '2');
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.vehicleData = res.data;
           this.showSpinner = false;
-          if (this.fromPopup) this.formSubmitted.emit();
         }
-      );
-
+      },
+      (error) => {
+        this.showSpinner = false;
+        if (this.fromPopup) this.formSubmitted.emit();
+      }
+    );
   }
   getDrivers() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append("type", "1");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.driverData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    fd.append('type', '1');
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.driverData = res.data;
           this.showSpinner = false;
-          if (this.fromPopup) this.formSubmitted.emit();
         }
-      );
+      },
+      (error) => {
+        this.showSpinner = false;
+        if (this.fromPopup) this.formSubmitted.emit();
+      }
+    );
   }
 
   onSubmit(): void {
@@ -114,10 +132,22 @@ export class AddPatientComponent implements OnInit {
 
       // Convert JSON object to FormData
       for (const key of Object.keys(formModel)) {
-        const value = formModel[key];
-        formData.append(key, value);
+        if (key === 'date') {
+          let date = this.datePipe.transform(
+            this.patientForm.get('date')?.value,
+            'MM-dd-yyyy'
+          );
+          formData.append(key, date?.toString() || '');
+        }
+        else if(key === 'driver_name' || key === 'vehicle_no') {
+          formData.append(key, formModel[key][0].id.toString());
+        }
+        else {
+          const value = formModel[key];
+          formData.append(key, value);
+        }
       }
-      formData.append('type','1');
+      formData.append('type', '1');
       this.showSpinner = true;
       this._apiService
         .post(
@@ -172,6 +202,12 @@ export class AddPatientComponent implements OnInit {
     //   );
 
     this.patientForm.get(field)?.markAsTouched(); // Mark phone as touched
+  }
+
+  public handleExpenseChange(event : MatSelectChange) {
+    // if(event.value === 'Spare part') {
+
+    // }
   }
 
   public getTimeZones() {

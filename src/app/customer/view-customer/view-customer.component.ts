@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./view-customer.component.scss'],
 })
 export class ViewCustomerComponent implements OnInit {
-  public customerData!: CustomerModel;
+  public customerData!: any;
   public apiKey = environment.googleMapsApiKey;
   public showSpinner: Boolean = false;
   userData = new MatTableDataSource<any>();
@@ -26,6 +26,7 @@ export class ViewCustomerComponent implements OnInit {
   public fuelData!: any;
   public spareData!: any;
   public inOutData!: any;
+  public expenseData!: any;
 
   displayedColumns: string[] = [
     'id',
@@ -35,7 +36,8 @@ export class ViewCustomerComponent implements OnInit {
     'Branch',
     'Action',
   ];
-  inOutColumns: string[] = ['id', 'driver', 'km', 'date','type'];
+  inOutColumns: string[] = ['id', 'vehicle', 'km', 'date','type'];
+  expenseColumns: string[] = ['id', 'expense', 'amount','payment', 'date'];
 
   public companyData: any = [
     {
@@ -124,8 +126,8 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.userData.paginator = this.paginator;
-    this.fetchUsers();
+    // this.expenseData.paginator = this.paginator;
+    // this.fetchExpense();
   }
 
   ngOnInit() {
@@ -142,6 +144,8 @@ export class ViewCustomerComponent implements OnInit {
       }
     });
     this.getFuelData();
+    this.fetchExpense();
+
   }
 
   public getFuelData() {
@@ -186,6 +190,26 @@ export class ViewCustomerComponent implements OnInit {
         if (res && res.status) {
           console.log(res.message);
           this.userData = res.data;
+          this.showSpinner = false;
+        }
+      },
+      (error) => {
+        this.showSpinner = false;
+        console.log(error);
+      }
+    );
+  }
+
+  fetchExpense() {
+    let fd = new FormData();
+    fd.append('type', '4');
+    fd.append('driver_id', this.customerData.id.toString());
+    this.showSpinner = true;
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          console.log(res.message);
+          this.expenseData = res.data;
           this.showSpinner = false;
         }
       },

@@ -10,6 +10,31 @@ form {
   }
 }
 
+.sewadar-code-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.prefix {
+  position: absolute;
+  padding-left: 8px;
+  background-color: #f0f0f0;
+  border-right: 1px solid #ccc;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+
+.prefix.visible {
+  opacity: 1;
+}
+
+input.mat-input-element {
+  padding-left: 8ch; /* Adjust based on the prefix width */
+}
+
 mat-card {
   border-top: 2px solid blue;
 }

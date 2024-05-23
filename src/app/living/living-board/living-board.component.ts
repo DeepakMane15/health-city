@@ -30,8 +30,8 @@ export class LivingBoardComponent implements OnInit {
     'New York, NY, USA',
   ];
   public mapUrl!: SafeResourceUrl;
-  latitude = 51.678418;
-  longitude = 7.809007;
+  latitude = 28.7041;
+  longitude = 77.1025;
   // latitude = 0; // Set your initial latitude
   // longitude = 0; // Set your initial longitude
   zoom = 2; // Set the initial zoom level
@@ -59,7 +59,7 @@ export class LivingBoardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    this.map = L.map('map').setView([28.6256227,77.2241118], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',

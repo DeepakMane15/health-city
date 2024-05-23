@@ -81,7 +81,7 @@
               <mat-icon>lock</mat-icon>
               <span>Reset Password</span>
             </button>
-            <button mat-menu-item (click)="uploadPicture()">
+            <!-- <button mat-menu-item (click)="uploadPicture()">
               <mat-icon>image</mat-icon>
               <span>Upload Profile Picture</span>
             </button>
@@ -92,16 +92,16 @@
             <button mat-menu-item (click)="openDocument()">
               <mat-icon>description</mat-icon>
               <span>Documents</span>
-            </button>
+            </button> -->
             <!-- dynamic option  -->
-            <button mat-menu-item *ngIf="canAccessCompany()">
+            <!-- <button mat-menu-item *ngIf="canAccessCompany()">
               <mat-icon>person</mat-icon>
               <span>Company</span>
-            </button>
-            <button mat-menu-item *ngIf="canAccessAccount()">
+            </button> -->
+            <!-- <button mat-menu-item *ngIf="canAccessAccount()">
               <mat-icon>account_circle</mat-icon>
               <span>Accounts</span>
-            </button>
+            </button> -->
             <button mat-menu-item (click)="handleLogOut()">
               <mat-icon>exit_to_app</mat-icon>
               <span>Logout</span>

@@ -9,7 +9,29 @@
   <mat-divider></mat-divider>
   <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
     <div>
-      <mat-form-field class="full-width" style="margin-top: -35px;">
+      <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData"
+        formControlName="vehicle" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+    </div>
+
+    <div>
+      <div *ngIf="vehicleDetail" class="recent-bg">
+        <div class="last-entry">Last Entry :</div>
+        <div>
+          {{vehicleDetail?.type === 'Out' ? 'Vehicle was Out of Workshop' :
+          'Vehicle was Parked in the Workshop'
+          }}
+        </div>
+        <div>
+          Date : {{vehicleDetail?.date}}
+        </div>
+        <div>
+          Reading : {{vehicleDetail?.km}} km
+        </div>
+      </div>
+    </div>
+    <div>
+      <mat-form-field class="full-width" style="margin-top: -9px;">
         <mat-label>Current Reading (KM)</mat-label>
         <div class="uname-input">
           <input matInput formControlName="km">
@@ -17,12 +39,13 @@
         <mat-error *ngIf="resetForm.get('km')?.invalid && resetForm.get('km')?.touched">
           Reading is invalid
         </mat-error>
+        <mat-hint style="color: red; line-height: 11px;" *ngIf="isKmError()">
+          Current Reading must be equal or greater than Last Reading.
+        </mat-hint>
       </mat-form-field>
     </div>
-    <div>
-      <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData"
-        formControlName="vehicle" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-      </ng-multiselect-dropdown>
+    <div style="margin-top: 3px;">
+      Current Time : {{currentTime}}
     </div>
     <div>
       <ng-multiselect-dropdown [placeholder]="'Driver'" [settings]="driverSettings" [data]="driverData"
@@ -37,43 +60,7 @@
       </ng-multiselect-dropdown>
       <!-- </mat-form-field> -->
     </div>
-    <div class="row">
-      <div class="col" style="width: 50%;">
-        <mat-form-field class="full-width">
-          <mat-label>Date</mat-label>
-          <input matInput [matDatepicker]="date" formControlName="date">
-          <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
-          <mat-datepicker #date></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="col" style="width: 50%;">
-        <mat-form-field class="full-width">
-          <mat-label>Time</mat-label>
-          <div class="uname-input">
-            <input matInput formControlName="time">
-          </div>
-          <!-- <ngx-mat-timepicker  [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker> -->
-        </mat-form-field>
-      </div>
-    </div>
 
-    <!-- </mat-form-field> -->
-    <div>
-      <div *ngIf="vehicleDetail" class="recent-bg">
-        <h3>Last Entry : </h3>
-        <div>
-          {{vehicleDetail?.type === 'Out' ? 'Vehicle was Out of Workshop' :
-          'Vehicle was Parked in the Workshop'
-          }}
-        </div>
-        <div>
-          Date : {{vehicleDetail?.date}}
-        </div>
-        <div>
-          Reading : {{vehicleDetail?.km}} km
-        </div>
-      </div>
-    </div>
     <div class="action">
       <button mat-raised-button color="primary" type="submit" [disabled]="!resetForm.valid">Mark {{vehicleDetail ?
         (vehicleDetail.type === 'Out'? 'In' : 'Out') : ''}}</button>

@@ -21,7 +21,8 @@ export class DriverListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
     'name',
-    'address',
+    'phone',
+    'date',
     'pickup',
     'destination',
     'action',
@@ -67,6 +68,25 @@ export class DriverListComponent implements OnInit {
           this.dataSource.data = res.data;
           this.originalData = res.data;
           this.filteredDataSource = this.dataSource.data.slice();
+        }
+        this.showSpinner = false;
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
+  }
+
+  approveRequest(id: string) {
+    this.showSpinner = true;
+    const fd = new FormData();
+    fd.append('type','9');
+    fd.append('id',id);
+
+    this._apiServices.post(APIConstant.SNM_EDIT, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+         this.fetchDrivers();
         }
         this.showSpinner = false;
       },

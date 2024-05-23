@@ -4,21 +4,25 @@
   </div>
   <mat-card class="customer-card">
     <mat-card-header>
-      <mat-card-title>All Vehicles</mat-card-title>
+      <mat-card-title>All Vehicles : {{dataSource.data.length}}</mat-card-title>
       <button mat-raised-button color="primary" type="button" (click)="navigateToAdd()">Add Vehicles</button>
     </mat-card-header>
     <mat-card-content>
 
       <div class="search">
         <div class="status-ins">
-          <span>Parked : <div class="green"></div></span>
-          <span>Out : <div class="red"></div></span>
+          <span>
+            <div class="green"></div> Parked : {{inCount}}
+          </span>
+          <span>
+            <div class="red"></div> Out : {{outCount}}
+          </span>
 
         </div>
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
       </div>
       <div class="mat-elevation-z8">
-        <table mat-table  [dataSource]="filteredDataSource" class="custom-table">
+        <table mat-table [dataSource]="filteredDataSource" class="custom-table">
 
           <!-- Position Column -->
           <ng-container matColumnDef="id">
@@ -42,7 +46,8 @@
           <!-- Name Column -->
           <ng-container matColumnDef="Chasis">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Average </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{(element.reading/element.total_fuel | number:'1.2-2') || '-'}}</td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{(element.reading/element.total_fuel |
+              number:'1.2-2') || '-'}}</td>
           </ng-container>
 
           <!-- Languages Column -->
@@ -77,20 +82,20 @@
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Action </th>
             <td mat-cell *matCellDef="let element" style="max-width: 150px;">
               <div class="icon-container">
-                <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
                 <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
                 <mat-icon class="action-mat-icon delete-icon" (click)="handleDelete(element.pid)">delete</mat-icon>
-                <mat-icon *ngIf="element.approved === '0'" (click)="approveMedicalTeam(element.pid)"
-                  class="action-mat-icon check" matTooltip="Approve">check</mat-icon>
+                <!-- <mat-icon class="action-mat-icon" (click)="navigateToView(element)"> </mat-icon> -->
               </div>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row [ngStyle]="{color: row.status === 'In' ? 'green' : '#df1717'}" *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row [ngStyle]="{color: row.status === 'In' ? 'green' : '#df1717'}"
+            *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons
           aria-label="Select page of periodic elements">
         </mat-paginator>
       </div>

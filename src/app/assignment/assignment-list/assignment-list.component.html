@@ -34,13 +34,13 @@
           <!-- Transaction Column -->
           <ng-container matColumnDef="vehicle" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Vehicle </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.vehicle_id}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.registeration_no}} </td>
           </ng-container>
 
           <!-- Profession Column -->
           <ng-container matColumnDef="driver" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 150px;"> Driver </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.driver_id}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 150px;"> {{element.driver_name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -51,14 +51,19 @@
           </ng-container>
 
           <!-- Entry Date -->
-          <ng-container matColumnDef="time" class="container-tab">
+          <!-- <ng-container matColumnDef="time" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Time </th>
             <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.time}} </td>
-          </ng-container>
+          </ng-container> -->
           <!-- Visit Date -->
           <ng-container matColumnDef="km" class="container-tab">
             <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> KM </th>
             <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.km}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type" class="container-tab">
+            <th mat-header-cell *matHeaderCellDef style="max-width: 200px;"> Type </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 200px;"> {{element.type}} </td>
           </ng-container>
           <!-- Amount -->
           <!-- Action Column -->
@@ -82,7 +87,7 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            [ngStyle]="{'background-color': row.status === '0' ? '#e6ffe6' : row.status === 'pending' ? '#fff6e6' : row.status === 'declined' ? '#ffe6e6' : ''}">
+            [ngStyle]="{'color': row.type === 'In' ? 'green' : '#df1717'}">
           </tr>
         </table>
 

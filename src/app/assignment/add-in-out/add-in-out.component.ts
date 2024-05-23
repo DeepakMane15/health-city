@@ -69,15 +69,19 @@ export class AddInOutComponent implements OnInit {
   resetForm = this.fb.group({
     vehicle: ['', Validators.required],
     driver: ['', Validators.required],
-    date: [new Date(), Validators.required],
-    type: '',
+    // date: [new Date(), Validators.required],
+    // type: '',
     km: ['', Validators.required],
-    time: ['', Validators.required],
+    // time: ['', Validators.required],
     request:  ['', Validators.required]
   });
 
   public hide1: boolean = true;
   public hide2: boolean = true;
+  public currentTime = this.datePipe.transform(
+    new Date(),
+    'dd-MM-yyyy hh:mm a'
+  );
 
   passwordMatchValidator(
     control: AbstractControl
@@ -142,8 +146,6 @@ export class AddInOutComponent implements OnInit {
     );
   }
 
-  getVehicleInOutData() {}
-
   closeDialog() {
     this.dialogRef.close();
   }
@@ -156,6 +158,9 @@ export class AddInOutComponent implements OnInit {
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         this.vehicleDetail = res.data[0];
+        this.resetForm.patchValue({
+          km: this.vehicleDetail.km
+        })
       },
       (error) => {
         console.error('Operation failed', error);
@@ -165,7 +170,7 @@ export class AddInOutComponent implements OnInit {
   onSelectAll(items: any) {}
 
   public onSubmit() {
-    if (this.resetForm.valid) {
+    if (this.resetForm.valid && !this.isKmError()) {
       const formModel: any = this.resetForm.value;
       const formData = new FormData();
       formData.append(
@@ -177,13 +182,8 @@ export class AddInOutComponent implements OnInit {
       for (const key of Object.keys(formModel)) {
         if (key === 'vehicle' || key === 'driver' || key === 'request') {
           formData.append(key, formModel[key][0].id);
-        } else if (key === 'date') {
-          let date = this.datePipe.transform(
-            this.resetForm.get('date')?.value,
-            'MM-dd-yyyy'
-          );
-          formData.append(key, date?.toString() || '');
-        } else {
+        }
+        else {
           const value = formModel[key];
           formData.append(key, value);
         }
@@ -198,5 +198,12 @@ export class AddInOutComponent implements OnInit {
         }
       );
     }
+  }
+  isKmError(): boolean {
+    const kmControl = this.resetForm.get('km');
+    return this.vehicleDetail?.type === 'Out' &&
+           kmControl?.value !== null &&
+           kmControl?.value !== undefined &&
+           parseInt(kmControl.value) < parseInt(this.vehicleDetail?.km);
   }
 }

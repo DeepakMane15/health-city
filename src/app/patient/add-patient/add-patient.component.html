@@ -15,33 +15,15 @@
     </mat-card-header>
     <mat-card-content>
       <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Vehicle No</mat-label>
-            <!-- <div class="uname-input">
-              <input matInput formControlName="vehicle_no">
-            </div> -->
-            <mat-select formControlName="vehicle_no">
-              <mat-option *ngFor="let vehicle of vehicleData" [value]="vehicle.id"> {{vehicle.registeration_no}}
-              </mat-option>
-          </mat-select>
-            <mat-error *ngIf="patientForm.get('vehicle_no')?.invalid && patientForm.get('vehicle_no')?.touched">
-              Vehicle No is required
-            </mat-error>
-          </mat-form-field>
+        <div class="col" style="width: 50%;">
+          <ng-multiselect-dropdown [placeholder]="'Vehicle'" [settings]="medSettings" [data]="vehicleData"
+            formControlName="vehicle_no">
+          </ng-multiselect-dropdown>
         </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Driver Name</mat-label>
-            <!-- <input matInput formControlName="driver_name"> -->
-            <mat-select formControlName="driver_name">
-              <mat-option *ngFor="let driver of driverData" [value]="driver.id"> {{driver.first_name + " " + driver.last_name}}
-              </mat-option>
-          </mat-select>
-            <mat-error *ngIf="patientForm.get('driver_name')?.invalid && patientForm.get('driver_name')?.touched">
-              Driver Name is required
-            </mat-error>
-          </mat-form-field>
+        <div class="col" style="width: 50%;">
+          <ng-multiselect-dropdown [placeholder]="'Driver'" [settings]="driverSettings" [data]="driverData"
+            formControlName="driver_name">
+          </ng-multiselect-dropdown>
         </div>
       </div>
 
@@ -49,20 +31,18 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Expense For</mat-label>
-            <mat-select formControlName="expense_for">
-                <mat-option value="Petrol/Diesel">Petrol/Diesel
-                </mat-option>
-                <mat-option value="Spare part
-                ">Spare part
-                </mat-option>
-                <mat-option value="Insurance Renewal
-                ">Insurance Renewal
+            <mat-select formControlName="expense_for" >
+              <mat-option value="Petrol">Petrol
               </mat-option>
-              <mat-option value="Pollution Certificate
-                ">Pollution Certificate
+              <mat-option value="Diesel">Diesel
               </mat-option>
-              <mat-option value="Others
-                ">Others
+              <mat-option value="Spare part">Spare part
+              </mat-option>
+              <mat-option value="Insurance Renewal">Insurance Renewal
+              </mat-option>
+              <mat-option value="Pollution Certificate">Pollution Certificate
+              </mat-option>
+              <mat-option value="Others">Others
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -72,7 +52,8 @@
             <mat-label>Last Reading</mat-label>
             <input matInput formControlName="last_reading">
           </mat-form-field>
-        </div></div>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -93,13 +74,23 @@
             </mat-error>
           </mat-form-field>
         </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="date" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+          </mat-form-field>
+        </div>
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Payment Mode</mat-label>
             <mat-select formControlName="payment_mode">
-                <mat-option value="Cash">Cash</mat-option>
-                <mat-option value="Petrol">Petrol</mat-option>
-                <mat-option value="Cheque">Cheque</mat-option>
+              <mat-option value="Cash">Cash</mat-option>
+              <mat-option value="Petrol">Petrol</mat-option>
+              <mat-option value="Cheque">Cheque</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -111,25 +102,4 @@
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
-
-  <!-- <mat-card class="shipping-card">
-    <mat-card-header>
-      <mat-card-title>Contact Person Details</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label>Payment Mode</mat-label>
-            <mat-select formControlName="payment_mode">
-                <mat-option value="Cash">Cash</mat-option>
-                <mat-option value="Petrol">Petrol</mat-option>
-                <mat-option value="Cheque">Cheque</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card> -->
-
 </form>
