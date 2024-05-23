@@ -1,16 +1,21 @@
+import { DatePipe } from '@angular/common';
 // import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialogRef } from '@angular/material/dialog';
+
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
 import { ApiService } from 'src/app/shared/services/api/api.service';
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatTimepickerModule,
-} from '@angular-material-components/datetime-picker';
-import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-add-in-out',
   templateUrl: './add-in-out.component.html',

@@ -27,16 +27,19 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" >
             <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="date" formControlName="date">
+            <!-- <input matInput [matDatepicker]="date" formControlName="date">
             <mat-datepicker-toggle matIconSuffix [for]="date"></mat-datepicker-toggle>
-            <mat-datepicker #date></mat-datepicker>
+            <mat-datepicker #date></mat-datepicker> -->
             <!-- <div class="uname-input">
               <input matInput formControlName="date">
             </div> -->
+             <input matInput [ngxMatDatetimePicker]="datetimePicker" formControlName="date" placeholder="MM/DD/YYYY HH:mm">
+            <ngx-mat-datepicker-toggle matSuffix [for]="datetimePicker"></ngx-mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #datetimePicker></ngx-mat-datetime-picker>
             <mat-error *ngIf="patientForm.get('date')?.invalid && patientForm.get('date')?.touched">
-              Date is required
+              Date is required 
             </mat-error>
           </mat-form-field>
         </div>

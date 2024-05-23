@@ -1,15 +1,20 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MatRadioChange } from '@angular/material/radio';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { APIConstant } from 'src/app/common/constants/APIConstant';
-import { UserTypeConstant } from 'src/app/common/constants/UserTypeConstant';
 import { PatientModel } from 'src/app/common/models/PatientModel';
 import { ApiService } from 'src/app/shared/services/api/api.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { GoogleService } from 'src/app/shared/services/google/google.service';
 
 @Component({
   selector: 'app-add-driver',
@@ -18,6 +23,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   providers: [DatePipe]
 })
 export class AddDriverComponent implements OnInit {
+  
   public showSpinner: Boolean = false;
   public isUnameAvailable: Boolean = true;
   public isChecking: Boolean = false;
@@ -32,7 +38,7 @@ export class AddDriverComponent implements OnInit {
   patientForm = this.fb.group({
     id: 0,
     name: ['', Validators.required],
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     pickup: ['', Validators.required],
     destination: ['', Validators.required],
     phone: ['', Validators.required]
@@ -42,8 +48,6 @@ export class AddDriverComponent implements OnInit {
     private fb: FormBuilder,
     private _apiService: ApiService,
     private router: Router,
-    private _authService: AuthService,
-    private _googleService: GoogleService,
     private datePipe: DatePipe
   ) {}
 
@@ -52,7 +56,7 @@ export class AddDriverComponent implements OnInit {
     this.patientForm.patchValue({
       id: this.patientData.id,
       name: this.patientData['name'],
-      date: this.patientData['date'],
+      date: this.patientData['date'] ? new Date(this.patientData['date']) : new Date(),
       pickup: this.patientData['pickup'],
       destination: this.patientData['destination'],
       phone: this.patientData['phone']
