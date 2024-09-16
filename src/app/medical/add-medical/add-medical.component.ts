@@ -87,35 +87,28 @@ export class AddMedicalComponent implements OnInit {
   public onSubmit(): void {
 
     if (this.medicalForm.valid) {
-      const formModel: MedicalTeamModel = this.medicalForm
-        .value as MedicalTeamModel;
-      const formData = new FormData();
-      formData.append("type",'3');
+      const formModel: MedicalTeamModel = this.medicalForm.value as MedicalTeamModel;
 
-      // Convert JSON object to FormData
+      const jsonObject: { [key: string]: any } = {};
+      // Add the 'type' property
+      jsonObject['type'] = '3';
+
+      // Loop through the formModel keys and populate the JSON object
       for (let key of Object.keys(formModel)) {
-        if(key === 'manufacturing_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('manufacturing_date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else if(key === 'registeration_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('registeration_date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else if(key === 'purchase_date') {
-          let date = this.datePipe.transform(this.medicalForm.get('purchase_date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else {
-          const value = formModel[key];
-          formData.append(key, value);
+        if (key === 'manufacturing_date' || key === 'registeration_date' || key === 'purchase_date') {
+          // Format the date
+          const date = this.datePipe.transform(this.medicalForm.get(key)?.value, 'MM-dd-yyyy');
+          jsonObject[key] = date || ""; // Handle null or undefined
+        } else {
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
       this.showSpinner = true;
       this._apiService
         .post(
           this.medicalData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
-          formData
+          jsonObject
         )
         .subscribe(
           (res: any) => {

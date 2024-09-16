@@ -155,9 +155,10 @@ export class ViewMedicalComponent implements OnInit {
   }
   public getFuelData() {
     this.showSpinner = true;
-    const formData = new FormData();
-    formData.append('type', '8');
-    formData.append('vehicle', this.medicalData['id']);
+    // const formData = new FormData();
+    // formData.append('type', '8');
+    // formData.append('vehicle', this.medicalData['id']);
+    let formData = {type: '8', vehicle: this.medicalData['id']};
     this._apiService.post(APIConstant.SNM_GET_BY_ID, formData).subscribe(
       (res: any) => {
         if (res && res.status) {

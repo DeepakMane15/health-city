@@ -54,7 +54,7 @@ export class AuthService {
   private userDataSubject = new BehaviorSubject<any>(null);
   public userData$: Observable<any> = this.userDataSubject.asObservable();
   public userProfile: any;
-  private baseUrl = 'https://app.profmedservices.com/api';
+  private baseUrl = 'http://localhost:3300/api';
   constructor(private router: Router, private http: HttpClient) {
     const userData = this.getUserData();
     if (userData) {
@@ -86,10 +86,11 @@ export class AuthService {
   }
 
   login(userData: UserAuthModel): Observable<any> {
-    const loginUrl = `${this.baseUrl}/login`; // Your login endpoint
-    let fd = new FormData();
-    fd.append('username', userData.email);
-    fd.append('password', userData.password);
+    const loginUrl = `${this.baseUrl}/auth/signin`; // Your login endpoint
+    let fd = {
+      userName: userData.email,
+      password: userData.password
+    };
 
     return this.http.post<any>(loginUrl, fd);
   }
@@ -104,10 +105,10 @@ export class AuthService {
   }
 
   logout(): void {
+    this.router.navigate(['']);
     window.location.reload();
     this.isLoggedIn = false;
     sessionStorage.clear();
-    // this.router.navigate(['/auth']);
   }
 
   isAuthenticated(): boolean {

@@ -25,7 +25,6 @@ export class AddInOutComponent implements OnInit {
     private datePipe: DatePipe,
     public dialogRef: MatDialogRef<AddInOutComponent>, // private datePipe: DatePipe
     @Inject(MAT_DIALOG_DATA) public data: any
-
   ) {}
   public vehicleData!: any;
   public driverData!: any;
@@ -47,7 +46,7 @@ export class AddInOutComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 1,
     allowSearchFilter: true,
-    closeDropDownOnSelection: true
+    closeDropDownOnSelection: true,
   };
   public driverSettings: IDropdownSettings = {
     singleSelection: true,
@@ -57,7 +56,7 @@ export class AddInOutComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
     allowSearchFilter: true,
-    closeDropDownOnSelection: true
+    closeDropDownOnSelection: true,
   };
   public reqSettings: IDropdownSettings = {
     singleSelection: true,
@@ -67,7 +66,7 @@ export class AddInOutComponent implements OnInit {
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
     allowSearchFilter: true,
-    closeDropDownOnSelection: true
+    closeDropDownOnSelection: true,
   };
 
   resetForm = this.fb.group({
@@ -77,7 +76,7 @@ export class AddInOutComponent implements OnInit {
     // type: '',
     km: ['', Validators.required],
     // time: ['', Validators.required],
-    request:  ['', Validators.required]
+    request: ['', Validators.required],
   });
 
   public hide1: boolean = true;
@@ -109,17 +108,18 @@ export class AddInOutComponent implements OnInit {
 
   getVehicles() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '2');
+    let fd = { type: '2' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.vehicleData = res.data;
-          if(this.data)
+          if (this.data)
             this.resetForm.patchValue({
-              vehicle: this.vehicleData.filter((vehicle: any) => vehicle.id === this.data.vehicle_id),
-              km: this.data.km
-            })
+              vehicle: this.vehicleData.filter(
+                (vehicle: any) => vehicle.id === this.data.vehicle_id
+              ),
+              km: this.data.km,
+            });
         }
         this.showSpinner = false;
       },
@@ -129,33 +129,37 @@ export class AddInOutComponent implements OnInit {
     );
   }
   getDrivers() {
-    const fd = new FormData();
-    fd.append('type', '1');
+    let fd = { type: '1' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.driverData = res.data;
-          if(this.data)
+          if (this.data)
             this.resetForm.patchValue({
-              driver: this.driverData.filter((driver: any) => driver.id === this.data.driver_id),
-            })
+              driver: this.driverData.filter(
+                (driver: any) => driver.id === this.data.driver_id
+              ),
+            });
         }
       },
       (error) => {}
     );
   }
   getrequests() {
-    const fd = new FormData();
-    fd.append('type', '6');
+    // const fd = new FormData();
+    // fd.append('type', '6');
+    let fd = { type: '6' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.requestData = res.data;
-          this.requestData.push({id:'0', name:"Others"});
-          if(this.data)
+          this.requestData.push({ id: '0', name: 'Others' });
+          if (this.data)
             this.resetForm.patchValue({
-              request: this.requestData.filter((request: any) => request.id === this.data.request),
-            })
+              request: this.requestData.filter(
+                (request: any) => request.id === this.data.request
+              ),
+            });
         }
         // this.showSpinner = false;
       },
@@ -171,15 +175,16 @@ export class AddInOutComponent implements OnInit {
 
   onItemSelect(item: any) {
     // this.handleMedicalSelect(item);
-    const fd = new FormData();
-    fd.append('type', '8');
-    fd.append('vehicle', item.id);
+    // const fd = new FormData();
+    // fd.append('type', '8');
+    // fd.append('vehicle', item.id);
+    let fd = { type: '2', vehicle: item.id };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         this.vehicleDetail = res.data[0];
         this.resetForm.patchValue({
-          km: this.vehicleDetail.km
-        })
+          km: this.vehicleDetail.km,
+        });
       },
       (error) => {
         console.error('Operation failed', error);
@@ -191,24 +196,23 @@ export class AddInOutComponent implements OnInit {
   public onSubmit() {
     if (this.resetForm.valid && !this.isKmError()) {
       const formModel: any = this.resetForm.value;
-      const formData = new FormData();
-      formData.append(
-        'markType',
-        this.vehicleDetail?.type === 'Out' ? 'In' : 'Out'
-      );
+      const jsonObject: { [key: string]: any } = {};
+      // Set the 'markType' property
+      jsonObject['markType'] =
+        this.vehicleDetail?.type === 'Out' ? 'In' : 'Out';
 
-      // Convert JSON object to FormData
+      // Populate the JSON object with form data
       for (const key of Object.keys(formModel)) {
         if (key === 'vehicle' || key === 'driver' || key === 'request') {
-          formData.append(key, formModel[key][0].id);
-        }
-        else {
-          const value = formModel[key];
-          formData.append(key, value);
+          jsonObject[key] = formModel[key][0].id;
+        } else {
+          jsonObject[key] = formModel[key];
         }
       }
-      formData.append("type",'7');
-      this._apiService.post(APIConstant.SNM_SAVE, formData).subscribe(
+
+      // Add additional property
+      jsonObject['type'] = '7';
+      this._apiService.post(APIConstant.SNM_SAVE, jsonObject).subscribe(
         (res: any) => {
           this.dialogRef.close(true);
         },
@@ -220,9 +224,11 @@ export class AddInOutComponent implements OnInit {
   }
   isKmError(): boolean {
     const kmControl = this.resetForm.get('km');
-    return this.vehicleDetail?.type === 'Out' &&
-           kmControl?.value !== null &&
-           kmControl?.value !== undefined &&
-           parseInt(kmControl.value) < parseInt(this.vehicleDetail?.km);
+    return (
+      this.vehicleDetail?.type === 'Out' &&
+      kmControl?.value !== null &&
+      kmControl?.value !== undefined &&
+      parseInt(kmControl.value) < parseInt(this.vehicleDetail?.km)
+    );
   }
 }

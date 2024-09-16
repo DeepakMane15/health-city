@@ -150,10 +150,11 @@ export class ViewCustomerComponent implements OnInit {
 
   public getFuelData() {
     this.showSpinner = true;
-    const formData = new FormData();
-    formData.append('type', '8');
-    formData.append('driver', this.customerData['id']);
-    formData.append('isVehicle', '0');
+    // const formData = new FormData();
+    // formData.append('type', '8');
+    // formData.append('driver', this.customerData['id']);
+    // formData.append('isVehicle', '0');
+    let formData = {type: '8', driver: this.customerData['id'], isVehicle: '0'}
 
     this._apiService.post(APIConstant.SNM_GET_BY_ID, formData).subscribe(
       (res: any) => {
@@ -201,9 +202,10 @@ export class ViewCustomerComponent implements OnInit {
   }
 
   fetchExpense() {
-    let fd = new FormData();
-    fd.append('type', '4');
-    fd.append('driver_id', this.customerData.id.toString());
+    // let fd = new FormData();
+    // fd.append('type', '4');
+    // fd.append('driver_id', this.customerData.id.toString());
+    let fd = {type: '4', driver_id: this.customerData.id.toString()};
     this.showSpinner = true;
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {

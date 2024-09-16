@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   selector: 'app-add-pollution',
   templateUrl: './add-pollution.component.html',
   styleUrl: './add-pollution.component.scss',
-  providers:[DatePipe]
+  providers: [DatePipe],
 })
 export class AddPollutionComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -29,15 +29,15 @@ export class AddPollutionComponent implements OnInit {
   public resumeError!: string;
   public fileError: boolean = false;
   public prof: any;
-  public vehicleData!:any;
-  public driverData!:any;
+  public vehicleData!: any;
+  public driverData!: any;
   medicalForm = this.fb.group({
     id: 0,
     addType: ['Pollution', Validators.required],
     amount: ['', Validators.required],
     vehicle: ['', Validators.required],
     tenure: ['', Validators.required],
-    date: [new Date(), Validators.required]
+    date: [new Date(), Validators.required],
   });
 
   constructor(
@@ -73,73 +73,73 @@ export class AddPollutionComponent implements OnInit {
 
   getVehicles() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append("type", "2");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.vehicleData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    // const fd = new FormData();
+    // fd.append("type", "2");
+    let fd = { type: '2' };
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.vehicleData = res.data;
           this.showSpinner = false;
         }
-      );
-
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
   }
   getDrivers() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append("type", "1");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.driverData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    // const fd = new FormData();
+    // fd.append("type", "1");
+    let fd = { type: '1' };
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.driverData = res.data;
           this.showSpinner = false;
         }
-      );
+      },
+      (error) => {
+        this.showSpinner = false;
+      }
+    );
   }
 
   onItemSelect(item: any) {}
   onSelectAll(items: any) {}
 
   public onSubmit(): void {
-
     if (this.medicalForm.valid) {
+      const jsonObject: { [key: string]: any } = {};
+
+      // Extract the form values
       const formModel: MedicalTeamModel = this.medicalForm
         .value as MedicalTeamModel;
-      const formData = new FormData();
-      formData.append("type",'8');
 
-      // Convert JSON object to FormData
+      // Add the 'type' property
+      jsonObject['type'] = '8';
+
+      // Loop through the formModel keys and populate the JSON object
       for (let key of Object.keys(formModel)) {
-        if(key === 'date') {
-          let date = this.datePipe.transform(this.medicalForm.get('date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else {
-          const value = formModel[key];
-          formData.append(key, value);
+        if (key === 'date') {
+          // Format the date
+          const date = this.datePipe.transform(
+            this.medicalForm.get('date')?.value,
+            'MM-dd-yyyy'
+          );
+          jsonObject[key] = date || ''; // Handle null or undefined
+        } else {
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
+
       this.showSpinner = true;
       this._apiService
         .post(
           this.medicalData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
-          formData
+          jsonObject
         )
         .subscribe(
           (res: any) => {
@@ -167,4 +167,3 @@ export class AddPollutionComponent implements OnInit {
     this.router.navigate(['/medical-team/pollution']);
   }
 }
-

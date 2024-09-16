@@ -15,7 +15,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   selector: 'app-add-driver',
   templateUrl: './add-driver.component.html',
   styleUrl: './add-driver.component.scss',
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class AddDriverComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -23,8 +23,8 @@ export class AddDriverComponent implements OnInit {
   public isChecking: Boolean = false;
   public timezones: any;
   public addressPredictions: any;
-  public vehicleData!:any;
-  public driverData!:any;
+  public vehicleData!: any;
+  public driverData!: any;
   public patientData!: PatientModel;
   @Input() fromPopup: boolean = false;
   @Output() formSubmitted: EventEmitter<void> = new EventEmitter<void>();
@@ -35,7 +35,7 @@ export class AddDriverComponent implements OnInit {
     date: ['', Validators.required],
     pickup: ['', Validators.required],
     destination: ['', Validators.required],
-    phone: ['', Validators.required]
+    phone: ['', Validators.required],
   });
 
   constructor(
@@ -55,56 +55,61 @@ export class AddDriverComponent implements OnInit {
       date: this.patientData['date'],
       pickup: this.patientData['pickup'],
       destination: this.patientData['destination'],
-      phone: this.patientData['phone']
+      phone: this.patientData['phone'],
     });
-
   }
 
   getVehicles() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append("type", "2");
-    this._apiService
-      .post(APIConstant.SNM_GET,
-        fd
-      )
-      .subscribe(
-        (res: any) => {
-          if(res && res.status) {
-            this.vehicleData = res.data;
-            this.showSpinner = false;
-          }
-        },
-        (error) => {
+    // const fd = new FormData();
+    // fd.append("type", "2");
+    let fd = { type: '2' };
+    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+      (res: any) => {
+        if (res && res.status) {
+          this.vehicleData = res.data;
           this.showSpinner = false;
-          if (this.fromPopup) this.formSubmitted.emit();
         }
-      );
-
+      },
+      (error) => {
+        this.showSpinner = false;
+        if (this.fromPopup) this.formSubmitted.emit();
+      }
+    );
   }
 
   onSubmit(): void {
     if (this.patientForm.valid) {
-      const formModel: any = this.patientForm.value;
-      const formData = new FormData();
+      // Initialize an empty object
+      const jsonObject: { [key: string]: any } = {};
 
-      // Convert JSON object to FormData
+      // Extract the form values
+      const formModel: any = this.patientForm.value;
+
+      // Loop through the formModel keys and populate the JSON object
       for (const key of Object.keys(formModel)) {
-        if(key === 'date') {
-          let date = this.datePipe.transform(this.patientForm.get('date')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else {
-          const value = formModel[key];
-          formData.append(key, value);
+        if (key === 'date') {
+          // Format the date
+          const date = this.datePipe.transform(
+            this.patientForm.get('date')?.value,
+            'MM-dd-yyyy'
+          );
+          jsonObject[key] = date || ''; // Handle null or undefined
+        } else {
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
-      formData.append('type','6');
+
+      // Add additional property
+      jsonObject['type'] = '6';
+
+
       this.showSpinner = true;
       this._apiService
         .post(
           this.patientData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
-          formData
+          jsonObject
         )
         .subscribe(
           (res: any) => {
@@ -188,4 +193,3 @@ export class AddDriverComponent implements OnInit {
     this.formSubmitted.emit();
   }
 }
-

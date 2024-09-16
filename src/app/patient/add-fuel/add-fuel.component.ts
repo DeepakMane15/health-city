@@ -80,8 +80,7 @@ export class AddFuelComponent implements OnInit {
 
   getVehicles() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '2');
+    let fd = { type: '2' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -102,24 +101,29 @@ export class AddFuelComponent implements OnInit {
 
   onSubmit(): void {
     if (this.patientForm.valid) {
-      const formModel: PatientModel = this.patientForm.value as PatientModel;
-      const formData = new FormData();
+      const jsonObject: { [key: string]: any } = {};
 
-      // Convert JSON object to FormData
+      // Extract the form values
+      const formModel: PatientModel = this.patientForm.value as PatientModel;
+
+      // Add the 'type' property
+      jsonObject['type'] = '5';
+
+      // Loop through the formModel keys and populate the JSON object
       for (const key of Object.keys(formModel)) {
         if (key === 'vehicle') {
-          formData.append(key, formModel[key][0].id);
+          // Assume vehicle is an array with at least one element
+          jsonObject[key] = formModel[key][0].id;
         } else {
-          const value = formModel[key];
-          formData.append(key, value);
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
-      formData.append('type', '5');
       this.showSpinner = true;
       this._apiService
         .post(
           this.patientData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
-          formData
+          jsonObject
         )
         .subscribe(
           (res: any) => {

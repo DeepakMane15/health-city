@@ -11,7 +11,7 @@ import { AuthService } from '../auth.service';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://app.profmedservices.com/api';
+  private baseUrl = 'http://localhost:3300/api';
 
   constructor(private http: HttpClient, private _authServive: AuthService) {}
 

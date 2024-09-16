@@ -50,8 +50,9 @@ export class PollutionListComponent  {
 
   fetchMedicalTeams() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','9');
+    // const fd = new FormData();
+    // fd.append('type','9');
+    let fd = {type: '9'}
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

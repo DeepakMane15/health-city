@@ -47,8 +47,9 @@ export class PatientListComponent {
 
   fetchPatients() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '3');
+    // const fd = new FormData();
+    // fd.append('type', '3');
+    let fd = {type: '3'}
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

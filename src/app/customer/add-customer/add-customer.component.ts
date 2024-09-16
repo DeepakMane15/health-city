@@ -17,7 +17,7 @@ import { GoogleService } from 'src/app/shared/services/google/google.service';
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
   styleUrls: ['./add-customer.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class AddCustomerComponent implements OnInit {
   public showSpinner: Boolean = false;
@@ -73,13 +73,12 @@ export class AddCustomerComponent implements OnInit {
     this.companyForm.get('cLimit')?.disable();
     this.companyForm.get('fuel_card_make')?.disable();
 
-
     this.customerData = history.state.customerData;
 
     this.companyForm.patchValue({
-      id:  this.customerData['id'],
-      sewadar_code:  this.customerData['sewadar_code'],
-      sewadar_type:  this.customerData['sewadar_type'],
+      id: this.customerData['id'],
+      sewadar_code: this.customerData['sewadar_code'],
+      sewadar_type: this.customerData['sewadar_type'],
       fname: this.customerData['first_name'],
       lname: this.customerData['last_name'],
       dl: this.customerData['dl_no'],
@@ -96,14 +95,14 @@ export class AddCustomerComponent implements OnInit {
       // cashElg: this.customerData['cash_eligiblity'],
       cLimit: this.customerData['cash_limit'],
     });
-    if(this.customerData['insurance'] === "1") {
+    if (this.customerData['insurance'] === '1') {
       this.companyForm.get('iDate')?.enable();
     }
-    if(this.customerData['fuel_card_issued'] === "1") {
+    if (this.customerData['fuel_card_issued'] === '1') {
       this.companyForm.get('fNo')?.enable();
       this.companyForm.get('fuel_card_make')?.enable();
     }
-    if(this.customerData['cash_eligiblity'] === "1") {
+    if (this.customerData['cash_eligiblity'] === '1') {
       this.companyForm.get('cLimit')?.enable();
     }
   }
@@ -137,26 +136,33 @@ export class AddCustomerComponent implements OnInit {
   onSubmit(): void {
     if (this.companyForm.valid) {
       this.showSpinner = true;
-      const formData = new FormData();
+      const jsonObject: { [key: string]: any } = {};
+
+      // Extract the form values
       const formModel: any = this.companyForm.value;
-      formData.append("type", "2");
+
+      // Add the 'type' property
+      jsonObject['type'] = '2';
+
+      // Loop through the formModel keys and populate the JSON object
       for (const key of Object.keys(formModel)) {
-        if(key === 'iDate') {
-          let date = this.datePipe.transform(this.companyForm.get('iDate')?.value, 'MM-dd-yyyy');
-          formData.append(key, date?.toString() || "");
-        }
-        else {
-          const value = formModel[key];
-          formData.append(key, value);
+        if (key === 'iDate') {
+          // Format the date
+          const date = this.datePipe.transform(
+            this.companyForm.get('iDate')?.value,
+            'MM-dd-yyyy'
+          );
+          jsonObject[key] = date || ''; // Handle null or undefined
+        } else {
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
 
       this._apiService
         .post(
-          this.customerData
-            ? APIConstant.SNM_EDIT
-            : APIConstant.SNM_SAVE,
-          formData
+          this.customerData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
+          jsonObject
         )
         .subscribe(
           (res: any) => {

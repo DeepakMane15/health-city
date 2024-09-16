@@ -57,8 +57,9 @@ export class HomeComponent implements OnInit {
 
   getDashboardData() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','10');
+    // const fd = new FormData();
+    // fd.append('type','10');
+    let fd = {type: '10'}
     this._apiService
         .post(
           APIConstant.SNM_GET,
@@ -82,8 +83,9 @@ export class HomeComponent implements OnInit {
   }
   getDriver() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','1');
+    // const fd = new FormData();
+    // fd.append('type','1');
+    let fd = {type: '1'}
     this._apiService
         .post(
           APIConstant.SNM_GET,

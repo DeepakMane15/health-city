@@ -61,7 +61,7 @@ export class DriverListComponent implements OnInit {
   fetchDrivers() {
     this.showSpinner = true;
     const fd = new FormData();
-    fd.append('type','6');
+    fd.append('type', '6');
     this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -79,14 +79,16 @@ export class DriverListComponent implements OnInit {
 
   approveRequest(id: string) {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','9');
-    fd.append('id',id);
+    // const fd = new FormData();
+    // fd.append('type','9');
+    // fd.append('id',id);
+
+    let fd = { type: '9', id: id };
 
     this._apiServices.post(APIConstant.SNM_EDIT, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
-         this.fetchDrivers();
+          this.fetchDrivers();
         }
         this.showSpinner = false;
       },

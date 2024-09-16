@@ -66,8 +66,9 @@ export class AssignmentListComponent implements OnInit {
 
   fetchAssignments() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '5');
+    // const fd = new FormData();
+    // fd.append('type', '5');
+    let fd = {type: '5'}
     this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

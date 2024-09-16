@@ -102,8 +102,7 @@ export class AddPatientComponent implements OnInit {
 
   getVehicles() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '2');
+    let fd = { type: '2' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -119,8 +118,9 @@ export class AddPatientComponent implements OnInit {
   }
   getDrivers() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '1');
+    // const fd = new FormData();
+    // fd.append('type', '1');
+    let fd = { type: '1' };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -137,31 +137,41 @@ export class AddPatientComponent implements OnInit {
 
   onSubmit(): void {
     if (this.patientForm.valid && !this.isKmError()) {
-      const formModel: PatientModel = this.patientForm.value as PatientModel;
-      const formData = new FormData();
+      const jsonObject: { [key: string]: any } = {};
 
-      // Convert JSON object to FormData
+      // Extract the form values
+      const formModel: PatientModel = this.patientForm.value as PatientModel;
+
+      // Add the 'type' property
+      jsonObject['type'] = '1';
+
+      // Loop through the formModel keys and populate the JSON object
       for (const key of Object.keys(formModel)) {
         if (key === 'date') {
-          let date = this.datePipe.transform(
+          // Format the date
+          const date = this.datePipe.transform(
             this.patientForm.get('date')?.value,
             'MM-dd-yyyy'
           );
-          formData.append(key, date?.toString() || '');
+          jsonObject[key] = date || ''; // Handle null or undefined
         } else if (key === 'driver_name' || key === 'vehicle_no') {
-          formData.append(key, formModel[key][0].id.toString());
+          // Assume these fields are arrays with at least one element
+          jsonObject[key] = formModel[key][0].id.toString();
         } else {
-          const value = formModel[key];
-          formData.append(key, value);
+          // Add other values directly
+          jsonObject[key] = formModel[key];
         }
       }
-      if (this.isChallanVisible) formData.append('is_challan', '1');
-      formData.append('type', '1');
+
+      // Conditionally add 'is_challan' property
+      if (this.isChallanVisible) {
+        jsonObject['is_challan'] = '1';
+      }
       this.showSpinner = true;
       this._apiService
         .post(
           this.patientData ? APIConstant.SNM_EDIT : APIConstant.SNM_SAVE,
-          formData
+          jsonObject
         )
         .subscribe(
           (res: any) => {
@@ -249,9 +259,10 @@ export class AddPatientComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '8');
-    fd.append('vehicle', item.id);
+    // const fd = new FormData();
+    // fd.append('type', '8');
+    // fd.append('vehicle', item.id);
+    let fd = { type: '1', vehicle: item.id };
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res.data && res.data.length > 0) {

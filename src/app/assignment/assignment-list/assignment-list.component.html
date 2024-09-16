@@ -74,9 +74,9 @@
                 <button class="icon-button">
                   <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
                 </button>
-                <button class="icon-button">
+                <!-- <button class="icon-button">
                   <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
-                </button>
+                </button> -->
                 <button class="icon-button" [disabled]="element.status !== assignmentStatus.PENDING">
                   <mat-icon class="action-mat-icon" (click)="handleDeleteAssignment(element.id)"
                     class="delete-icon">delete</mat-icon>

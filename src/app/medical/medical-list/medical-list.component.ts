@@ -55,8 +55,9 @@ export class MedicalListComponent implements OnInit {
 
   fetchMedicalTeams() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','2');
+    // const fd = new FormData();
+    // fd.append('type','2');
+    let fd = {type: '2'}
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

@@ -58,8 +58,9 @@ export class ImprestListComponent {
 
   fetchPatients() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '4');
+    // const fd = new FormData();
+    // fd.append('type', '4');
+    let fd = {type: '4'}
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {

@@ -49,8 +49,9 @@ export class SparePartComponent {
 
   fetchMedicalTeams() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type','7');
+    // const fd = new FormData();
+    // fd.append('type','7');
+    let fd = {type: '7'}
     this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
