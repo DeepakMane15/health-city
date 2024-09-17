@@ -54,7 +54,7 @@ export class AuthService {
   private userDataSubject = new BehaviorSubject<any>(null);
   public userData$: Observable<any> = this.userDataSubject.asObservable();
   public userProfile: any;
-  private baseUrl = 'http://localhost:3300/api';
+  private baseUrl = 'https://172.16.29.38/api';
   constructor(private router: Router, private http: HttpClient) {
     const userData = this.getUserData();
     if (userData) {

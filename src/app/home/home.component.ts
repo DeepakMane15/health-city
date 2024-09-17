@@ -67,10 +67,10 @@ export class HomeComponent implements OnInit {
         )
         .subscribe(
           (res: any) => {
-            if (res && res.status) {
+            if (res && res.data.length > 0) {
               this.showSpinner = false;
-              this.dashboardData = res.data['counts'][0];
-              this.requests = res.data['request']?.splice(0,10);
+              this.dashboardData = res.data[0]['counts'][0];
+              this.requests = res.data[0]['request']?.splice(0,10);
             } else {
               this.showSpinner = false;
             }

@@ -46,8 +46,9 @@ export class CustomersListComponent implements AfterViewInit {
 
   fetchCustomers() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '1');
+    // const fd = new FormData();
+    // fd.append('type', '1');
+    let fd = {type: '1'};
 
     this._apiService.post(APIConstant.GET_DRIVERS, fd).subscribe(
       (res: any) => {
