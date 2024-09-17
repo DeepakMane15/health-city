@@ -2,7 +2,7 @@
   <div class="spinner-overlay" *ngIf="showSpinner">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
-  <span class="mat-h1">Dashboard CI/CD 1</span>
+  <span class="mat-h1">Dashboard CI/CD 2</span>
   <mat-divider></mat-divider>
   <mat-grid-list [cols]="columns ? 4 : 2" rowHeight="140px" *ngIf="cards && cards.length && dashboardData">
     <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
