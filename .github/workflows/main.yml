@@ -30,10 +30,10 @@ jobs:
 
       - name: Test network connectivity to server
         run: |
-          ping -c 4 $SERVER_IP
-          nc -zv $SERVER_IP 22  # Check if SSH port is open
+          ping -c 4 $VPN_SERVER_IP
+          nc -zv $VPN_SERVER_IP 22  # Check if SSH port is open
         env:
-          SERVER_IP: ${{ secrets.SERVER_IP }}
+          VPN_SERVER_IP: ${{ secrets.VPN_SERVER_IP }}
 
       - name: Cache Node.js modules
         uses: actions/cache@v3
@@ -59,20 +59,18 @@ jobs:
       - name: Deploy to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
+          VPN_SERVER_IP: ${{ secrets.VPN_SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
            eval "$(ssh-agent -s)"
            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-           
-           # Debug: List the added SSH keys to verify it's loaded
-           ssh-add -l
-
-           # Debug: Test SSH connection with verbose output
-           ssh -v $SERVER_USER@$SERVER_IP "echo 'Connected to Server!'"
-           
-           # Verbose rsync to help debug any issues
-           rsync -avz --progress --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
+          
+           # Connect to VPN server directly (if no bastion host)
+           ssh -o "ForwardAgent=yes" $SERVER_USER@$VPN_SERVER_IP << 'EOF'
+            # From VPN server, execute commands
+            echo 'Connected to VPN Server!'
+            rsync -avz --progress --delete ./dist/ $SERVER_USER@$VPN_SERVER_IP:/var/www/snmhealthcity-fe/
+           EOF
         
       # Debug: Capture logs in case of failure
       - name: Capture logs on failure
