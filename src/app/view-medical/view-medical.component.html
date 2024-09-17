@@ -36,8 +36,8 @@
           <div class="right-panel">
             <div class="img-container">
               <div class="image">
-                <div [ngClass]="{'image-border' : !medicalData?.avatar }">
-                  <img [src]="medicalData?.avatar || appConstants.DEFAULT_IMG " />
+                <div *ngIf="medicalData" [ngClass]="{'image-border' : !medicalData.avatar }">
+                  <img [src]="medicalData.avatar || appConstants.DEFAULT_IMG " />
                 </div>
               </div>
               <div class="img-name">{{getName()}}</div>
