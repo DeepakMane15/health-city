@@ -28,6 +28,13 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Test network connectivity to server
+        run: |
+          ping -c 4 $SERVER_IP
+          nc -zv $SERVER_IP 22  # Check if SSH port is open
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
