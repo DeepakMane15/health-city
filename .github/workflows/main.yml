@@ -55,7 +55,9 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
-          eval "$(ssh-agent -s)"
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-          rsync -avz --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
+           eval "$(ssh-agent -s)"
+           echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+           ssh-add -l  # List the added SSH keys to verify it's loaded
+           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+           ssh -v $SERVER_USER@$SERVER_IP "echo Connected to Server!"  # Test SSH connection with verbose output
+           rsync -avz --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
