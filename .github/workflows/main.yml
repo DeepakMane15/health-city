@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'  # Update to a version compatible with Angular CLI
+          node-version: '18'  # Ensure this is set to a compatible version
 
       - name: Install dependencies
         run: npm install
