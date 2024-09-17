@@ -57,7 +57,18 @@ jobs:
         run: |
            eval "$(ssh-agent -s)"
            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-           ssh-add -l  # List the added SSH keys to verify it's loaded
-           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-           ssh -v $SERVER_USER@$SERVER_IP "echo Connected to Server!"  # Test SSH connection with verbose output
-           rsync -avz --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
+           
+           # Debug: List the added SSH keys to verify it's loaded
+           ssh-add -l
+
+           # Debug: Test SSH connection with verbose output
+           ssh -v $SERVER_USER@$SERVER_IP "echo 'Connected to Server!'"
+           
+           # Verbose rsync to help debug any issues
+           rsync -avz --progress --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
+        
+      # Debug: Capture logs in case of failure
+      - name: Capture logs on failure
+        if: failure()
+        run: |
+          dmesg | tail -20
