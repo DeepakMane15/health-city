@@ -49,6 +49,22 @@ jobs:
       - name: Build Angular app
         run: npm run build
 
+      - name: Install FortiClient
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://path-to-forticlient-linux-deb -O forticlient.deb
+          sudo dpkg -i forticlient.deb
+          sudo apt-get install -f  # Fix any dependency issues
+
+      - name: Connect to FortiClient VPN
+        run: |
+          echo "${FORTICLIENT_VPN_PASSWORD}" > /tmp/vpn_password.txt
+          sudo forticlientsslvpn --config /path/to/forticlient_config.conf --username "${FORTICLIENT_VPN_USERNAME}" --password /tmp/vpn_password.txt
+        env:
+          FORTICLIENT_VPN_USERNAME: ${{ secrets.FORTICLIENT_VPN_USERNAME }}
+          FORTICLIENT_VPN_PASSWORD: ${{ secrets.FORTICLIENT_VPN_PASSWORD }}
+
       - name: Deploy to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -58,7 +74,7 @@ jobs:
            eval "$(ssh-agent -s)"
            echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
           
-           # Connect to VPN server directly (if no bastion host)
+           # Connect to server after VPN connection is established
            ssh -o "ForwardAgent=yes" $SERVER_USER@$VPN_SERVER_IP << 'EOF'
             # From VPN server, execute commands
             echo 'Connected to VPN Server!'
