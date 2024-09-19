@@ -13,6 +13,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Debug SSH Key
+        run: echo "${SSH_PRIVATE_KEY:0:10}..." # Print only the first 10 characters
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        shell: bash
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -28,9 +43,6 @@ jobs:
         with:
           node-version: '18'  # Ensure this is set to a compatible version
 
-      - name: Check Node.js version
-        run: node -v
-
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
@@ -40,10 +52,21 @@ jobs:
       - name: Deploy to server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
+          VPN_SERVER_IP: ${{ secrets.VPN_SERVER_IP }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
-          eval "$(ssh-agent -s)"
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-          rsync -avz --delete ./dist/ $SERVER_USER@$SERVER_IP:/var/www/snmhealthcity-fe/
+           eval "$(ssh-agent -s)"
+           echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+          
+           # Connect to VPN server directly (if no bastion host)
+           ssh -o "ForwardAgent=yes" $SERVER_USER@$VPN_SERVER_IP << 'EOF'
+            # From VPN server, execute commands
+            echo 'Connected to VPN Server!'
+            rsync -avz --progress --delete ./dist/ $SERVER_USER@$VPN_SERVER_IP:/var/www/snmhealthcity-fe/
+           EOF
+        
+      # Debug: Capture logs in case of failure
+      - name: Capture logs on failure
+        if: failure()
+        run: |
+          dmesg | tail -20
