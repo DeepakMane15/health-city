@@ -154,14 +154,12 @@ export class ViewCustomerComponent implements OnInit {
     // formData.append('type', '8');
     // formData.append('driver', this.customerData['id']);
     // formData.append('isVehicle', '0');
-    let formData = {type: '8', driver: this.customerData['id'], isVehicle: '0'}
+    let formData = {type: '10', driver: this.customerData['id'], isVehicle: '0'}
 
     this._apiService.post(APIConstant.SNM_GET_BY_ID, formData).subscribe(
       (res: any) => {
         if (res && res.status) {
           this.showSpinner = false;
-          this.fuelData = res.data['fuel'];
-          this.spareData = res.data['spare-parts'];
           this.inOutData = res.data['inout'];
         } else {
           this.showSpinner = false;
@@ -243,7 +241,7 @@ export class ViewCustomerComponent implements OnInit {
     );
   }
   navigateToAddUser() {
-    this.router.navigate(['customer/add-user'], {
+    this.router.navigate(['driver/add-user'], {
       state: { customerData: this.customerData },
     });
   }
@@ -251,15 +249,15 @@ export class ViewCustomerComponent implements OnInit {
     return user_type !== UserTypeConstant.CUSTOMER;
   }
   navigateBack() {
-    this.router.navigate(['customer']);
+    this.router.navigate(['driver']);
   }
   navigateToEdit() {
-    this.router.navigate(['/customer/edit'], {
+    this.router.navigate(['/driver/edit'], {
       state: { customerData: this.customerData },
     });
   }
   editUser() {
-    this.router.navigate(['/customer/user/edit'], {
+    this.router.navigate(['/driver/user/edit'], {
       state: { userData: this.userData },
     });
   }

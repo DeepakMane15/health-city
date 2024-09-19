@@ -75,16 +75,16 @@ export class ImprestListComponent {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/patients/add']);
+    this.router.navigate(['/fuels/add']);
   }
 
   navigateToEdit(patientData: PatientModel) {
-    this.router.navigate(['/patients/edit'], {
+    this.router.navigate(['/fuels/edit'], {
       state: { patientData: patientData },
     });
   }
   navigateToView(patientData: PatientModel) {
-    this.router.navigate(['/patients/view'], {
+    this.router.navigate(['/fuels/view'], {
       state: { id: patientData.id, tabIndex: 0 },
     });
   }
@@ -96,9 +96,13 @@ export class ImprestListComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let fd = new FormData();
-        fd.append('type', DELETE_TYPE.PATIENT.toString());
-        fd.append('id', patientId);
+        // let fd = new FormData();
+        // fd.append('type', DELETE_TYPE.PATIENT.toString());
+        // fd.append('id', patientId);
+        let fd = {
+          type: '4',
+          id: patientId
+        }
         this.showSpinner = true;
         this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {

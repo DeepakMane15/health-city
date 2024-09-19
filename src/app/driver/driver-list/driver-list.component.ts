@@ -60,8 +60,9 @@ export class DriverListComponent implements OnInit {
 
   fetchDrivers() {
     this.showSpinner = true;
-    const fd = new FormData();
-    fd.append('type', '6');
+    // const fd = new FormData();
+    // fd.append('type', '6');
+    let fd = {type: '6'};
     this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -98,16 +99,16 @@ export class DriverListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/driver/add']);
+    this.router.navigate(['/pre-request/add']);
   }
 
   navigateToEdit(driverData: any) {
-    this.router.navigate(['/driver/edit'], {
+    this.router.navigate(['/pre-request/edit'], {
       state: { driverData: driverData },
     });
   }
   navigateToView(driverData: any) {
-    this.router.navigate(['/driver/view'], {
+    this.router.navigate(['/pre-request/view'], {
       state: { driverId: driverData.id, tabIndex: 0 },
     });
   }
@@ -115,14 +116,18 @@ export class DriverListComponent implements OnInit {
   handleDelete(id: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Driver' },
+      data: { name: 'Pre Request' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let fd = new FormData();
-        fd.append('id', id);
-        fd.append('type', DELETE_TYPE.DRIVER.toString());
+        // let fd = new FormData();
+        // fd.append('id', id);
+        // fd.append('type', DELETE_TYPE.DRIVER.toString());
+        let fd = {
+          id: id,
+          type: '6'
+        }
         this.showSpinner = true;
         this._apiServices.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {

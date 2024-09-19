@@ -52,7 +52,7 @@
             <td mat-cell *matCellDef="let element" style="max-width: 150px;">
               <div class="icon-container">
                 <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
-                <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
+                <!-- <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon> -->
                 <mat-icon class="action-mat-icon delete-icon" (click)="handleDelete(element.pid)">delete</mat-icon>
                 <mat-icon *ngIf="element.approved === '0'" (click)="approveMedicalTeam(element.pid)"
                   class="action-mat-icon check" matTooltip="Approve">check</mat-icon>

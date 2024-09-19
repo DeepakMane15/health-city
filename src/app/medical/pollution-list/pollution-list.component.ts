@@ -68,7 +68,7 @@ export class PollutionListComponent  {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/medical-team/pollution/add']);
+    this.router.navigate(['/vehicles/pollution/add']);
   }
 
   handleToggleChange(event: MatButtonToggleChange): void {
@@ -91,12 +91,12 @@ export class PollutionListComponent  {
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/pollution/edit'], {
+    this.router.navigate(['/vehicles/pollution/edit'], {
       state: { medicalData: medicalData },
     });
   }
   navigateToView(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/pollution/view'], {
+    this.router.navigate(['/vehicles/pollution/view'], {
       state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }

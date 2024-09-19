@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.driverData = res.data.splice(0,10);;
+              this.driverData = res.data.splice(0,8);
             } else {
               this.showSpinner = false;
             }

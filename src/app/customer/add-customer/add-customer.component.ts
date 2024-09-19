@@ -168,7 +168,7 @@ export class AddCustomerComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/customer']);
+              this.router.navigate(['/driver']);
             } else {
               this.showSpinner = false;
               console.log(res.message);
@@ -184,11 +184,11 @@ export class AddCustomerComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['customer'], {
+    this.router.navigate(['driver'], {
       state: { customerData: this.customerData },
     });
   }
   public navigateBack() {
-    this.router.navigate(['/customer']);
+    this.router.navigate(['/driver']);
   }
 }

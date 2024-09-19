@@ -63,7 +63,7 @@ export class ViewDriverComponent implements OnInit {
   ngOnInit() {
     let driverId = history.state.driverId;
     if (driverId) this.fetchDriverData(driverId);
-    else this.router.navigate(['driver']);
+    else this.router.navigate(['pre-request']);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
   }
   private fetchDriverData(driverId: string) {

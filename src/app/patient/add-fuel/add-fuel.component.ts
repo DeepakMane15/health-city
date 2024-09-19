@@ -130,7 +130,7 @@ export class AddFuelComponent implements OnInit {
             if (res && res.status) {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
-              else this.router.navigate(['/patients']);
+              else this.router.navigate(['/fuels']);
             } else {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
@@ -195,13 +195,13 @@ export class AddFuelComponent implements OnInit {
   public handleCancel() {
     if (this.fromPopup) this.formSubmitted.emit();
     else
-      this.router.navigate(['patients'], {
+      this.router.navigate(['fuels'], {
         state: { patientData: this.patientData },
       });
   }
   public navigateBack() {
     if (this.fromPopup) this.formSubmitted.emit();
-    else this.router.navigate(['/patients']);
+    else this.router.navigate(['/fuels']);
   }
   closeDialog() {
     this.formSubmitted.emit();

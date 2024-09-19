@@ -116,7 +116,7 @@ export class AddDriverComponent implements OnInit {
             if (res && res.status) {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
-              else this.router.navigate(['/driver']);
+              else this.router.navigate(['/pre-request']);
             } else {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
@@ -181,13 +181,13 @@ export class AddDriverComponent implements OnInit {
   public handleCancel() {
     if (this.fromPopup) this.formSubmitted.emit();
     else
-      this.router.navigate(['driver'], {
+      this.router.navigate(['pre-request'], {
         state: { patientData: this.patientData },
       });
   }
   public navigateBack() {
     if (this.fromPopup) this.formSubmitted.emit();
-    else this.router.navigate(['/driver']);
+    else this.router.navigate(['/pre-request']);
   }
   closeDialog() {
     this.formSubmitted.emit();

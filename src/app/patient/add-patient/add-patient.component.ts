@@ -178,7 +178,7 @@ export class AddPatientComponent implements OnInit {
             if (res && res.status) {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
-              else this.router.navigate(['/patients/imprest']);
+              else this.router.navigate(['/fuels/imprest']);
             } else {
               this.showSpinner = false;
               if (this.fromPopup) this.formSubmitted.emit();
@@ -312,13 +312,13 @@ export class AddPatientComponent implements OnInit {
   public handleCancel() {
     if (this.fromPopup) this.formSubmitted.emit();
     else
-      this.router.navigate(['/patients/imprest'], {
+      this.router.navigate(['/fuels/imprest'], {
         state: { patientData: this.patientData },
       });
   }
   public navigateBack() {
     if (this.fromPopup) this.formSubmitted.emit();
-    else this.router.navigate(['/patients/imprest']);
+    else this.router.navigate(['/fuels/imprest']);
   }
   closeDialog() {
     this.formSubmitted.emit();

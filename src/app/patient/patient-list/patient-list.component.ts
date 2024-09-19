@@ -64,30 +64,34 @@ export class PatientListComponent {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/patients/fuel/add']);
+    this.router.navigate(['/fuels/fuel/add']);
   }
 
   navigateToEdit(patientData: PatientModel) {
-    this.router.navigate(['/patients/fuel/edit'], {
+    this.router.navigate(['/fuels/fuel/edit'], {
       state: { patientData: patientData },
     });
   }
   navigateToView(patientData: PatientModel) {
-    this.router.navigate(['/patients/view'], {
+    this.router.navigate(['/fuels/view'], {
       state: { id: patientData.id, tabIndex: 0 },
     });
   }
   handleDeletePatient(patientId: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Patient' },
+      data: { name: 'Fuel' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let fd = new FormData();
-        fd.append('type', DELETE_TYPE.PATIENT.toString());
-        fd.append('id', patientId);
+        // let fd = new FormData();
+        // fd.append('type', DELETE_TYPE.PATIENT.toString());
+        // fd.append('id', patientId);
+        let fd = {
+          type: '3',
+          id: patientId
+        }
         this.showSpinner = true;
         this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {

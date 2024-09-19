@@ -145,7 +145,7 @@ export class AddPollutionComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/medical-team/pollution']);
+              this.router.navigate(['/vehicles/pollution']);
             } else {
               this.showSpinner = false;
             }
@@ -160,10 +160,10 @@ export class AddPollutionComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['/medical-team/pollution']);
+    this.router.navigate(['/vehicles/pollution']);
   }
 
   public navigateBack() {
-    this.router.navigate(['/medical-team/pollution']);
+    this.router.navigate(['/vehicles/pollution']);
   }
 }

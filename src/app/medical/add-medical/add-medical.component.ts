@@ -114,7 +114,7 @@ export class AddMedicalComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/spare-parts']);
+              this.router.navigate(['/vehicles']);
             } else {
               this.showSpinner = false;
             }
@@ -129,10 +129,10 @@ export class AddMedicalComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['spare-parts']);
+    this.router.navigate(['/vehicles']);
   }
 
   public navigateBack() {
-    this.router.navigate(['/spare-parts']);
+    this.router.navigate(['/vehicles']);
   }
 }

@@ -52,7 +52,7 @@ export class AddUserComponent implements OnInit {
     this.userData = history.state.userData;
     console.log(this.customerData);
     if (!this.customerData && !this.userData) {
-      this.router.navigate(['/customer/view']);
+      this.router.navigate(['/driver/view']);
     }
     if (this.userData) {
       this.userForm.patchValue({
@@ -137,7 +137,7 @@ export class AddUserComponent implements OnInit {
             if (res && res.status) {
               console.log(res.message);
               this.showSpinner = false;
-              this.router.navigate(['/customer/view'], {
+              this.router.navigate(['/driver/view'], {
                 state: { customerData: this.customerData, tabIndex: 1 },
               });
             } else {
@@ -156,7 +156,7 @@ export class AddUserComponent implements OnInit {
     this.userForm.patchValue({ force_password_change: value });
   }
   public handleCancel() {
-    this.router.navigate(['customer/view'], {
+    this.router.navigate(['driver/view'], {
       state: { customerData: this.customerData, tabIndex: 1 },
     });
   }

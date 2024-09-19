@@ -141,7 +141,7 @@ export class ViewMedicalComponent implements OnInit {
     this.medicalData = history.state.pid;
     // if (pid) this.fetchMedicalTeamData(pid);
     this.defaultTabIndex = (history && history.state.tabIndex) || 0;
-    // if (!pid) this.router.navigate(['medical-team']);
+    // if (!pid) this.router.navigate(['vehicles']);
     // console.log(history.state);
 
     this.router.events.subscribe((event) => {
@@ -215,11 +215,11 @@ export class ViewMedicalComponent implements OnInit {
     });
   }
   navigateBack() {
-    this.router.navigate(['medical-team']);
+    this.router.navigate(['vehicles']);
   }
 
   navigateToEdit() {
-    this.router.navigate(['/medical-team/edit'], {
+    this.router.navigate(['/vehicles/edit'], {
       state: { medicalData: this.medicalData },
     });
   }

@@ -66,7 +66,7 @@ export class SparePartComponent {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/medical-team/spare-parts/add']);
+    this.router.navigate(['/vehicles/spare-parts/add']);
   }
 
   applyFilter(): void {
@@ -77,12 +77,12 @@ export class SparePartComponent {
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/spare-parts/edit'], {
+    this.router.navigate(['/vehicles/spare-parts/edit'], {
       state: { medicalData: medicalData },
     });
   }
   navigateToView(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/spare-parts/view'], {
+    this.router.navigate(['/vehicles/spare-parts/view'], {
       state: { pid: medicalData.pid, tabIndex: 0 },
     });
   }

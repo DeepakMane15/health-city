@@ -135,12 +135,17 @@ export class AddSparePartComponent implements OnInit {
       // Loop through the formModel keys and populate the JSON object
       for (let key of Object.keys(formModel)) {
         if (key === 'date') {
-          // Format the date
-          const date = this.datePipe.transform(
-            this.medicalForm.get('date')?.value,
-            'MM-dd-yyyy'
-          );
-          jsonObject[key] = date || ''; // Handle null or undefined
+          // Manually format the date
+          const rawDate = this.medicalForm.get('date')?.value;
+          if (rawDate) {
+            const dateObj = new Date(rawDate);
+            const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+              .toString()
+              .padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
+            jsonObject[key] = formattedDate;
+          } else {
+            jsonObject[key] = ''; // Handle null or undefined
+          }
         } else if (key === 'vehicle') {
           // Assume vehicle is an array with at least one element
           jsonObject[key] = formModel[key][0].id;
@@ -159,7 +164,7 @@ export class AddSparePartComponent implements OnInit {
           (res: any) => {
             if (res && res.status) {
               this.showSpinner = false;
-              this.router.navigate(['/medical-team/spare-parts']);
+              this.router.navigate(['/vehicles/spare-parts']);
             } else {
               this.showSpinner = false;
             }
@@ -174,10 +179,10 @@ export class AddSparePartComponent implements OnInit {
   }
 
   public handleCancel() {
-    this.router.navigate(['/medical-team/spare-parts']);
+    this.router.navigate(['/vehicles/spare-parts']);
   }
 
   public navigateBack() {
-    this.router.navigate(['/medical-team/spare-parts']);
+    this.router.navigate(['/vehicles/spare-parts']);
   }
 }

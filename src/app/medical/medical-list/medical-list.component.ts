@@ -76,7 +76,7 @@ export class MedicalListComponent implements OnInit {
     );
   }
   navigateToAdd() {
-    this.router.navigate(['/medical-team/add']);
+    this.router.navigate(['/vehicles/add']);
   }
 
   applyFilter(): void {
@@ -87,12 +87,12 @@ export class MedicalListComponent implements OnInit {
   }
 
   navigateToEdit(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/edit'], {
+    this.router.navigate(['/vehicles/edit'], {
       state: { medicalData: medicalData },
     });
   }
   navigateToView(medicalData: MedicalTeamModel) {
-    this.router.navigate(['/medical-team/view'], {
+    this.router.navigate(['/vehicles/view'], {
       state: { pid: medicalData, tabIndex: 0 },
     });
   }
@@ -100,7 +100,7 @@ export class MedicalListComponent implements OnInit {
   public openResetPopUp() {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Medical-Team' },
+      data: { name: 'Vehicle' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
@@ -109,14 +109,18 @@ export class MedicalListComponent implements OnInit {
   handleDelete(pid: any) {
     const dialogRef = this.dialog.open(DeleteConfirmComponent, {
       width: '400px',
-      data: { name: 'Medical-Team' },
+      data: { name: 'Vehicle' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let fd = new FormData();
-        fd.append('type', DELETE_TYPE.MEDICAL.toString());
-        fd.append('pid', pid);
+        // let fd = new FormData();
+        // fd.append('type', DELETE_TYPE.MEDICAL.toString());
+        // fd.append('pid', pid);
+        let fd = {
+          type: '2',
+          id: pid
+        }
         this.showSpinner = true;
         this._apiService.post(APIConstant.COMMON_DELETE, fd).subscribe(
           (res: any) => {

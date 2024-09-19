@@ -23,13 +23,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'customer',
+    path: 'driver',
     loadChildren: () =>
       import('./customer/customer.module').then((m) => m.CustomerModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'medical-team',
+    path: 'vehicles',
     loadChildren: () =>
       import('./medical/medical.module').then((m) => m.MedicalModule),
     canActivate: [AuthGuard],
@@ -57,13 +57,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'patients',
+    path: 'fuels',
     loadChildren: () =>
       import('./patient/patient.module').then((m) => m.PatientModule),
     canActivate: [AuthGuard],
   },
   {
-    path: 'assignments',
+    path: 'inout',
     loadChildren: () =>
       import('./assignment/assignment.module').then((m) => m.AssignmentModule),
     canActivate: [AuthGuard],
@@ -75,7 +75,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'driver',
+    path: 'pre-request',
     loadChildren: () =>
       import('./driver/driver.module').then((m) => m.DriverModule),
     canActivate: [AuthGuard],

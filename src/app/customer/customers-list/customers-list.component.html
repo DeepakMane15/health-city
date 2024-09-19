@@ -74,7 +74,7 @@
             <td mat-cell *matCellDef="let element">
               <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
               <mat-icon class="action-mat-icon"(click)="navigateToView(element)">remove_red_eye</mat-icon>
-              <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.customer_id)"class="delete-icon">delete</mat-icon>
+              <mat-icon class="action-mat-icon" (click)="handleDeleteCustomer(element.id)"class="delete-icon">delete</mat-icon>
             </td>
           </ng-container>
 
