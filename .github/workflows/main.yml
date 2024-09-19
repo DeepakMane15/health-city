@@ -53,7 +53,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wget
-          wget https://path-to-forticlient-linux-deb -O forticlient.deb
+          wget https://actual-url-for-forticlient-linux-deb -O forticlient.deb
           sudo dpkg -i forticlient.deb
           sudo apt-get install -f  # Fix any dependency issues
 
