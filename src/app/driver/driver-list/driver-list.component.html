@@ -72,17 +72,20 @@
                 <!-- <button class="icon-button">
                   <mat-icon class="action-mat-icon" (click)="navigateToEdit(element)">edit</mat-icon>
                 </button> -->
-                <button class="icon-button">
+                <!-- <button class="icon-button">
                   <mat-icon class="action-mat-icon" (click)="navigateToView(element)">remove_red_eye</mat-icon>
-                </button>
+                </button> -->
                 <!-- <button class="icon-button" *ngIf="element.status === 'unapproved'">
                   <mat-icon (click)="approveRequest(element.id)"
                   class="action-mat-icon check" matTooltip="Approve">check</mat-icon>
                 </button> -->
 
-                <button class="icon-button" *ngIf="element.status !== 'complete'">
+                <button class="icon-button" *ngIf="element.status !== 'complete'" (click)="handleDelete(element.id)">
                   <mat-icon class="action-mat-icon"
-                    (click)="handleDelete(element.id)"class="delete-icon">delete</mat-icon>
+                    class="delete-icon">delete</mat-icon>
+                </button>
+                <button class="icon-button" disabled style="opacity: 0.4;" *ngIf="element.status === 'complete'">
+                  <mat-icon class="action-mat-icon"class="delete-icon">delete</mat-icon>
                 </button>
               </div>
             </td>
