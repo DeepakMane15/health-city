@@ -33,10 +33,19 @@ export class AddDriverComponent implements OnInit {
     id: 0,
     name: ['', Validators.required],
     date: ['', Validators.required],
+    time: ['', Validators.required],
     pickup: ['', Validators.required],
     destination: ['', Validators.required],
     phone: ['', Validators.required],
+    mode: ['telephone', Validators.required]
   });
+
+  public modes = [
+    {key:'telephone', value: 'Telephone'},
+    {key:'email', value: 'Email'},
+    {key:'walk-in', value: 'Walk In'},
+    {key:'via-app', value: 'Via App'},
+  ]
 
   constructor(
     private fb: FormBuilder,
@@ -53,9 +62,11 @@ export class AddDriverComponent implements OnInit {
       id: this.patientData.id,
       name: this.patientData['name'],
       date: this.patientData['date'],
+      time: this.patientData['time'],
       pickup: this.patientData['pickup'],
       destination: this.patientData['destination'],
       phone: this.patientData['phone'],
+      mode: this.patientData['mode'],
     });
   }
 

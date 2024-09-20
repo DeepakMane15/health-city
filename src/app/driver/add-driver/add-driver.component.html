@@ -40,6 +40,21 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput [format]="24" formControlName="time" [ngxMatTimepicker]="pickerS"
+              placeholder="Pick-Up Time" readonly />
+            <mat-icon matSuffix (click)="pickerS.open()">
+              watch_later
+            </mat-icon>
+            <mat-error *ngIf="patientForm.get('time')?.invalid && patientForm.get('time')?.touched">
+              Pick-Up Time is invalid
+            </mat-error>
+          </mat-form-field>
+          <ngx-mat-timepicker color="accent" #pickerS></ngx-mat-timepicker>
+
+          <ngx-mat-timepicker #pickerA dottedMinutesInGap enableKeyboardInput></ngx-mat-timepicker>
+        </div>
       </div>
 
       <div class="row">
@@ -63,12 +78,26 @@
             </mat-error>
           </mat-form-field>
         </div>
+        </div>
+        <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-label>Phone No.</mat-label>
             <input matInput formControlName="phone">
             <mat-error *ngIf="patientForm.get('phone')?.invalid && patientForm.get('phone')?.touched">
               Phone No. is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Mode of Request</mat-label>
+            <!-- <input matInput formControlName="refill_from"> -->
+            <mat-select formControlName="mode">
+              <mat-option *ngFor="let mode of modes" [value]="mode.key">{{mode.value}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="patientForm.get('mode')?.invalid && patientForm.get('mode')?.touched">
+              Refill From is required
             </mat-error>
           </mat-form-field>
         </div>

@@ -9,12 +9,21 @@
     </mat-card-header>
     <mat-card-content>
       <div class="search">
-        <div class="status-ins">
-          <span>Parked : <div class="green"></div></span>
-          <span>Out : <div class="red"></div></span>
-
+        <!--  -->
+        <div>
+          <label>Filter: </label>
+          <select class="custom-input" [(ngModel)]="selectedType" (change)="changedType()">
+            @for (option of status; track option) {
+              <option [value]="option.key">{{option.value}}</option>
+            }
+          </select>
         </div>
         <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search">
+      </div>
+      <div class="status-ins">
+        <span>Free : {{getCount(1)}} <div style="margin-left: 3px;" class="green"></div></span>
+        <span>Occupied : {{getCount(2)}} <div style="margin-left: 3px;" class="red"></div></span>
+
       </div>
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="filteredDataSource">
@@ -25,11 +34,15 @@
             <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
           </ng-container>
 
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.status === 'In' ? 'Free' : 'Occupied'}} </td>
+          </ng-container>
+
           <ng-container matColumnDef="Code">
             <th mat-header-cell *matHeaderCellDef> Sewadar Code </th>
             <td mat-cell *matCellDef="let element"> {{element.sewadar_code}} </td>
           </ng-container>
-
 
           <!-- Name Column -->
           <ng-container matColumnDef="Name">
@@ -43,25 +56,9 @@
             <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
           </ng-container>
 
-          <!-- Symbol Column -->
-          <!-- <ng-container matColumnDef="Time Zone">
-            <th mat-header-cell *matHeaderCellDef> Time Zone </th>
-            <td mat-cell *matCellDef="let element"> {{element.time_zone}} </td>
-          </ng-container> -->
-
-          <!-- <ng-container matColumnDef="Email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.company_email}} </td>
-          </ng-container> -->
-
           <ng-container matColumnDef="Sewa Type">
             <th mat-header-cell *matHeaderCellDef> Sewa Type </th>
             <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="Status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
           </ng-container>
 
           <ng-container matColumnDef="Department">

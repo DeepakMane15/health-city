@@ -17,20 +17,25 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 export class CustomersListComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
-    'Code',
+    'Status',
     'Name',
+    'Code',
     'Sewa Type',
     'Phone',
     // 'Time Zone',
     // 'Email',
-    'Status',
-    'Department',
+    // 'Department',
     'Action',
   ];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
   public searchTerm!: string;
+  public selectedType: string = '0';
+
+  public status = [
+    {key: '0',value:'All'}, {key: 'In', value: 'Free'}, {key:'Out', value: 'Occupied'}
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -47,11 +52,15 @@ export class CustomersListComponent implements AfterViewInit {
     this.filteredDataSource = this.filterService.applyFilter(this.dataSource.data, this.searchTerm);
   }
 
+  changedType() {
+    this.fetchCustomers();
+  }
+
   fetchCustomers() {
     this.showSpinner = true;
     // const fd = new FormData();
     // fd.append('type', '1');
-    let fd = {type: '1'};
+    let fd = {type: '1', selectedType: this.selectedType};
 
     this._apiService.post(APIConstant.GET_DRIVERS, fd).subscribe(
       (res: any) => {
@@ -112,5 +121,9 @@ export class CustomersListComponent implements AfterViewInit {
         );
       }
     });
+  }
+
+  getCount(type: number) :number {
+    return this.dataSource.data.filter(data => data.status === (type === 1 ?'In' : 'Out'))?.length || 0;
   }
 }

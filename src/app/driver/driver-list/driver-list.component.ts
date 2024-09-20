@@ -20,9 +20,11 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
 export class DriverListComponent implements OnInit {
   displayedColumns: string[] = [
     'no',
+    'status',
     'name',
     'phone',
     'date',
+    'time',
     'pickup',
     'destination',
     'action',
@@ -35,6 +37,11 @@ export class DriverListComponent implements OnInit {
   public filteredDataSource!: any[];
   public searchTerm!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public selectedType:string = '0';
+  public status = [
+    {key: '0',value:'All'}, {key: 'pending', value: 'Pending'}, {key:'complete', value: 'Completed'},
+    {key:'cancelled', value: 'Cancelled'}
+  ];
 
   constructor(
     private _apiServices: ApiService,
@@ -58,11 +65,26 @@ export class DriverListComponent implements OnInit {
     );
   }
 
+  changedType () {
+    if(this.selectedType === 'cancelled') {
+    let index = this.displayedColumns.findIndex(d => d=== 'action');
+    if(index > -1){
+      this.displayedColumns.splice(index,1);
+    }
+  } else {
+    let index = this.displayedColumns.findIndex(d => d=== 'action');
+    if(index < 0) {
+      this.displayedColumns.push('action');
+    }
+  }
+
+    this.fetchDrivers();
+  }
   fetchDrivers() {
     this.showSpinner = true;
     // const fd = new FormData();
     // fd.append('type', '6');
-    let fd = {type: '6'};
+    let fd = {type: '6', selectedType: this.selectedType};
     this._apiServices.post(APIConstant.SNM_GET, fd).subscribe(
       (res: any) => {
         if (res && res.status) {
@@ -104,7 +126,7 @@ export class DriverListComponent implements OnInit {
 
   navigateToEdit(driverData: any) {
     this.router.navigate(['/pre-request/edit'], {
-      state: { driverData: driverData },
+      state: { patientData: driverData },
     });
   }
   navigateToView(driverData: any) {

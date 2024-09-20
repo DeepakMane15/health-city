@@ -62,6 +62,8 @@ import { AddFormPopupComponent } from './shared/dialog/add-form-popup/add-form-p
 import { PatientModule } from './patient/patient.module';
 import { DriverModule } from './driver/driver.module';
 import { DeleteConfirmComponent } from './shared/dialog/delete-confirm/delete-confirm.component';
+import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -146,7 +148,8 @@ import { DeleteConfirmComponent } from './shared/dialog/delete-confirm/delete-co
     MatChipListbox,
     NgMultiSelectDropDownModule.forRoot(),
     PatientModule,
-    DriverModule
+    DriverModule,
+    NgxMatTimepickerModule
   ],
   exports: [OverlaySpinnerComponent],
   providers: [
