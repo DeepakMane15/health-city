@@ -206,4 +206,14 @@ export class AddFuelComponent implements OnInit {
   closeDialog() {
     this.formSubmitted.emit();
   }
+  public calculateAmount () {
+    let litre = this.patientForm.get("fuel_in_litre")?.value;
+    let rate = this.patientForm.get("rate")?.value;
+
+    if(rate && litre) {
+      this.patientForm.patchValue({
+        amount: (parseInt(litre) * parseInt(rate)).toString()
+      })
+    }
+  }
 }

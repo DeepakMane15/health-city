@@ -24,7 +24,7 @@
           <mat-form-field class="full-width">
             <mat-label>Fuel in Litre</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="fuel_in_litre">
+              <input matInput formControlName="fuel_in_litre" (change)="calculateAmount()">
             </div>
             <mat-error *ngIf="patientForm.get('fuel_in_litre')?.invalid && patientForm.get('fuel_in_litre')?.touched">
               Fuel in Litre is required
@@ -60,7 +60,7 @@
           <mat-form-field class="full-width">
             <mat-label>Rate</mat-label>
             <div class="uname-input">
-              <input matInput formControlName="rate" type="number">
+              <input matInput formControlName="rate" (change)="calculateAmount()" type="number">
             </div>
             <mat-error *ngIf="patientForm.get('rate')?.invalid && patientForm.get('rate')?.touched">
               Rate is required
