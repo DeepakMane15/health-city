@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
             if (res && res.data.length > 0) {
               this.showSpinner = false;
               this.dashboardData = res.data[0]['counts'][0];
-              this.requests = res.data[0]['request']?.splice(0,10);
+              this.requests = res.data[0]['request']?.splice(0,5);
             } else {
               this.showSpinner = false;
             }
