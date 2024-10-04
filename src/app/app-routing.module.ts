@@ -8,6 +8,7 @@ import { TeamBoardComponent } from './team-board/team-board.component';
 import { ViewMedicalComponent } from './view-medical/view-medical.component';
 import { TeamInvitationComponent } from './team-invitation/team-invitation.component';
 import { Dashboard2Component } from './dashboard2/dashboard2.component';
+import { PermissionGuard } from './shared/authguard/permission.guard';
 //import { DocumentComponent } from './document/document.component';
 const routes: Routes = [
   {
@@ -26,86 +27,38 @@ const routes: Routes = [
     path: 'driver',
     loadChildren: () =>
       import('./customer/customer.module').then((m) => m.CustomerModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Driver/Sewadar', type: 'canView' }
   },
   {
     path: 'vehicles',
     loadChildren: () =>
       import('./medical/medical.module').then((m) => m.MedicalModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'chat',
-    loadChildren: () => import('./new-chat/new-chat.module').then((m) => m.NewChatModule),
-    canActivate: [AuthGuard],
-  },
-  // {
-  //   path: 'new-chat',
-  //   loadChildren: () => import('./new-chat/new-chat.module').then((m) => m.NewChatModule),
-  //   canActivate: [AuthGuard],
-  // },
-  {
-    path: 'team-board',
-    component: TeamBoardComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'team-board/medical-team',
-    component: ViewMedicalComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Vehicle Management', type: 'canView' }
   },
   {
     path: 'fuels',
     loadChildren: () =>
       import('./patient/patient.module').then((m) => m.PatientModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Fuel/Imprest A/C', type: 'canView' }
   },
   {
     path: 'inout',
     loadChildren: () =>
       import('./assignment/assignment.module').then((m) => m.AssignmentModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Vehicle In/out', type: 'canView' }
   },
-  {
-    path: 'ambulance',
-    loadChildren: () =>
-      import('./ambulance/ambulance.module').then((m) => m.AmbulanceModule),
-    canActivate: [AuthGuard],
-  },
+
   {
     path: 'pre-request',
     loadChildren: () =>
       import('./driver/driver.module').then((m) => m.DriverModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PermissionGuard],
+    data: { permission: 'Pre-request For vehicle', type: 'canView' }
   },
-  {
-    path: 'job-portal',
-    loadChildren: () =>
-      import('./job-portal/job-portal.module').then((m) => m.JobPortalModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'living',
-    loadChildren: () =>
-      import('./living/living.module').then((m) => m.LivingModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'team-invitation',
-    component: TeamInvitationComponent,
-    pathMatch: 'full',
-  },
-  // {
-  //   path: 'dashboard2',
-  //   component: Dashboard2Component,
-  //   canActivate: [AuthGuard],
-  // },
-  //   {
-  //     path: 'document',
-  //     component : DocumentComponent,
-  //   },
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 main {
   margin: 0;
-  background-image: url('/assets/images/login-bg.jpeg');
+  background-image: url('/assets/images/login-bg1.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -16,7 +16,7 @@ main {
   padding: 0px 75px;
   // width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
 }
 
 
@@ -223,7 +223,7 @@ mat-form-field {
 .center-card .mat-mdc-card-header {
   justify-content: center;
   // background-color: #2b6598;
-  background: linear-gradient(90deg, rgba(231, 231, 231, 1) 0%, rgba(200, 191, 246, 1) 0%, rgba(110, 168, 196, 1) 1%, rgba(49, 145, 164, 1) 100%);
+  background: #286081;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   padding-top: 5px;
@@ -237,7 +237,13 @@ mat-form-field {
 }
 
 mat-card-content {
-  padding: 40px 0;
+  padding: 15px 0;
+
+  h1 {
+    color: #286081;
+    font-weight: 600;
+    text-align: center;
+  }
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
@@ -267,6 +273,7 @@ mat-card-content {
   display: flex;
   align-items: flex-start;
   text-decoration: none;
+  padding-top: 12px;
 
   mat-icon {
     font-size: 16px;

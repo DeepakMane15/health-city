@@ -63,6 +63,7 @@ import { PatientModule } from './patient/patient.module';
 import { DriverModule } from './driver/driver.module';
 import { DeleteConfirmComponent } from './shared/dialog/delete-confirm/delete-confirm.component';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+import { ResetPwdComponent } from './shared/dialog/reset-pwd/reset-pwd.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     ResetPasswordComponent,
     UploadProfileComponent,
     AddFormPopupComponent,
-    DeleteConfirmComponent
+    DeleteConfirmComponent,
+    ResetPwdComponent
   ],
   imports: [
     BrowserModule,

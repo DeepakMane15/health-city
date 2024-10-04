@@ -13,6 +13,7 @@ import { NavItemNode } from 'src/app/common/models/NavItemNodeModel';
 import { NavLinksModel } from 'src/app/common/models/NavLinksModel';
 import { UserAuthModel } from 'src/app/common/models/UserAuthModel';
 import { APIConstant } from 'src/app/common/constants/APIConstant';
+import { AppConstants } from 'src/app/common/constants/AppConstants';
 
 @Injectable({
   providedIn: 'root',
@@ -113,9 +114,32 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     this.userProfile = this.getUserData();
+    let permissions = this.userProfile.permissions;
     let navItems = NavItemsContant.filter((navItems) =>
       navItems.roles.includes(this.userProfile.user_type)
     );
+    for (const p of permissions) {
+      for (const t of AppConstants.PERMISSION_TITLES) {
+      if(p.title === t.key && p.canEdit === "0"){
+        let index = navItems.findIndex((n:NavLinksModel) => n.label === t.value);
+        if(index > -1) {
+          navItems.splice(index,1);
+        }
+      }
+      else if(p.title === t.key && p.canEdit === "0") {
+        let index = navItems.findIndex((n:NavLinksModel) => n.label === t.value);
+        if(index > -1) {
+          navItems[index].subItems.splice(1,1);
+        }
+      }
+    }
+    if(p.title === 'Medical Team Board' && p.canEdit === "0"){
+      let index = navItems.findIndex((n:NavLinksModel) => n.label === 'Medical Team');
+        if(index > -1) {
+          navItems[index].subItems.splice(navItems[index].subItems.length-1,1);
+        }
+    }
+    }
     this.dataSource.data = navItems.filter((item) => item.category === '');
     this.dataSource1.data = navItems.filter(
       (item) => item.category === 'directory'

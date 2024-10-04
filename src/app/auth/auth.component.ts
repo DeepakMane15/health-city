@@ -3,8 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserAuthModel } from '../common/models/UserAuthModel';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 import { ChatService } from '../shared/services/chat/chat.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetPwdComponent } from '../shared/dialog/reset-pwd/reset-pwd.component';
 
 @Component({
   selector: 'app-auth',
@@ -12,16 +20,22 @@ import { ChatService } from '../shared/services/chat/chat.service';
   styleUrls: ['./auth.component.scss'],
   animations: [
     trigger('hoverAnimation', [
-      state('start', style({
-        width: '2em',
-        left: 'calc(100% - 1.45em)'
-      })),
-      state('end', style({
-        width: 'calc(100% + 1.3em)'
-      })),
-      transition('start <=> end', animate('0.6s ease'))
-    ])
-  ]
+      state(
+        'start',
+        style({
+          width: '2em',
+          left: 'calc(100% - 1.45em)',
+        })
+      ),
+      state(
+        'end',
+        style({
+          width: 'calc(100% + 1.3em)',
+        })
+      ),
+      transition('start <=> end', animate('0.6s ease')),
+    ]),
+  ],
 })
 export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
@@ -33,7 +47,8 @@ export class AuthComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private _authService: AuthService,
-    private _chatService: ChatService
+    private _chatService: ChatService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -53,7 +68,10 @@ export class AuthComponent implements OnInit {
         (response) => {
           if (response.status) {
             this._authService.storeUserData(response.data);
-            this._chatService.createNewUser('angular-firebase@profmedservices.com','firebaseProfmed@2024');
+            this._chatService.createNewUser(
+              'angular-firebase@profmedservices.com',
+              'firebaseProfmed@2024'
+            );
             this.router.navigate(['/']);
           } else {
             console.error('Login failed', response.message);
@@ -66,5 +84,10 @@ export class AuthComponent implements OnInit {
         }
       );
     }
+  }
+  handleResetPassword() {
+    const dialogRef = this.dialog.open(ResetPwdComponent, {
+      width: '400px',
+    });
   }
 }
