@@ -16,7 +16,7 @@ import { FilterServiceService } from 'src/app/shared/services/filter-service/fil
   styleUrls: ['./patient-list.component.scss'],
 })
 export class PatientListComponent {
-  displayedColumns: string[] = ['id', 'receipt', 'fuel', 'rate', 'amount', 'transaction', 'Action'];
+  displayedColumns: string[] = ['id', 'receipt', 'fuel', 'rate', 'amount', 'transaction', 'date', 'Action'];
   public showSpinner: Boolean = false;
   dataSource = new MatTableDataSource<any>();
   public filteredDataSource!: any[];
