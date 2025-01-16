@@ -178,13 +178,18 @@ export class AddInOutComponent implements OnInit {
     // const fd = new FormData();
     // fd.append('type', '8');
     // fd.append('vehicle', item.id);
+    console.log(item);
+    let selectedVehicle = this.vehicleData.find((v: any) => v.id === item.id);
+    console.log(selectedVehicle);
     let fd = { type: '2', vehicle: item.id };
-    this._apiService.post(APIConstant.SNM_GET, fd).subscribe(
+    this._apiService.post(APIConstant.SNM_GET_BY_ID, fd).subscribe(
       (res: any) => {
-        this.vehicleDetail = res.data[0];
-        this.resetForm.patchValue({
-          km: this.vehicleDetail.km,
-        });
+        this.vehicleDetail = res.data;
+        // if (selectedVehicle) {
+          this.resetForm.patchValue({
+            km: res.data.present_km,
+          });
+        // }
       },
       (error) => {
         console.error('Operation failed', error);
@@ -225,10 +230,10 @@ export class AddInOutComponent implements OnInit {
   isKmError(): boolean {
     const kmControl = this.resetForm.get('km');
     return (
-      this.vehicleDetail?.type === 'Out' &&
+      // this.vehicleDetail?.type === 'Out' &&
       kmControl?.value !== null &&
       kmControl?.value !== undefined &&
-      parseInt(kmControl.value) < parseInt(this.vehicleDetail?.km)
+      parseInt(kmControl.value) < parseInt(this.vehicleDetail?.present_km)
     );
   }
 }

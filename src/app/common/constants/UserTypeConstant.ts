@@ -4,5 +4,6 @@ export enum UserTypeConstant {
   PROFESSIONAL = 'professional',
   CUSTOMER_USER = 'customer-user',
   GATE_KEEPER = 'gate-keeper',
-  RECEPTIONIST = 'receptionist'
+  RECEPTIONIST = 'receptionist',
+  FUEL='fuel'
 }

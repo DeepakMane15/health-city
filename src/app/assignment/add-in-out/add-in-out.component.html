@@ -26,10 +26,10 @@
           }}
         </div>
         <div>
-          Date : {{vehicleDetail?.date}}
+          Date: {{ vehicleDetail?.recent_date | date:'yyyy-MM-dd HH:mm:ss' }}
         </div>
         <div>
-          Reading : {{vehicleDetail?.km}} km
+          Reading : {{vehicleDetail?.present_km}} km
         </div>
       </div>
     </div>

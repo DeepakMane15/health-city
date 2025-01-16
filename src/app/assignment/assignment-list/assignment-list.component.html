@@ -23,6 +23,9 @@
         </div>
       </div> -->
       <div class="mat-elevation-z8">
+        <div class="search">
+          <input type="text" [(ngModel)]="searchTerm" (input)="applyFilter()" class="custom-input" placeholder="Search by Vehicle No or Driver">
+        </div>
         <table mat-table [dataSource]="filteredDataSource" class="custom-table">
 
           <!-- Position Column -->

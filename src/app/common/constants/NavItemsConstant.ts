@@ -34,7 +34,8 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
-      UserTypeConstant.GATE_KEEPER
+      UserTypeConstant.GATE_KEEPER,
+      UserTypeConstant.FUEL,
     ],
     category: '',
     subItems: [
@@ -72,7 +73,7 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
-      UserTypeConstant.RECEPTIONIST
+      UserTypeConstant.RECEPTIONIST,
     ],
     category: '',
     subItems: [
@@ -110,6 +111,7 @@ export const NavItemsContant: NavLinksModel[] = [
       UserTypeConstant.ADMIN,
       UserTypeConstant.CUSTOMER,
       UserTypeConstant.CUSTOMER_USER,
+      UserTypeConstant.FUEL,
     ],
     category: '',
     subItems: [
@@ -119,6 +121,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
           UserTypeConstant.CUSTOMER_USER,
+          UserTypeConstant.FUEL,
         ],
         icon: '',
         url: '/fuels',
@@ -131,6 +134,7 @@ export const NavItemsContant: NavLinksModel[] = [
           UserTypeConstant.ADMIN,
           UserTypeConstant.CUSTOMER,
           UserTypeConstant.CUSTOMER_USER,
+          UserTypeConstant.FUEL,
         ],
         icon: '',
         url: '/fuels/imprest',
