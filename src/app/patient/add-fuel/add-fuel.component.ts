@@ -96,6 +96,13 @@ export class AddFuelComponent implements OnInit {
   }
   onItemSelect(item: any) {
     // this.handleMedicalSelect(item);
+    console.log(item);
+    let selectedVehicle = this.vehicleData.find((vehicle: any) => vehicle.id === item.id);
+    if(selectedVehicle) {
+      this.patientForm.patchValue({
+        present_km: selectedVehicle.present_km
+      })
+    }
   }
   onSelectAll(items: any) {}
 
